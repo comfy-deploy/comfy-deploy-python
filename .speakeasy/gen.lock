@@ -3,15 +3,18 @@ id: 2c1d440e-25e4-46e2-a435-ebd1f72a7373
 management:
   docChecksum: 751bbee351db5354325a9ef968014e0d
   docVersion: 0.0.1
-  speakeasyVersion: 1.335.2
-  generationVersion: 2.372.3
-  releaseVersion: 0.0.1
-  configChecksum: 146d1ec1460e43d80975a87764babb15
+  speakeasyVersion: 1.337.1
+  generationVersion: 2.373.2
+  releaseVersion: 0.0.2
+  configChecksum: 9cb0ea095a0bc55ad805a566cde61f4d
+  repoURL: https://github.com/comfy-deploy/comfy-deploy-python.git
+  installationURL: https://github.com/comfy-deploy/comfy-deploy-python.git
+  published: true
 features:
   python:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.3
-    core: 4.8.1
+    core: 4.8.2
     devContainers: 2.86.0
     flattening: 2.81.1
     globalSecurity: 2.83.5
@@ -224,3 +227,4 @@ generatedFiles:
   - src/comfydeploy/_hooks/sdkhooks.py
   - src/comfydeploy/_hooks/types.py
   - src/comfydeploy/_hooks/__init__.py
+  - CONTRIBUTING.md
