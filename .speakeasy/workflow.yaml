@@ -9,3 +9,6 @@ targets:
     comfy-deploy:
         target: python
         source: comfydeploy-api
+        publish:
+            pypi:
+                token: $pypi_token
