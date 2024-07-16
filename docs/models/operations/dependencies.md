@@ -1,0 +1,12 @@
+# Dependencies
+
+
+## Fields
+
+| Field                                                                       | Type                                                                        | Required                                                                    | Description                                                                 |
+| --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `comfyui`                                                                   | *str*                                                                       | :heavy_check_mark:                                                          | N/A                                                                         |
+| `missing_nodes`                                                             | List[*str*]                                                                 | :heavy_check_mark:                                                          | N/A                                                                         |
+| `custom_nodes`                                                              | Dict[str, [operations.CustomNodes](../../models/operations/customnodes.md)] | :heavy_check_mark:                                                          | N/A                                                                         |
+| `models`                                                                    | Dict[str, List[[operations.Models](../../models/operations/models.md)]]     | :heavy_check_mark:                                                          | N/A                                                                         |
+| `files`                                                                     | Dict[str, List[[operations.Files](../../models/operations/files.md)]]       | :heavy_check_mark:                                                          | N/A                                                                         |

@@ -1,0 +1,11 @@
+workflowVersion: 1.0.0
+sources:
+    comfydeploy-api:
+        inputs:
+            - location: https://www.comfydeploy.com/api/openapi.json
+        registry:
+            location: registry.speakeasyapi.dev/comfydeploy/comfydeploy/comfydeploy-api
+targets:
+    comfy-deploy:
+        target: python
+        source: comfydeploy-api

@@ -1,0 +1,9 @@
+# PostMachineEndpointResponse
+
+
+## Fields
+
+| Field                                                                                                              | Type                                                                                                               | Required                                                                                                           | Description                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| `http_meta`                                                                                                        | [components.HTTPMetadata](../../models/components/httpmetadata.md)                                                 | :heavy_check_mark:                                                                                                 | N/A                                                                                                                |
+| `object`                                                                                                           | [Optional[operations.PostMachineEndpointResponseBody]](../../models/operations/postmachineendpointresponsebody.md) | :heavy_minus_sign:                                                                                                 | Create short lived machine endpoint                                                                                |

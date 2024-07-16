@@ -1,0 +1,15 @@
+# CustomNodes
+
+
+## Fields
+
+| Field                                                                      | Type                                                                       | Required                                                                   | Description                                                                |
+| -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `name`                                                                     | *str*                                                                      | :heavy_check_mark:                                                         | N/A                                                                        |
+| `url`                                                                      | *str*                                                                      | :heavy_check_mark:                                                         | N/A                                                                        |
+| `node`                                                                     | List[[operations.Node](../../models/operations/node.md)]                   | :heavy_minus_sign:                                                         | N/A                                                                        |
+| `hash`                                                                     | *Optional[str]*                                                            | :heavy_minus_sign:                                                         | N/A                                                                        |
+| `files`                                                                    | List[*str*]                                                                | :heavy_minus_sign:                                                         | N/A                                                                        |
+| `install_type`                                                             | [Optional[operations.InstallType]](../../models/operations/installtype.md) | :heavy_minus_sign:                                                         | N/A                                                                        |
+| `warning`                                                                  | *Optional[str]*                                                            | :heavy_minus_sign:                                                         | N/A                                                                        |
+| `pip`                                                                      | List[*str*]                                                                | :heavy_minus_sign:                                                         | N/A                                                                        |
