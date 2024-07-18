@@ -12,15 +12,16 @@ Usually when you run something, you want to upload a file, image etc.
 ### Example Usage
 
 ```python
-import comfydeploy
+from comfydeploy import ComfyDeploy
 from comfydeploy.models import operations
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.files.get_upload_url(type=operations.Type.APPLICATION_OCTET_STREAM, file_size='<value>')
+res = s.files.get_upload_url(type_=operations.Type.APPLICATION_OCTET_STREAM, file_size="<value>")
 
 if res.object is not None:
     # handle response
@@ -30,10 +31,11 @@ if res.object is not None:
 
 ### Parameters
 
-| Parameter                                          | Type                                               | Required                                           | Description                                        |
-| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
-| `type`                                             | [operations.Type](../../models/operations/type.md) | :heavy_check_mark:                                 | N/A                                                |
-| `file_size`                                        | *str*                                              | :heavy_check_mark:                                 | N/A                                                |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `type`                                                              | [operations.Type](../../models/operations/type.md)                  | :heavy_check_mark:                                                  | N/A                                                                 |
+| `file_size`                                                         | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 
 ### Response
