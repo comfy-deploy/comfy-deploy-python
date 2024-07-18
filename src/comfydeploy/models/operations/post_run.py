@@ -34,6 +34,8 @@ class PostRunRequestBody:
     r"""Deployment ID to run"""
     workflow_api: Optional[Any] = dataclasses.field(default=UNSET, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('workflow_api'), 'exclude': lambda f: f is PostRunRequestBody.UNSET }})
     r"""Workflow API JSON to run"""
+    workflow_api_json: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('workflow_api_json'), 'exclude': lambda f: f is None }})
+    r"""Workflow API JSON to run"""
     workflow_id: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('workflow_id'), 'exclude': lambda f: f is None }})
     r"""Workflow ID to run"""
     machine_id: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('machine_id'), 'exclude': lambda f: f is None }})
@@ -44,6 +46,8 @@ class PostRunRequestBody:
     run_origin: Optional[RunOrigin] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('run_origin'), 'exclude': lambda f: f is None }})
     inputs: Optional[Dict[str, Inputs]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('inputs'), 'exclude': lambda f: f is None }})
     r"""External inputs to the workflow"""
+    inputs_json: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('inputs_json'), 'exclude': lambda f: f is None }})
+    r"""External inputs to the workflow in JSON format"""
     webhook: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('webhook'), 'exclude': lambda f: f is None }})
     r"""Webhook URL to receive workflow updates"""
     stream: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('stream'), 'exclude': lambda f: f is None }})
