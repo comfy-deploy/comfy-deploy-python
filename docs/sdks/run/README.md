@@ -13,14 +13,15 @@ Call this to get a run's output, usually in conjunction with polling method
 ### Example Usage
 
 ```python
-import comfydeploy
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.run.get(run_id='<value>')
+res = s.run.get(run_id="<value>")
 
 if res.object is not None:
     # handle response
@@ -30,9 +31,10 @@ if res.object is not None:
 
 ### Parameters
 
-| Parameter          | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `run_id`           | *str*              | :heavy_check_mark: | N/A                |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `run_id`                                                            | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 
 ### Response
@@ -53,23 +55,23 @@ Run a workflow via deployment_id
 ### Example Usage
 
 ```python
-import comfydeploy
-from comfydeploy.models import operations
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.run.create(request=operations.PostRunRequestBody(
-    deployment_id='d290f1ee-6c54-4b01-90e6-d701748f0851',
-    workflow_id='f47ac10b-58cc-4372-a567-0e02b2c3d479',
-    inputs={
-        'input_text': 'value1',
-        'input_url': 'https://example.png',
+res = s.run.create(request={
+    "deployment_id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "workflow_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    "inputs": {
+        "input_text": "value1",
+        "input_url": "https://example.png",
     },
-    webhook='https://example.com/webhook',
-))
+    "webhook": "https://example.com/webhook",
+})
 
 if res.object is not None:
     # handle response
@@ -82,6 +84,7 @@ if res.object is not None:
 | Parameter                                                                      | Type                                                                           | Required                                                                       | Description                                                                    |
 | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
 | `request`                                                                      | [operations.PostRunRequestBody](../../models/operations/postrunrequestbody.md) | :heavy_check_mark:                                                             | The request object to use for the request.                                     |
+| `retries`                                                                      | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)               | :heavy_minus_sign:                                                             | Configuration to override the default retry behavior of the client.            |
 
 
 ### Response

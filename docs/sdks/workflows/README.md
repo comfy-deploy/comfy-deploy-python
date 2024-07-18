@@ -17,14 +17,15 @@ Get a websocket url for a specific deployment
 ### Example Usage
 
 ```python
-import comfydeploy
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.workflows.get_websocket_deployment_id_(deployment_id='<value>')
+res = s.workflows.get_websocket_deployment_id_(deployment_id="<value>")
 
 if res.object is not None:
     # handle response
@@ -34,9 +35,10 @@ if res.object is not None:
 
 ### Parameters
 
-| Parameter          | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `deployment_id`    | *str*              | :heavy_check_mark: | N/A                |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `deployment_id`                                                     | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 
 ### Response
@@ -56,18 +58,15 @@ Create an endpoint for a machine
 ### Example Usage
 
 ```python
-import comfydeploy
-from comfydeploy.models import operations
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.workflows.post_machine_endpoint(request=operations.PostMachineEndpointRequestBody(
-    machine_id='<value>',
-    type='<value>',
-))
+res = s.workflows.post_machine_endpoint()
 
 if res.object is not None:
     # handle response
@@ -80,6 +79,7 @@ if res.object is not None:
 | Parameter                                                                                              | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
 | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
 | `request`                                                                                              | [operations.PostMachineEndpointRequestBody](../../models/operations/postmachineendpointrequestbody.md) | :heavy_check_mark:                                                                                     | The request object to use for the request.                                                             |
+| `retries`                                                                                              | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                       | :heavy_minus_sign:                                                                                     | Configuration to override the default retry behavior of the client.                                    |
 
 
 ### Response
@@ -99,14 +99,15 @@ Retrieve workflows based on optional query parameters
 ### Example Usage
 
 ```python
-import comfydeploy
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.workflows.get_v1_workflows(page='1', page_size='12', search='<value>')
+res = s.workflows.get_v1_workflows()
 
 if res.response_bodies is not None:
     # handle response
@@ -116,11 +117,12 @@ if res.response_bodies is not None:
 
 ### Parameters
 
-| Parameter          | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `page`             | *Optional[str]*    | :heavy_minus_sign: | N/A                |
-| `page_size`        | *Optional[str]*    | :heavy_minus_sign: | N/A                |
-| `search`           | *Optional[str]*    | :heavy_minus_sign: | N/A                |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `page`                                                              | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `page_size`                                                         | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `search`                                                            | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 
 ### Response
@@ -140,15 +142,15 @@ Create a new workflow by analyzing the provided workflow JSON
 ### Example Usage
 
 ```python
-import comfydeploy
-from comfydeploy.models import operations
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.workflows.post_v1_workflows(request=operations.PostV1WorkflowsRequestBody())
+res = s.workflows.post_v1_workflows()
 
 if res.object is not None:
     # handle response
@@ -161,6 +163,7 @@ if res.object is not None:
 | Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    |
 | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | `request`                                                                                      | [operations.PostV1WorkflowsRequestBody](../../models/operations/postv1workflowsrequestbody.md) | :heavy_check_mark:                                                                             | The request object to use for the request.                                                     |
+| `retries`                                                                                      | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                               | :heavy_minus_sign:                                                                             | Configuration to override the default retry behavior of the client.                            |
 
 
 ### Response
@@ -180,14 +183,15 @@ Retrieve the latest version of a specific workflow by its ID
 ### Example Usage
 
 ```python
-import comfydeploy
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.workflows.get_v1_workflows_workflow_id_(workflow_id='<value>')
+res = s.workflows.get_v1_workflows_workflow_id_(workflow_id="<value>")
 
 if res.object is not None:
     # handle response
@@ -197,9 +201,10 @@ if res.object is not None:
 
 ### Parameters
 
-| Parameter          | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `workflow_id`      | *str*              | :heavy_check_mark: | N/A                |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `workflow_id`                                                       | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 
 ### Response
@@ -219,17 +224,17 @@ Retrieve the latest version of a specific workflow by its ID
 ### Example Usage
 
 ```python
-import comfydeploy
-from comfydeploy.models import operations
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.workflows.get_v1_workflows_workflow_id_outputs(request=operations.GetV1WorkflowsWorkflowIDOutputsRequest(
-    workflow_id='<value>',
-))
+res = s.workflows.get_v1_workflows_workflow_id_outputs(request={
+    "workflow_id": "<value>",
+})
 
 if res.object is not None:
     # handle response
@@ -242,6 +247,7 @@ if res.object is not None:
 | Parameter                                                                                                              | Type                                                                                                                   | Required                                                                                                               | Description                                                                                                            |
 | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | `request`                                                                                                              | [operations.GetV1WorkflowsWorkflowIDOutputsRequest](../../models/operations/getv1workflowsworkflowidoutputsrequest.md) | :heavy_check_mark:                                                                                                     | The request object to use for the request.                                                                             |
+| `retries`                                                                                                              | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                       | :heavy_minus_sign:                                                                                                     | Configuration to override the default retry behavior of the client.                                                    |
 
 
 ### Response

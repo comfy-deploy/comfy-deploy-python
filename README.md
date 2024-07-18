@@ -19,8 +19,14 @@ It has been generated successfully based on your OpenAPI spec. However, it is no
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
+PIP
 ```bash
 pip install comfydeploy
+```
+
+Poetry
+```bash
+poetry add comfydeploy
 ```
 <!-- End SDK Installation [installation] -->
 
@@ -30,19 +36,41 @@ pip install comfydeploy
 ### Example
 
 ```python
-import comfydeploy
+# Synchronous Example
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.run.get(run_id='<value>')
+res = s.run.get(run_id="<value>")
 
 if res.object is not None:
     # handle response
     pass
+```
 
+</br>
+
+The same SDK client can also be used to make asychronous requests by importing asyncio.
+```python
+# Asynchronous Example
+import asyncio
+from comfydeploy import ComfyDeploy
+import os
+
+async def main():
+    s = ComfyDeploy(
+        bearer_auth=os.getenv("BEARER_AUTH", ""),
+    )
+    res = await s.run.get_async(run_id="<value>")
+    if res.object is not None:
+        # handle response
+        pass
+
+asyncio.run(main())
 ```
 <!-- End SDK Example Usage [usage] -->
 
@@ -98,16 +126,17 @@ Handling errors in this SDK should largely match your expectations.  All operati
 ### Example
 
 ```python
-import comfydeploy
+from comfydeploy import ComfyDeploy
 from comfydeploy.models import errors
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 res = None
 try:
-    res = s.run.get(run_id='<value>')
+    res = s.run.get(run_id="<value>")
 
 except errors.GetRunResponseBody as e:
     # handle exception
@@ -140,15 +169,16 @@ You can override the default server globally by passing a server index to the `s
 #### Example
 
 ```python
-import comfydeploy
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
+s = ComfyDeploy(
     server_idx=0,
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.run.get(run_id='<value>')
+res = s.run.get(run_id="<value>")
 
 if res.object is not None:
     # handle response
@@ -161,15 +191,16 @@ if res.object is not None:
 
 The default server can also be overridden globally by passing a URL to the `server_url: str` optional parameter when initializing the SDK client instance. For example:
 ```python
-import comfydeploy
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
+s = ComfyDeploy(
     server_url="https:///api",
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.run.get(run_id='<value>')
+res = s.run.get(run_id="<value>")
 
 if res.object is not None:
     # handle response
@@ -181,16 +212,81 @@ if res.object is not None:
 <!-- Start Custom HTTP Client [http-client] -->
 ## Custom HTTP Client
 
-The Python SDK makes API calls using the [requests](https://pypi.org/project/requests/) HTTP library.  In order to provide a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration, you can initialize the SDK client with a custom `requests.Session` object.
+The Python SDK makes API calls using the [httpx](https://www.python-httpx.org/) HTTP library.  In order to provide a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration, you can initialize the SDK client with your own HTTP client instance.
+Depending on whether you are using the sync or async version of the SDK, you can pass an instance of `HttpClient` or `AsyncHttpClient` respectively, which are Protocol's ensuring that the client has the necessary methods to make API calls.
+This allows you to wrap the client with your own custom logic, such as adding custom headers, logging, or error handling, or you can just pass an instance of `httpx.Client` or `httpx.AsyncClient` directly.
 
 For example, you could specify a header for every request that this sdk makes as follows:
 ```python
-import comfydeploy
-import requests
+from comfydeploy import ComfyDeploy
+import httpx
 
-http_client = requests.Session()
-http_client.headers.update({'x-custom-header': 'someValue'})
-s = comfydeploy.ComfyDeploy(client=http_client)
+http_client = httpx.Client(headers={"x-custom-header": "someValue"})
+s = ComfyDeploy(client=http_client)
+```
+
+or you could wrap the client with your own custom logic:
+```python
+from comfydeploy import ComfyDeploy
+from comfydeploy.httpclient import AsyncHttpClient
+import httpx
+
+class CustomClient(AsyncHttpClient):
+    client: AsyncHttpClient
+
+    def __init__(self, client: AsyncHttpClient):
+        self.client = client
+
+    async def send(
+        self,
+        request: httpx.Request,
+        *,
+        stream: bool = False,
+        auth: Union[
+            httpx._types.AuthTypes, httpx._client.UseClientDefault, None
+        ] = httpx.USE_CLIENT_DEFAULT,
+        follow_redirects: Union[
+            bool, httpx._client.UseClientDefault
+        ] = httpx.USE_CLIENT_DEFAULT,
+    ) -> httpx.Response:
+        request.headers["Client-Level-Header"] = "added by client"
+
+        return await self.client.send(
+            request, stream=stream, auth=auth, follow_redirects=follow_redirects
+        )
+
+    def build_request(
+        self,
+        method: str,
+        url: httpx._types.URLTypes,
+        *,
+        content: Optional[httpx._types.RequestContent] = None,
+        data: Optional[httpx._types.RequestData] = None,
+        files: Optional[httpx._types.RequestFiles] = None,
+        json: Optional[Any] = None,
+        params: Optional[httpx._types.QueryParamTypes] = None,
+        headers: Optional[httpx._types.HeaderTypes] = None,
+        cookies: Optional[httpx._types.CookieTypes] = None,
+        timeout: Union[
+            httpx._types.TimeoutTypes, httpx._client.UseClientDefault
+        ] = httpx.USE_CLIENT_DEFAULT,
+        extensions: Optional[httpx._types.RequestExtensions] = None,
+    ) -> httpx.Request:
+        return self.client.build_request(
+            method,
+            url,
+            content=content,
+            data=data,
+            files=files,
+            json=json,
+            params=params,
+            headers=headers,
+            cookies=cookies,
+            timeout=timeout,
+            extensions=extensions,
+        )
+
+s = ComfyDeploy(async_client=CustomClient(httpx.AsyncClient()))
 ```
 <!-- End Custom HTTP Client [http-client] -->
 
@@ -207,14 +303,15 @@ This SDK supports the following security scheme globally:
 
 To authenticate with the API the `bearer_auth` parameter must be set when initializing the SDK client instance. For example:
 ```python
-import comfydeploy
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.run.get(run_id='<value>')
+res = s.run.get(run_id="<value>")
 
 if res.object is not None:
     # handle response
@@ -222,6 +319,52 @@ if res.object is not None:
 
 ```
 <!-- End Authentication [security] -->
+
+<!-- Start Retries [retries] -->
+## Retries
+
+Some of the endpoints in this SDK support retries. If you use the SDK without any configuration, it will fall back to the default retry strategy provided by the API. However, the default retry strategy can be overridden on a per-operation basis, or across the entire SDK.
+
+To change the default retry strategy for a single API call, simply provide a `RetryConfig` object to the call:
+```python
+from comfydeploy import ComfyDeploy
+from comfydeploy.utils import BackoffStrategy, RetryConfig
+import os
+
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
+)
+
+
+res = s.run.get(run_id="<value>",
+    RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
+
+if res.object is not None:
+    # handle response
+    pass
+
+```
+
+If you'd like to override the default retry strategy for all operations that support retries, you can use the `retry_config` optional parameter when initializing the SDK:
+```python
+from comfydeploy import ComfyDeploy
+from comfydeploy.utils import BackoffStrategy, RetryConfig
+import os
+
+s = ComfyDeploy(
+    retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
+)
+
+
+res = s.run.get(run_id="<value>")
+
+if res.object is not None:
+    # handle response
+    pass
+
+```
+<!-- End Retries [retries] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 

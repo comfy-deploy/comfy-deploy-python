@@ -15,20 +15,15 @@ Register a machine event
 ### Example Usage
 
 ```python
-import comfydeploy
-from comfydeploy.models import operations
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.machines.post_gpu_event(request=operations.PostGpuEventRequestBody(
-    machine_id='<value>',
-    timestamp='<value>',
-    event_type=operations.EventType.GPU_END,
-    gpu_provider=operations.GpuProvider.MODAL,
-))
+res = s.machines.post_gpu_event()
 
 if res.object is not None:
     # handle response
@@ -41,6 +36,7 @@ if res.object is not None:
 | Parameter                                                                                | Type                                                                                     | Required                                                                                 | Description                                                                              |
 | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | `request`                                                                                | [operations.PostGpuEventRequestBody](../../models/operations/postgpueventrequestbody.md) | :heavy_check_mark:                                                                       | The request object to use for the request.                                               |
+| `retries`                                                                                | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                         | :heavy_minus_sign:                                                                       | Configuration to override the default retry behavior of the client.                      |
 
 
 ### Response
@@ -60,15 +56,15 @@ Retrieve details of all machines for the authenticated user, with pagination and
 ### Example Usage
 
 ```python
-import comfydeploy
-from comfydeploy.models import operations
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.machines.get_v1_machines(page='1', page_size='12', fields=operations.Fields.MINIMAL)
+res = s.machines.get_v1_machines()
 
 if res.object is not None:
     # handle response
@@ -78,11 +74,12 @@ if res.object is not None:
 
 ### Parameters
 
-| Parameter                                                        | Type                                                             | Required                                                         | Description                                                      |
-| ---------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- |
-| `page`                                                           | *Optional[str]*                                                  | :heavy_minus_sign:                                               | N/A                                                              |
-| `page_size`                                                      | *Optional[str]*                                                  | :heavy_minus_sign:                                               | N/A                                                              |
-| `fields`                                                         | [Optional[operations.Fields]](../../models/operations/fields.md) | :heavy_minus_sign:                                               | N/A                                                              |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `page`                                                              | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `page_size`                                                         | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `fields`                                                            | [Optional[operations.Fields]](../../models/operations/fields.md)    | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 
 ### Response
@@ -102,15 +99,15 @@ Create a new machine with optional default setting
 ### Example Usage
 
 ```python
-import comfydeploy
-from comfydeploy.models import operations
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.machines.post_v1_machines(request=operations.PostV1MachinesRequestBody())
+res = s.machines.post_v1_machines()
 
 if res.object is not None:
     # handle response
@@ -123,6 +120,7 @@ if res.object is not None:
 | Parameter                                                                                    | Type                                                                                         | Required                                                                                     | Description                                                                                  |
 | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | `request`                                                                                    | [operations.PostV1MachinesRequestBody](../../models/operations/postv1machinesrequestbody.md) | :heavy_check_mark:                                                                           | The request object to use for the request.                                                   |
+| `retries`                                                                                    | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                             | :heavy_minus_sign:                                                                           | Configuration to override the default retry behavior of the client.                          |
 
 
 ### Response
@@ -142,14 +140,15 @@ Retrieve details of a specific machine by its ID, with optional workspace detail
 ### Example Usage
 
 ```python
-import comfydeploy
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.machines.get_v1_machines_machine_id_(machine_id='<value>', ext_urls='false')
+res = s.machines.get_v1_machines_machine_id_(machine_id="<value>")
 
 if res.object is not None:
     # handle response
@@ -159,10 +158,11 @@ if res.object is not None:
 
 ### Parameters
 
-| Parameter          | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `machine_id`       | *str*              | :heavy_check_mark: | N/A                |
-| `ext_urls`         | *Optional[str]*    | :heavy_minus_sign: | N/A                |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `machine_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `ext_urls`                                                          | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 
 ### Response

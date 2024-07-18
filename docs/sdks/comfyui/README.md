@@ -17,14 +17,15 @@ This endpoints is specifically built for ComfyUI workflow upload.
 ### Example Usage
 
 ```python
-import comfydeploy
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.comfyui.get_auth_response_request_id_(request_id='<value>')
+res = s.comfyui.get_auth_response_request_id_(request_id="<value>")
 
 if res.two_hundred_application_json_object is not None:
     # handle response
@@ -34,9 +35,10 @@ if res.two_hundred_application_json_object is not None:
 
 ### Parameters
 
-| Parameter          | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `request_id`       | *str*              | :heavy_check_mark: | N/A                |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `request_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 
 ### Response
@@ -56,35 +58,15 @@ This endpoints is specifically built for ComfyUI workflow upload.
 ### Example Usage
 
 ```python
-import comfydeploy
-from comfydeploy.models import operations
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.comfyui.post_workflow(request=operations.PostWorkflowRequestBody(
-    workflow_api={
-        'key': operations.WorkflowAPI(
-            inputs={
-                'key': '<value>',
-            },
-        ),
-    },
-    snapshot=operations.Snapshot(
-        comfyui='<value>',
-        git_custom_nodes={
-            'key': operations.GitCustomNodes(
-                hash='<value>',
-                disabled=False,
-            ),
-        },
-        file_custom_nodes=[
-            '<value>',
-        ],
-    ),
-))
+res = s.comfyui.post_workflow()
 
 if res.object is not None:
     # handle response
@@ -97,6 +79,7 @@ if res.object is not None:
 | Parameter                                                                                | Type                                                                                     | Required                                                                                 | Description                                                                              |
 | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | `request`                                                                                | [operations.PostWorkflowRequestBody](../../models/operations/postworkflowrequestbody.md) | :heavy_check_mark:                                                                       | The request object to use for the request.                                               |
+| `retries`                                                                                | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                         | :heavy_minus_sign:                                                                       | Configuration to override the default retry behavior of the client.                      |
 
 
 ### Response
@@ -116,14 +99,15 @@ Use this to retrieve comfyui workflow by id
 ### Example Usage
 
 ```python
-import comfydeploy
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.comfyui.get_workflow_version_version_id_(version_id='<value>')
+res = s.comfyui.get_workflow_version_version_id_(version_id="<value>")
 
 if res.object is not None:
     # handle response
@@ -133,9 +117,10 @@ if res.object is not None:
 
 ### Parameters
 
-| Parameter          | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `version_id`       | *str*              | :heavy_check_mark: | N/A                |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `version_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 
 ### Response
@@ -155,14 +140,15 @@ Use this to retrieve comfyui workflow by id
 ### Example Usage
 
 ```python
-import comfydeploy
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.comfyui.get_workflow_id_(id='<value>')
+res = s.comfyui.get_workflow_id_(id="<value>")
 
 if res.object is not None:
     # handle response
@@ -172,9 +158,10 @@ if res.object is not None:
 
 ### Parameters
 
-| Parameter          | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `id`               | *str*              | :heavy_check_mark: | N/A                |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `id`                                                                | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 
 ### Response
@@ -194,14 +181,15 @@ Use this to retrieve comfyui workflow inputs definition by id
 ### Example Usage
 
 ```python
-import comfydeploy
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.comfyui.get_deployment_id_inputs(id='<value>')
+res = s.comfyui.get_deployment_id_inputs(id="<value>")
 
 if res.response_bodies is not None:
     # handle response
@@ -211,9 +199,10 @@ if res.response_bodies is not None:
 
 ### Parameters
 
-| Parameter          | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `id`               | *str*              | :heavy_check_mark: | N/A                |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `id`                                                                | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 
 ### Response
@@ -233,15 +222,15 @@ Get all deployed workflows
 ### Example Usage
 
 ```python
-import comfydeploy
-from comfydeploy.models import operations
+from comfydeploy import ComfyDeploy
+import os
 
-s = comfydeploy.ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+s = ComfyDeploy(
+    bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 
 
-res = s.comfyui.get_deployment(environment=operations.Environment.STAGING)
+res = s.comfyui.get_deployment()
 
 if res.response_bodies is not None:
     # handle response
@@ -254,6 +243,7 @@ if res.response_bodies is not None:
 | Parameter                                                                  | Type                                                                       | Required                                                                   | Description                                                                |
 | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
 | `environment`                                                              | [Optional[operations.Environment]](../../models/operations/environment.md) | :heavy_minus_sign:                                                         | N/A                                                                        |
+| `retries`                                                                  | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)           | :heavy_minus_sign:                                                         | Configuration to override the default retry behavior of the client.        |
 
 
 ### Response
