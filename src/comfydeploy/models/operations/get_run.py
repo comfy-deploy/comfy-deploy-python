@@ -7,7 +7,7 @@ from comfydeploy.utils import FieldMetadata, QueryParamMetadata
 from enum import Enum
 import pydantic
 from pydantic import model_serializer
-from typing import Optional, TypedDict
+from typing import List, Optional, TypedDict
 from typing_extensions import Annotated, NotRequired
 
 
@@ -82,6 +82,58 @@ class WebhookStatus(str, Enum):
     NOT_STARTED = "not-started"
     RUNNING = "running"
 
+class ImagesTypedDict(TypedDict):
+    url: str
+    filename: str
+    
+
+class Images(BaseModel):
+    url: str
+    filename: str
+    
+
+class GetRunFilesTypedDict(TypedDict):
+    url: str
+    filename: str
+    
+
+class GetRunFiles(BaseModel):
+    url: str
+    filename: str
+    
+
+class GifsTypedDict(TypedDict):
+    url: str
+    filename: str
+    
+
+class Gifs(BaseModel):
+    url: str
+    filename: str
+    
+
+class DataTypedDict(TypedDict):
+    images: NotRequired[List[ImagesTypedDict]]
+    files: NotRequired[List[GetRunFilesTypedDict]]
+    gifs: NotRequired[List[GifsTypedDict]]
+    text: NotRequired[List[str]]
+    
+
+class Data(BaseModel):
+    images: Optional[List[Images]] = None
+    files: Optional[List[GetRunFiles]] = None
+    gifs: Optional[List[Gifs]] = None
+    text: Optional[List[str]] = None
+    
+
+class OutputsTypedDict(TypedDict):
+    data: DataTypedDict
+    
+
+class Outputs(BaseModel):
+    data: Data
+    
+
 class GetRunResponseBodyTypedDict(TypedDict):
     r"""Retrieve the output"""
     
@@ -109,6 +161,7 @@ class GetRunResponseBodyTypedDict(TypedDict):
     is_realtime: bool
     webhook: Nullable[str]
     webhook_status: Nullable[WebhookStatus]
+    outputs: List[OutputsTypedDict]
     
 
 class GetRunResponseBody(BaseModel):
@@ -138,6 +191,7 @@ class GetRunResponseBody(BaseModel):
     is_realtime: bool
     webhook: Nullable[str]
     webhook_status: Nullable[WebhookStatus]
+    outputs: List[Outputs]
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
