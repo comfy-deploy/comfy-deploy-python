@@ -33,13 +33,13 @@ class GetV1WorkflowsWorkflowIDOutputsRequest(BaseModel):
     run_origin: Annotated[Optional[QueryParamRunOrigin], pydantic.Field(alias="runOrigin"), FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = None
     
 
-class OutputsTypedDict(TypedDict):
+class GetV1WorkflowsWorkflowIDOutputsOutputsTypedDict(TypedDict):
     file_ur_ls: List[str]
     run_id: str
     duration: float
     
 
-class Outputs(BaseModel):
+class GetV1WorkflowsWorkflowIDOutputsOutputs(BaseModel):
     file_ur_ls: Annotated[List[str], pydantic.Field(alias="fileURLs")]
     run_id: Annotated[str, pydantic.Field(alias="runID")]
     duration: float
@@ -48,14 +48,14 @@ class Outputs(BaseModel):
 class GetV1WorkflowsWorkflowIDOutputsResponseBodyTypedDict(TypedDict):
     r"""Specific workflow retrieved successfully"""
     
-    outputs: List[OutputsTypedDict]
+    outputs: List[GetV1WorkflowsWorkflowIDOutputsOutputsTypedDict]
     total: float
     
 
 class GetV1WorkflowsWorkflowIDOutputsResponseBody(BaseModel):
     r"""Specific workflow retrieved successfully"""
     
-    outputs: List[Outputs]
+    outputs: List[GetV1WorkflowsWorkflowIDOutputsOutputs]
     total: float
     
 
