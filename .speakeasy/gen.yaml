@@ -2,7 +2,7 @@ configVersion: 2.0.0
 generation:
   devContainers:
     enabled: true
-    schemaPath: https://www.comfydeploy.com/api/openapi.json
+    schemaPath: https://www.comfydeploy.com/api
   sdkClassName: ComfyDeploy
   maintainOpenAPIOrder: true
   usageSnippets:
@@ -15,7 +15,7 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: false
 python:
-  version: 0.1.1
+  version: 0.2.0
   additionalDependencies:
     dev: {}
     main: {}

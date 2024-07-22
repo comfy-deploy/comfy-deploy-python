@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2c1d440e-25e4-46e2-a435-ebd1f72a7373
 management:
-  docChecksum: 49bafb4b5a6a1e264a3874f028a0f6ad
+  docChecksum: 1c69bf2b9eaf6112b978c624ef0b2f5a
   docVersion: 0.0.1
-  speakeasyVersion: 1.344.1
-  generationVersion: 2.376.2
-  releaseVersion: 0.1.1
-  configChecksum: c3630d02bc13e2ff89db897e3d85d633
+  speakeasyVersion: 1.344.2
+  generationVersion: 2.377.1
+  releaseVersion: 0.2.0
+  configChecksum: 185e4d363233af7c2e7e47dbc3f19ea0
   repoURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   installationURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   published: true
@@ -14,7 +14,7 @@ features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.0
-    core: 5.1.6
+    core: 5.2.1
     defaultEnabledRetries: 0.2.0
     devContainers: 3.0.0
     envVarSecurityUsage: 0.2.0

@@ -164,7 +164,7 @@ You can override the default server globally by passing a server index to the `s
 
 | # | Server | Variables |
 | - | ------ | --------- |
-| 0 | `https:///api` | None |
+| 0 | `https://www.comfydeploy.com/api` | None |
 
 #### Example
 
@@ -195,7 +195,7 @@ from comfydeploy import ComfyDeploy
 import os
 
 s = ComfyDeploy(
-    server_url="https:///api",
+    server_url="https://www.comfydeploy.com/api",
     bearer_auth=os.getenv("BEARER_AUTH", ""),
 )
 

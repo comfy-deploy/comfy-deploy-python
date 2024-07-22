@@ -25,11 +25,11 @@ The speakeasy CLI allows you to generate more usage snippets. Here's how:
 - To generate a sample for a specific operation by providing an operation ID, use:
 
 ```
-speakeasy generate usage -s https://www.comfydeploy.com/api/openapi.json -l python -i {INPUT_OPERATION_ID} -o ./samples
+speakeasy generate usage -s https://www.comfydeploy.com/api -l python -i {INPUT_OPERATION_ID} -o ./samples
 ```
 
 - To generate samples for an entire namespace (like a tag or group name), use:
 
 ```
-speakeasy generate usage -s https://www.comfydeploy.com/api/openapi.json -l python -n {INPUT_TAG_NAME} -o ./samples
+speakeasy generate usage -s https://www.comfydeploy.com/api -l python -n {INPUT_TAG_NAME} -o ./samples
 ```

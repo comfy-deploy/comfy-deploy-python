@@ -3,7 +3,7 @@ speakeasyVersion: latest
 sources:
     comfydeploy-api:
         inputs:
-            - location: https://www.comfydeploy.com/api/openapi.json
+            - location: https://www.comfydeploy.com/api
         registry:
             location: registry.speakeasyapi.dev/comfydeploy/comfydeploy/comfydeploy-api
 targets:

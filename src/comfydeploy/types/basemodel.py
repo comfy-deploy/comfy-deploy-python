@@ -2,7 +2,7 @@
 
 from pydantic import ConfigDict, model_serializer
 from pydantic import BaseModel as PydanticBaseModel
-from typing import Optional, TypeVar, Union, NewType
+from typing import Literal, Optional, TypeVar, Union, NewType
 from typing_extensions import TypeAliasType
 
 
@@ -16,6 +16,9 @@ class Unset(BaseModel):
     @model_serializer(mode="plain")
     def serialize_model(self):
         return UNSET_SENTINEL
+
+    def __bool__(self) -> Literal[False]:
+        return False
 
 
 UNSET = Unset()
