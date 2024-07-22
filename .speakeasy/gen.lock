@@ -3,10 +3,10 @@ id: 2c1d440e-25e4-46e2-a435-ebd1f72a7373
 management:
   docChecksum: 1c69bf2b9eaf6112b978c624ef0b2f5a
   docVersion: 0.0.1
-  speakeasyVersion: 1.344.2
-  generationVersion: 2.377.1
-  releaseVersion: 0.2.1
-  configChecksum: 250a5dbbabb026f61c1f1a50351766cf
+  speakeasyVersion: 1.345.1
+  generationVersion: 2.378.1
+  releaseVersion: 0.2.2
+  configChecksum: 223f18b50c3ff9e062fbe29c820614a4
   repoURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   installationURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   published: true
