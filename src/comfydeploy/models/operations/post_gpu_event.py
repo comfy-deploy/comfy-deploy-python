@@ -37,7 +37,8 @@ class PostGpuEventRequestBodyTypedDict(TypedDict):
     ws_gpu_type: NotRequired[Nullable[WsGpuType]]
     event_id: NotRequired[Nullable[str]]
     is_workspace: NotRequired[Nullable[bool]]
-    user_or_org_id: NotRequired[Nullable[str]]
+    user_id: NotRequired[Nullable[str]]
+    org_id: NotRequired[Nullable[str]]
     
 
 class PostGpuEventRequestBody(BaseModel):
@@ -49,12 +50,13 @@ class PostGpuEventRequestBody(BaseModel):
     ws_gpu_type: Annotated[OptionalNullable[WsGpuType], pydantic.Field(alias="wsGpuType")] = UNSET
     event_id: OptionalNullable[str] = UNSET
     is_workspace: OptionalNullable[bool] = UNSET
-    user_or_org_id: OptionalNullable[str] = UNSET
+    user_id: OptionalNullable[str] = UNSET
+    org_id: OptionalNullable[str] = UNSET
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["gpuType", "wsGpuType", "event_id", "is_workspace", "user_or_org_id"]
-        nullable_fields = ["gpuType", "wsGpuType", "event_id", "is_workspace", "user_or_org_id"]
+        optional_fields = ["gpuType", "wsGpuType", "event_id", "is_workspace", "user_id", "org_id"]
+        nullable_fields = ["gpuType", "wsGpuType", "event_id", "is_workspace", "user_id", "org_id"]
         null_default_fields = []
 
         serialized = handler(self)
