@@ -141,7 +141,6 @@ class GetRunResponseBodyTypedDict(TypedDict):
     workflow_version_id: Nullable[str]
     workflow_inputs: WorkflowInputsTypedDict
     workflow_id: Nullable[str]
-    workflow_api: GetRunWorkflowAPITypedDict
     machine_id: Nullable[str]
     origin: Origin
     status: Status
@@ -155,13 +154,14 @@ class GetRunResponseBodyTypedDict(TypedDict):
     modal_function_call_id: Nullable[str]
     user_id: Nullable[str]
     org_id: Nullable[str]
-    run_log: RunLogTypedDict
     live_status: Nullable[str]
     progress: float
     is_realtime: bool
     webhook: Nullable[str]
     webhook_status: Nullable[WebhookStatus]
     outputs: List[OutputsTypedDict]
+    workflow_api: NotRequired[GetRunWorkflowAPITypedDict]
+    run_log: NotRequired[RunLogTypedDict]
     
 
 class GetRunResponseBody(BaseModel):
@@ -171,7 +171,6 @@ class GetRunResponseBody(BaseModel):
     workflow_version_id: Nullable[str]
     workflow_inputs: WorkflowInputs
     workflow_id: Nullable[str]
-    workflow_api: GetRunWorkflowAPI
     machine_id: Nullable[str]
     origin: Origin
     status: Status
@@ -185,17 +184,18 @@ class GetRunResponseBody(BaseModel):
     modal_function_call_id: Nullable[str]
     user_id: Nullable[str]
     org_id: Nullable[str]
-    run_log: RunLog
     live_status: Nullable[str]
     progress: float
     is_realtime: bool
     webhook: Nullable[str]
     webhook_status: Nullable[WebhookStatus]
     outputs: List[Outputs]
+    workflow_api: Optional[GetRunWorkflowAPI] = None
+    run_log: Optional[RunLog] = None
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = []
+        optional_fields = ["workflow_api", "run_log"]
         nullable_fields = ["workflow_version_id", "workflow_id", "machine_id", "ended_at", "queued_at", "started_at", "gpu", "machine_version", "machine_type", "modal_function_call_id", "user_id", "org_id", "live_status", "webhook", "webhook_status"]
         null_default_fields = []
 
