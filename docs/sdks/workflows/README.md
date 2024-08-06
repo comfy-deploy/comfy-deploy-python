@@ -18,10 +18,9 @@ Get a websocket url for a specific deployment
 
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -59,10 +58,9 @@ Create an endpoint for a machine
 
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -100,10 +98,9 @@ Retrieve workflows based on optional query parameters
 
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -143,10 +140,9 @@ Create a new workflow by analyzing the provided workflow JSON
 
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -184,10 +180,9 @@ Retrieve the latest version of a specific workflow by its ID
 
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -225,10 +220,9 @@ Retrieve the latest version of a specific workflow by its ID
 
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 

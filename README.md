@@ -38,10 +38,9 @@ poetry add comfydeploy
 ```python
 # Synchronous Example
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -59,11 +58,10 @@ The same SDK client can also be used to make asychronous requests by importing a
 # Asynchronous Example
 import asyncio
 from comfydeploy import ComfyDeploy
-import os
 
 async def main():
     s = ComfyDeploy(
-        bearer_auth=os.getenv("BEARER_AUTH", ""),
+        bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
     )
     res = await s.run.get_async(run_id="<value>")
     if res.object is not None:
@@ -128,10 +126,9 @@ Handling errors in this SDK should largely match your expectations.  All operati
 ```python
 from comfydeploy import ComfyDeploy
 from comfydeploy.models import errors
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 res = None
@@ -170,11 +167,10 @@ You can override the default server globally by passing a server index to the `s
 
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
     server_idx=0,
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -192,11 +188,10 @@ if res.object is not None:
 The default server can also be overridden globally by passing a URL to the `server_url: str` optional parameter when initializing the SDK client instance. For example:
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
     server_url="https://www.comfydeploy.com/api",
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -301,13 +296,12 @@ This SDK supports the following security scheme globally:
 | ------------- | ------------- | ------------- |
 | `bearer_auth` | http          | HTTP Bearer   |
 
-To authenticate with the API the `bearer_auth` parameter must be set when initializing the SDK client instance. For example:
+To authenticate with the API the `null` parameter must be set when initializing the SDK client instance. For example:
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -329,10 +323,9 @@ To change the default retry strategy for a single API call, simply provide a `Re
 ```python
 from comfydeploy import ComfyDeploy
 from comfydeploy.utils import BackoffStrategy, RetryConfig
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -349,11 +342,10 @@ If you'd like to override the default retry strategy for all operations that sup
 ```python
 from comfydeploy import ComfyDeploy
 from comfydeploy.utils import BackoffStrategy, RetryConfig
-import os
 
 s = ComfyDeploy(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -365,6 +357,20 @@ if res.object is not None:
 
 ```
 <!-- End Retries [retries] -->
+
+<!-- Start Debugging [debug] -->
+## Debugging
+
+To emit debug logs for SDK requests and responses you can pass a logger object directly into your SDK object.
+
+```python
+from comfydeploy import ComfyDeploy
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+s = ComfyDeploy(debug_logger=logging.getLogger("comfydeploy"))
+```
+<!-- End Debugging [debug] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 

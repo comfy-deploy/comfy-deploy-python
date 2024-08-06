@@ -14,10 +14,9 @@ Call this to get a run's output, usually in conjunction with polling method
 
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -56,10 +55,9 @@ Run a workflow via deployment_id
 
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 

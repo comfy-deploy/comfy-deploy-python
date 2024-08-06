@@ -14,10 +14,9 @@ Usually when you run something, you want to upload a file, image etc.
 ```python
 from comfydeploy import ComfyDeploy
 from comfydeploy.models import operations
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 

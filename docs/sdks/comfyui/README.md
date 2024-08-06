@@ -18,10 +18,9 @@ This endpoints is specifically built for ComfyUI workflow upload.
 
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -59,10 +58,9 @@ This endpoints is specifically built for ComfyUI workflow upload.
 
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -100,10 +98,9 @@ Use this to retrieve comfyui workflow by id
 
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -141,10 +138,9 @@ Use this to retrieve comfyui workflow by id
 
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -182,10 +178,9 @@ Use this to retrieve comfyui workflow inputs definition by id
 
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -223,10 +218,9 @@ Get all deployed workflows
 
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
