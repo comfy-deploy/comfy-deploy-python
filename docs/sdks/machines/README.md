@@ -16,10 +16,9 @@ Register a machine event
 
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -57,10 +56,9 @@ Retrieve details of all machines for the authenticated user, with pagination and
 
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -100,10 +98,9 @@ Create a new machine with optional default setting
 
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -141,10 +138,9 @@ Retrieve details of a specific machine by its ID, with optional workspace detail
 
 ```python
 from comfydeploy import ComfyDeploy
-import os
 
 s = ComfyDeploy(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 

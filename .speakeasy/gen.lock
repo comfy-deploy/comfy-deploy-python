@@ -1,25 +1,25 @@
 lockVersion: 2.0.0
 id: 2c1d440e-25e4-46e2-a435-ebd1f72a7373
 management:
-  docChecksum: f6dd26bb762b4690f9848f1ad6510dff
+  docChecksum: 758b13f74fcbb24560b25f761d26fe35
   docVersion: 0.0.1
-  speakeasyVersion: 1.345.1
-  generationVersion: 2.378.1
-  releaseVersion: 0.2.3
-  configChecksum: 76c3a19501ee2de7335fa30b925a729c
+  speakeasyVersion: 1.352.2
+  generationVersion: 2.385.2
+  releaseVersion: 0.3.0
+  configChecksum: 5c8843f7c912eda2355cf16e3da81a7d
   repoURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   installationURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   published: true
 features:
   python:
     additionalDependencies: 1.0.0
-    constsAndDefaults: 1.0.0
-    core: 5.2.1
+    constsAndDefaults: 1.0.1
+    core: 5.3.3
     defaultEnabledRetries: 0.2.0
     devContainers: 3.0.0
-    envVarSecurityUsage: 0.2.0
+    envVarSecurityUsage: 0.3.1
     flattening: 3.0.0
-    globalSecurity: 3.0.0
+    globalSecurity: 3.0.1
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
     globalServerURLs: 3.0.0
@@ -38,9 +38,11 @@ generatedFiles:
   - src/comfydeploy/machines.py
   - src/comfydeploy/sdk.py
   - .vscode/settings.json
+  - poetry.toml
   - py.typed
   - pylintrc
   - pyproject.toml
+  - scripts/compile.sh
   - scripts/publish.sh
   - src/comfydeploy/__init__.py
   - src/comfydeploy/basesdk.py
@@ -54,6 +56,7 @@ generatedFiles:
   - src/comfydeploy/utils/eventstreaming.py
   - src/comfydeploy/utils/forms.py
   - src/comfydeploy/utils/headers.py
+  - src/comfydeploy/utils/logger.py
   - src/comfydeploy/utils/metadata.py
   - src/comfydeploy/utils/queryparams.py
   - src/comfydeploy/utils/requestbodies.py
