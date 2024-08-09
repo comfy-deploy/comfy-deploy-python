@@ -15,7 +15,7 @@ try:
             r"(\[[^\]]+\]\()((?!https?:)[^\)]+)(\))",
             lambda m: m.group(1)
             + GITHUB_URL
-            + "/blob/main/"
+            + "/blob/master/"
             + m.group(2)
             + m.group(3),
             readme_contents,
