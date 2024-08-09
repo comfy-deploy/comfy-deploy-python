@@ -84,14 +84,9 @@ asyncio.run(main())
 
 * [get_upload_url](docs/sdks/files/README.md#get_upload_url) - Upload any files to the storage
 
-### [workflows](docs/sdks/workflows/README.md)
+### [websocket](docs/sdks/websocket/README.md)
 
-* [get_websocket_deployment_id_](docs/sdks/workflows/README.md#get_websocket_deployment_id_) - Get a websocket url for a specific deployment
-* [post_machine_endpoint](docs/sdks/workflows/README.md#post_machine_endpoint) - Create an endpoint for a machine
-* [get_v1_workflows](docs/sdks/workflows/README.md#get_v1_workflows) - Retrieve workflows
-* [post_v1_workflows](docs/sdks/workflows/README.md#post_v1_workflows) - Create a new workflow
-* [get_v1_workflows_workflow_id_](docs/sdks/workflows/README.md#get_v1_workflows_workflow_id_) - Retrieve a specific workflow by ID
-* [get_v1_workflows_workflow_id_outputs](docs/sdks/workflows/README.md#get_v1_workflows_workflow_id_outputs) - Retrieve the most recent outputs for a workflow
+* [get](docs/sdks/websocket/README.md#get) - Get a websocket url for a specific deployment
 
 ### [comfyui](docs/sdks/comfyui/README.md)
 
@@ -99,8 +94,19 @@ asyncio.run(main())
 * [post_workflow](docs/sdks/comfyui/README.md#post_workflow) - Upload workflow from ComfyUI
 * [get_workflow_version_version_id_](docs/sdks/comfyui/README.md#get_workflow_version_version_id_) - Get comfyui workflow
 * [get_workflow_id_](docs/sdks/comfyui/README.md#get_workflow_id_) - Get comfyui workflow
-* [get_deployment_id_inputs](docs/sdks/comfyui/README.md#get_deployment_id_inputs) - Get comfyui workflow inputs definition
-* [get_deployment](docs/sdks/comfyui/README.md#get_deployment) - Get all deployed workflows
+
+### [workflows](docs/sdks/workflows/README.md)
+
+* [post_machine_endpoint](docs/sdks/workflows/README.md#post_machine_endpoint) - Create an endpoint for a machine
+* [get_all](docs/sdks/workflows/README.md#get_all) - Retrieve workflows
+* [create](docs/sdks/workflows/README.md#create) - Create a new workflow
+* [get](docs/sdks/workflows/README.md#get) - Retrieve a specific workflow by ID
+* [get_outputs](docs/sdks/workflows/README.md#get_outputs) - Retrieve the most recent outputs for a workflow
+
+### [deployment](docs/sdks/deployment/README.md)
+
+* [get_input_definition](docs/sdks/deployment/README.md#get_input_definition) - Get comfyui workflow inputs definition
+* [get](docs/sdks/deployment/README.md#get) - Get all deployed workflows
 
 ### [machines](docs/sdks/machines/README.md)
 
@@ -296,7 +302,7 @@ This SDK supports the following security scheme globally:
 | ------------- | ------------- | ------------- |
 | `bearer_auth` | http          | HTTP Bearer   |
 
-To authenticate with the API the `null` parameter must be set when initializing the SDK client instance. For example:
+To authenticate with the API the `bearer_auth` parameter must be set when initializing the SDK client instance. For example:
 ```python
 from comfydeploy import ComfyDeploy
 
@@ -371,6 +377,16 @@ logging.basicConfig(level=logging.DEBUG)
 s = ComfyDeploy(debug_logger=logging.getLogger("comfydeploy"))
 ```
 <!-- End Debugging [debug] -->
+
+<!-- Start IDE Support [idesupport] -->
+## IDE Support
+
+### PyCharm
+
+Generally, the SDK will work well with most IDEs out of the box. However, when using PyCharm, you can enjoy much better integration with Pydantic by installing an additional plugin.
+
+- [PyCharm Pydantic Plugin](https://docs.pydantic.dev/latest/integrations/pycharm/)
+<!-- End IDE Support [idesupport] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 

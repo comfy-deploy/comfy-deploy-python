@@ -76,7 +76,7 @@ def retry(func, retries: Retries):
 
                         status_major = res.status_code / 100
 
-                        if status_major >= code_range and status_major < code_range + 1:
+                        if code_range <= status_major < code_range + 1:
                             raise TemporaryError(res)
                     else:
                         parsed_code = int(code)
@@ -125,7 +125,7 @@ async def retry_async(func, retries: Retries):
 
                         status_major = res.status_code / 100
 
-                        if status_major >= code_range and status_major < code_range + 1:
+                        if code_range <= status_major < code_range + 1:
                             raise TemporaryError(res)
                     else:
                         parsed_code = int(code)

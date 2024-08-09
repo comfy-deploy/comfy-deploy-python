@@ -5,14 +5,16 @@ from .httpclient import AsyncHttpClient, HttpClient
 from .sdkconfiguration import SDKConfiguration
 from .utils.logger import Logger, NoOpLogger
 from .utils.retries import RetryConfig
+from comfydeploy import utils
 from comfydeploy._hooks import SDKHooks
 from comfydeploy.comfyui import Comfyui
+from comfydeploy.deployment import Deployment
 from comfydeploy.files import Files
 from comfydeploy.machines import Machines
 from comfydeploy.models import components
 from comfydeploy.run import Run
 from comfydeploy.types import OptionalNullable, UNSET
-import comfydeploy.utils as utils
+from comfydeploy.websocket import Websocket
 from comfydeploy.workflows import Workflows
 import httpx
 from typing import Any, Callable, Dict, Optional, Union
@@ -21,8 +23,10 @@ class ComfyDeploy(BaseSDK):
     r"""Comfy Deploy API: Interact with Comfy Deploy programmatically to trigger run and retrieve output"""
     run: Run
     files: Files
-    workflows: Workflows
+    websocket: Websocket
     comfyui: Comfyui
+    workflows: Workflows
+    deployment: Deployment
     machines: Machines
     def __init__(
         self,
@@ -102,7 +106,9 @@ class ComfyDeploy(BaseSDK):
     def _init_sdks(self):
         self.run = Run(self.sdk_configuration)
         self.files = Files(self.sdk_configuration)
-        self.workflows = Workflows(self.sdk_configuration)
+        self.websocket = Websocket(self.sdk_configuration)
         self.comfyui = Comfyui(self.sdk_configuration)
+        self.workflows = Workflows(self.sdk_configuration)
+        self.deployment = Deployment(self.sdk_configuration)
         self.machines = Machines(self.sdk_configuration)
     

@@ -7,23 +7,19 @@ from comfydeploy.models import components, errors, operations
 from comfydeploy.types import OptionalNullable, UNSET
 from typing import Any, Optional
 
-class Files(BaseSDK):
+class Websocket(BaseSDK):
     
     
-    def get_upload_url(
+    def get(
         self, *,
-        type_: operations.Type,
-        file_size: str,
+        deployment_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> operations.GetUploadURLResponse:
-        r"""Upload any files to the storage
+    ) -> operations.GetWebsocketDeploymentIDResponse:
+        r"""Get a websocket url for a specific deployment
 
-        Usually when you run something, you want to upload a file, image etc.
-
-        :param type: 
-        :param file_size: 
+        :param deployment_id: 
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -36,19 +32,18 @@ class Files(BaseSDK):
         if server_url is not None:
             base_url = server_url
         
-        request = operations.GetUploadURLRequest(
-            type=type_,
-            file_size=file_size,
+        request = operations.GetWebsocketDeploymentIDRequest(
+            deployment_id=deployment_id,
         )
         
         req = self.build_request(
             method="GET",
-            path="/upload-url",
+            path="/websocket/{deployment_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
             request_body_required=False,
-            request_has_path_params=False,
+            request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
@@ -71,7 +66,7 @@ class Files(BaseSDK):
             ])                
         
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="get_/upload-url", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(operation_id="get_/websocket/{deployment_id}", oauth2_scopes=[], security_source=self.sdk_configuration.security),
             request=req,
             error_status_codes=["401","4XX","500","5XX"],
             retry_config=retry_config
@@ -79,33 +74,29 @@ class Files(BaseSDK):
         
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return operations.GetUploadURLResponse(object=utils.unmarshal_json(http_res.text, Optional[operations.GetUploadURLResponseBody]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+            return operations.GetWebsocketDeploymentIDResponse(object=utils.unmarshal_json(http_res.text, Optional[operations.GetWebsocketDeploymentIDResponseBody]), http_meta=components.HTTPMetadata(request=req, response=http_res))
         if utils.match_response(http_res, ["401","4XX","5XX"], "*"):
             raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
         if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.GetUploadURLResponseBodyData)
+            data = utils.unmarshal_json(http_res.text, errors.GetWebsocketDeploymentIDResponseBodyData)
             data.http_meta = components.HTTPMetadata(request=req, response=http_res)
-            raise errors.GetUploadURLResponseBody(data=data)
+            raise errors.GetWebsocketDeploymentIDResponseBody(data=data)
         
         content_type = http_res.headers.get("Content-Type")
         raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
 
     
     
-    async def get_upload_url_async(
+    async def get_async(
         self, *,
-        type_: operations.Type,
-        file_size: str,
+        deployment_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> operations.GetUploadURLResponse:
-        r"""Upload any files to the storage
+    ) -> operations.GetWebsocketDeploymentIDResponse:
+        r"""Get a websocket url for a specific deployment
 
-        Usually when you run something, you want to upload a file, image etc.
-
-        :param type: 
-        :param file_size: 
+        :param deployment_id: 
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -118,19 +109,18 @@ class Files(BaseSDK):
         if server_url is not None:
             base_url = server_url
         
-        request = operations.GetUploadURLRequest(
-            type=type_,
-            file_size=file_size,
+        request = operations.GetWebsocketDeploymentIDRequest(
+            deployment_id=deployment_id,
         )
         
         req = self.build_request(
             method="GET",
-            path="/upload-url",
+            path="/websocket/{deployment_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
             request_body_required=False,
-            request_has_path_params=False,
+            request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
@@ -153,7 +143,7 @@ class Files(BaseSDK):
             ])                
         
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="get_/upload-url", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(operation_id="get_/websocket/{deployment_id}", oauth2_scopes=[], security_source=self.sdk_configuration.security),
             request=req,
             error_status_codes=["401","4XX","500","5XX"],
             retry_config=retry_config
@@ -161,13 +151,13 @@ class Files(BaseSDK):
         
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return operations.GetUploadURLResponse(object=utils.unmarshal_json(http_res.text, Optional[operations.GetUploadURLResponseBody]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+            return operations.GetWebsocketDeploymentIDResponse(object=utils.unmarshal_json(http_res.text, Optional[operations.GetWebsocketDeploymentIDResponseBody]), http_meta=components.HTTPMetadata(request=req, response=http_res))
         if utils.match_response(http_res, ["401","4XX","5XX"], "*"):
             raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
         if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.GetUploadURLResponseBodyData)
+            data = utils.unmarshal_json(http_res.text, errors.GetWebsocketDeploymentIDResponseBodyData)
             data.http_meta = components.HTTPMetadata(request=req, response=http_res)
-            raise errors.GetUploadURLResponseBody(data=data)
+            raise errors.GetWebsocketDeploymentIDResponseBody(data=data)
         
         content_type = http_res.headers.get("Content-Type")
         raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)

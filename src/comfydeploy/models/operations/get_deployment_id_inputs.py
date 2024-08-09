@@ -21,16 +21,16 @@ class ResponseBodyTypedDict(TypedDict):
     class_type: str
     input_id: str
     default_value: str
-    min_value: float
-    max_value: float
+    min_value: NotRequired[float]
+    max_value: NotRequired[float]
     
 
 class ResponseBody(BaseModel):
     class_type: str
     input_id: str
     default_value: str
-    min_value: float
-    max_value: float
+    min_value: Optional[float] = None
+    max_value: Optional[float] = None
     
 
 class GetDeploymentIDInputsResponseTypedDict(TypedDict):

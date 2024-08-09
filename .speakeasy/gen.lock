@@ -1,25 +1,25 @@
 lockVersion: 2.0.0
 id: 2c1d440e-25e4-46e2-a435-ebd1f72a7373
 management:
-  docChecksum: 758b13f74fcbb24560b25f761d26fe35
+  docChecksum: 952904e7571e8f42d16c273c713eb53f
   docVersion: 0.0.1
-  speakeasyVersion: 1.352.2
-  generationVersion: 2.385.2
-  releaseVersion: 0.3.0
-  configChecksum: 5c8843f7c912eda2355cf16e3da81a7d
+  speakeasyVersion: 1.360.0
+  generationVersion: 2.392.0
+  releaseVersion: 0.3.1
+  configChecksum: 497c27017354df7c500d6da34d9f9960
   repoURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   installationURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   published: true
 features:
   python:
     additionalDependencies: 1.0.0
-    constsAndDefaults: 1.0.1
-    core: 5.3.3
+    constsAndDefaults: 1.0.2
+    core: 5.3.7
     defaultEnabledRetries: 0.2.0
     devContainers: 3.0.0
     envVarSecurityUsage: 0.3.1
     flattening: 3.0.0
-    globalSecurity: 3.0.1
+    globalSecurity: 3.0.2
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
     globalServerURLs: 3.0.0
@@ -33,8 +33,10 @@ generatedFiles:
   - src/comfydeploy/sdkconfiguration.py
   - src/comfydeploy/run.py
   - src/comfydeploy/files.py
-  - src/comfydeploy/workflows.py
+  - src/comfydeploy/websocket.py
   - src/comfydeploy/comfyui.py
+  - src/comfydeploy/workflows.py
+  - src/comfydeploy/deployment.py
   - src/comfydeploy/machines.py
   - src/comfydeploy/sdk.py
   - .vscode/settings.json
@@ -43,6 +45,7 @@ generatedFiles:
   - pylintrc
   - pyproject.toml
   - scripts/compile.sh
+  - scripts/prepare-readme.py
   - scripts/publish.sh
   - src/comfydeploy/__init__.py
   - src/comfydeploy/basesdk.py
@@ -70,15 +73,15 @@ generatedFiles:
   - src/comfydeploy/models/operations/post_run.py
   - src/comfydeploy/models/operations/get_upload_url.py
   - src/comfydeploy/models/operations/get_websocket_deployment_id_.py
+  - src/comfydeploy/models/operations/get_auth_response_request_id_.py
+  - src/comfydeploy/models/operations/post_workflow.py
+  - src/comfydeploy/models/operations/get_workflow_version_version_id_.py
+  - src/comfydeploy/models/operations/get_workflow_id_.py
   - src/comfydeploy/models/operations/post_machine_endpoint.py
   - src/comfydeploy/models/operations/get_v1_workflows.py
   - src/comfydeploy/models/operations/post_v1_workflows.py
   - src/comfydeploy/models/operations/get_v1_workflows_workflow_id_.py
   - src/comfydeploy/models/operations/get_v1_workflows_workflow_id_outputs.py
-  - src/comfydeploy/models/operations/get_auth_response_request_id_.py
-  - src/comfydeploy/models/operations/post_workflow.py
-  - src/comfydeploy/models/operations/get_workflow_version_version_id_.py
-  - src/comfydeploy/models/operations/get_workflow_id_.py
   - src/comfydeploy/models/operations/get_deployment_id_inputs.py
   - src/comfydeploy/models/operations/get_deployment.py
   - src/comfydeploy/models/operations/post_gpu_event.py
@@ -93,15 +96,15 @@ generatedFiles:
   - src/comfydeploy/models/errors/post_run.py
   - src/comfydeploy/models/errors/get_upload_url.py
   - src/comfydeploy/models/errors/get_websocket_deployment_id_.py
+  - src/comfydeploy/models/errors/get_auth_response_request_id_.py
+  - src/comfydeploy/models/errors/post_workflow.py
+  - src/comfydeploy/models/errors/get_workflow_version_version_id_.py
+  - src/comfydeploy/models/errors/get_workflow_id_.py
   - src/comfydeploy/models/errors/post_machine_endpoint.py
   - src/comfydeploy/models/errors/get_v1_workflows.py
   - src/comfydeploy/models/errors/post_v1_workflows.py
   - src/comfydeploy/models/errors/get_v1_workflows_workflow_id_.py
   - src/comfydeploy/models/errors/get_v1_workflows_workflow_id_outputs.py
-  - src/comfydeploy/models/errors/get_auth_response_request_id_.py
-  - src/comfydeploy/models/errors/post_workflow.py
-  - src/comfydeploy/models/errors/get_workflow_version_version_id_.py
-  - src/comfydeploy/models/errors/get_workflow_id_.py
   - src/comfydeploy/models/errors/get_deployment_id_inputs.py
   - src/comfydeploy/models/errors/get_deployment.py
   - src/comfydeploy/models/errors/post_gpu_event.py
@@ -138,27 +141,6 @@ generatedFiles:
   - docs/models/operations/getwebsocketdeploymentidrequest.md
   - docs/models/operations/getwebsocketdeploymentidresponsebody.md
   - docs/models/operations/getwebsocketdeploymentidresponse.md
-  - docs/models/operations/postmachineendpointrequestbody.md
-  - docs/models/operations/postmachineendpointresponsebody.md
-  - docs/models/operations/postmachineendpointresponse.md
-  - docs/models/operations/getv1workflowsrequest.md
-  - docs/models/operations/user.md
-  - docs/models/operations/versions.md
-  - docs/models/operations/getv1workflowsresponsebody.md
-  - docs/models/operations/getv1workflowsresponse.md
-  - docs/models/operations/workflowjson.md
-  - docs/models/operations/postv1workflowsrequestbody.md
-  - docs/models/operations/postv1workflowsresponsebody.md
-  - docs/models/operations/postv1workflowsresponse.md
-  - docs/models/operations/getv1workflowsworkflowidrequest.md
-  - docs/models/operations/getv1workflowsworkflowidversions.md
-  - docs/models/operations/getv1workflowsworkflowidresponsebody.md
-  - docs/models/operations/getv1workflowsworkflowidresponse.md
-  - docs/models/operations/queryparamrunorigin.md
-  - docs/models/operations/getv1workflowsworkflowidoutputsrequest.md
-  - docs/models/operations/getv1workflowsworkflowidoutputsoutputs.md
-  - docs/models/operations/getv1workflowsworkflowidoutputsresponsebody.md
-  - docs/models/operations/getv1workflowsworkflowidoutputsresponse.md
   - docs/models/operations/getauthresponserequestidrequest.md
   - docs/models/operations/getauthresponserequestidcomfyuiresponsebody.md
   - docs/models/operations/getauthresponserequestidresponsebody.md
@@ -190,6 +172,27 @@ generatedFiles:
   - docs/models/operations/getworkflowiddependencies.md
   - docs/models/operations/getworkflowidresponsebody.md
   - docs/models/operations/getworkflowidresponse.md
+  - docs/models/operations/postmachineendpointrequestbody.md
+  - docs/models/operations/postmachineendpointresponsebody.md
+  - docs/models/operations/postmachineendpointresponse.md
+  - docs/models/operations/getv1workflowsrequest.md
+  - docs/models/operations/user.md
+  - docs/models/operations/versions.md
+  - docs/models/operations/getv1workflowsresponsebody.md
+  - docs/models/operations/getv1workflowsresponse.md
+  - docs/models/operations/workflowjson.md
+  - docs/models/operations/postv1workflowsrequestbody.md
+  - docs/models/operations/postv1workflowsresponsebody.md
+  - docs/models/operations/postv1workflowsresponse.md
+  - docs/models/operations/getv1workflowsworkflowidrequest.md
+  - docs/models/operations/getv1workflowsworkflowidversions.md
+  - docs/models/operations/getv1workflowsworkflowidresponsebody.md
+  - docs/models/operations/getv1workflowsworkflowidresponse.md
+  - docs/models/operations/queryparamrunorigin.md
+  - docs/models/operations/getv1workflowsworkflowidoutputsrequest.md
+  - docs/models/operations/getv1workflowsworkflowidoutputsoutputs.md
+  - docs/models/operations/getv1workflowsworkflowidoutputsresponsebody.md
+  - docs/models/operations/getv1workflowsworkflowidoutputsresponse.md
   - docs/models/operations/getdeploymentidinputsrequest.md
   - docs/models/operations/responsebody.md
   - docs/models/operations/getdeploymentidinputsresponse.md
@@ -225,15 +228,15 @@ generatedFiles:
   - docs/models/errors/postrunresponsebody.md
   - docs/models/errors/getuploadurlresponsebody.md
   - docs/models/errors/getwebsocketdeploymentidresponsebody.md
+  - docs/models/errors/getauthresponserequestidresponsebody.md
+  - docs/models/errors/postworkflowresponsebody.md
+  - docs/models/errors/getworkflowversionversionidresponsebody.md
+  - docs/models/errors/getworkflowidresponsebody.md
   - docs/models/errors/postmachineendpointresponsebody.md
   - docs/models/errors/getv1workflowsresponsebody.md
   - docs/models/errors/postv1workflowsresponsebody.md
   - docs/models/errors/getv1workflowsworkflowidresponsebody.md
   - docs/models/errors/getv1workflowsworkflowidoutputsresponsebody.md
-  - docs/models/errors/getauthresponserequestidresponsebody.md
-  - docs/models/errors/postworkflowresponsebody.md
-  - docs/models/errors/getworkflowversionversionidresponsebody.md
-  - docs/models/errors/getworkflowidresponsebody.md
   - docs/models/errors/getdeploymentidinputsresponsebody.md
   - docs/models/errors/getdeploymentresponsebody.md
   - docs/models/errors/postgpueventresponsebody.md
@@ -244,8 +247,10 @@ generatedFiles:
   - docs/models/utils/retryconfig.md
   - docs/sdks/run/README.md
   - docs/sdks/files/README.md
-  - docs/sdks/workflows/README.md
+  - docs/sdks/websocket/README.md
   - docs/sdks/comfyui/README.md
+  - docs/sdks/workflows/README.md
+  - docs/sdks/deployment/README.md
   - docs/sdks/machines/README.md
   - USAGE.md
   - .gitattributes
