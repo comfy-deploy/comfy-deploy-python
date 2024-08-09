@@ -5,8 +5,8 @@ management:
   docVersion: 0.0.1
   speakeasyVersion: 1.360.0
   generationVersion: 2.392.0
-  releaseVersion: 0.3.1
-  configChecksum: 497c27017354df7c500d6da34d9f9960
+  releaseVersion: 0.3.2
+  configChecksum: 5001ab47ebd5f39dc5d648c4c61b5086
   repoURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   installationURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   published: true
