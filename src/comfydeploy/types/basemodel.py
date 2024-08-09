@@ -2,8 +2,8 @@
 
 from pydantic import ConfigDict, model_serializer
 from pydantic import BaseModel as PydanticBaseModel
-from typing import Literal, Optional, TypeVar, Union, NewType
-from typing_extensions import TypeAliasType
+from typing import TYPE_CHECKING, Literal, Optional, TypeVar, Union, NewType
+from typing_extensions import TypeAliasType, TypeAlias
 
 
 class BaseModel(PydanticBaseModel):
@@ -26,10 +26,14 @@ UNSET_SENTINEL = "~?~unset~?~sentinel~?~"
 
 
 T = TypeVar("T")
-Nullable = TypeAliasType("Nullable", Union[T, None], type_params=(T,))
-OptionalNullable = TypeAliasType(
-    "OptionalNullable", Union[Optional[Nullable[T]], Unset], type_params=(T,)
-)
+if TYPE_CHECKING:
+    Nullable: TypeAlias = Union[T, None]
+    OptionalNullable: TypeAlias = Union[Optional[Nullable[T]], Unset]
+else:
+    Nullable = TypeAliasType("Nullable", Union[T, None], type_params=(T,))
+    OptionalNullable = TypeAliasType(
+        "OptionalNullable", Union[Optional[Nullable[T]], Unset], type_params=(T,)
+    )
 
 UnrecognizedInt = NewType("UnrecognizedInt", int)
 UnrecognizedStr = NewType("UnrecognizedStr", str)
