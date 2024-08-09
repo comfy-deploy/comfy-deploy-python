@@ -3,52 +3,11 @@
 
 ### Available Operations
 
-* [get_websocket_deployment_id_](#get_websocket_deployment_id_) - Get a websocket url for a specific deployment
 * [post_machine_endpoint](#post_machine_endpoint) - Create an endpoint for a machine
-* [get_v1_workflows](#get_v1_workflows) - Retrieve workflows
-* [post_v1_workflows](#post_v1_workflows) - Create a new workflow
-* [get_v1_workflows_workflow_id_](#get_v1_workflows_workflow_id_) - Retrieve a specific workflow by ID
-* [get_v1_workflows_workflow_id_outputs](#get_v1_workflows_workflow_id_outputs) - Retrieve the most recent outputs for a workflow
-
-## get_websocket_deployment_id_
-
-Get a websocket url for a specific deployment
-
-### Example Usage
-
-```python
-from comfydeploy import ComfyDeploy
-
-s = ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
-
-
-res = s.workflows.get_websocket_deployment_id_(deployment_id="<value>")
-
-if res.object is not None:
-    # handle response
-    pass
-
-```
-
-### Parameters
-
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `deployment_id`                                                     | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
-
-
-### Response
-
-**[operations.GetWebsocketDeploymentIDResponse](../../models/operations/getwebsocketdeploymentidresponse.md)**
-### Errors
-
-| Error Object                                | Status Code                                 | Content Type                                |
-| ------------------------------------------- | ------------------------------------------- | ------------------------------------------- |
-| errors.GetWebsocketDeploymentIDResponseBody | 500                                         | application/json                            |
-| errors.SDKError                             | 4xx-5xx                                     | */*                                         |
+* [get_all](#get_all) - Retrieve workflows
+* [create](#create) - Create a new workflow
+* [get](#get) - Retrieve a specific workflow by ID
+* [get_outputs](#get_outputs) - Retrieve the most recent outputs for a workflow
 
 ## post_machine_endpoint
 
@@ -90,7 +49,7 @@ if res.object is not None:
 | errors.PostMachineEndpointResponseBody | 500                                    | application/json                       |
 | errors.SDKError                        | 4xx-5xx                                | */*                                    |
 
-## get_v1_workflows
+## get_all
 
 Retrieve workflows based on optional query parameters
 
@@ -104,7 +63,7 @@ s = ComfyDeploy(
 )
 
 
-res = s.workflows.get_v1_workflows()
+res = s.workflows.get_all()
 
 if res.response_bodies is not None:
     # handle response
@@ -132,7 +91,7 @@ if res.response_bodies is not None:
 | errors.GetV1WorkflowsResponseBody | 400                               | application/json                  |
 | errors.SDKError                   | 4xx-5xx                           | */*                               |
 
-## post_v1_workflows
+## create
 
 Create a new workflow by analyzing the provided workflow JSON
 
@@ -146,7 +105,7 @@ s = ComfyDeploy(
 )
 
 
-res = s.workflows.post_v1_workflows()
+res = s.workflows.create()
 
 if res.object is not None:
     # handle response
@@ -172,7 +131,7 @@ if res.object is not None:
 | errors.PostV1WorkflowsResponseBody | 400                                | application/json                   |
 | errors.SDKError                    | 4xx-5xx                            | */*                                |
 
-## get_v1_workflows_workflow_id_
+## get
 
 Retrieve the latest version of a specific workflow by its ID
 
@@ -186,7 +145,7 @@ s = ComfyDeploy(
 )
 
 
-res = s.workflows.get_v1_workflows_workflow_id_(workflow_id="<value>")
+res = s.workflows.get(workflow_id="<value>")
 
 if res.object is not None:
     # handle response
@@ -212,7 +171,7 @@ if res.object is not None:
 | errors.GetV1WorkflowsWorkflowIDResponseBody | 400                                         | application/json                            |
 | errors.SDKError                             | 4xx-5xx                                     | */*                                         |
 
-## get_v1_workflows_workflow_id_outputs
+## get_outputs
 
 Retrieve the latest version of a specific workflow by its ID
 
@@ -226,7 +185,7 @@ s = ComfyDeploy(
 )
 
 
-res = s.workflows.get_v1_workflows_workflow_id_outputs(request={
+res = s.workflows.get_outputs(request={
     "workflow_id": "<value>",
 })
 

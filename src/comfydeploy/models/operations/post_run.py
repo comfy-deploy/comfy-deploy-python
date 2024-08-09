@@ -24,6 +24,12 @@ class RunOrigin(str, Enum):
     PUBLIC_TEMPLATE = "public-template"
     WORKSPACE = "workspace"
 
+InputsTypedDict = Union[str, float]
+
+
+Inputs = Union[str, float]
+
+
 class PostRunRequestBodyTypedDict(TypedDict):
     r"""Run options"""
     
@@ -47,6 +53,8 @@ class PostRunRequestBodyTypedDict(TypedDict):
     r"""External inputs to the workflow in JSON format"""
     webhook: NotRequired[str]
     r"""Webhook URL to receive workflow updates"""
+    webhook_intermediate_status: NotRequired[bool]
+    r"""Whether to send webhook on intermediate status"""
     stream: NotRequired[bool]
     r"""Whether to return a streaming url"""
     batch_number: NotRequired[float]
@@ -76,6 +84,8 @@ class PostRunRequestBody(BaseModel):
     r"""External inputs to the workflow in JSON format"""
     webhook: Optional[str] = None
     r"""Webhook URL to receive workflow updates"""
+    webhook_intermediate_status: Optional[bool] = None
+    r"""Whether to send webhook on intermediate status"""
     stream: Optional[bool] = None
     r"""Whether to return a streaming url"""
     batch_number: Optional[float] = 1
@@ -83,7 +93,7 @@ class PostRunRequestBody(BaseModel):
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["deployment_id", "workflow_api", "workflow_api_json", "workflow_id", "machine_id", "gpu", "concurrency_limit", "private_volume_name", "timeout", "run_origin", "inputs", "inputs_json", "webhook", "stream", "batch_number"]
+        optional_fields = ["deployment_id", "workflow_api", "workflow_api_json", "workflow_id", "machine_id", "gpu", "concurrency_limit", "private_volume_name", "timeout", "run_origin", "inputs", "inputs_json", "webhook", "webhook_intermediate_status", "stream", "batch_number"]
         nullable_fields = ["workflow_api"]
         null_default_fields = []
 
@@ -95,18 +105,13 @@ class PostRunRequestBody(BaseModel):
             k = f.alias or n
             val = serialized.get(k)
 
+            optional_nullable = k in optional_fields and k in nullable_fields
+            is_set = (self.__pydantic_fields_set__.intersection({n}) or k in null_default_fields) # pylint: disable=no-member
+
             if val is not None and val != UNSET_SENTINEL:
                 m[k] = val
             elif val != UNSET_SENTINEL and (
-                not k in optional_fields
-                or (
-                    k in optional_fields
-                    and k in nullable_fields
-                    and (
-                        self.__pydantic_fields_set__.intersection({n})
-                        or k in null_default_fields
-                    )  # pylint: disable=no-member
-                )
+                not k in optional_fields or (optional_nullable and is_set)
             ):
                 m[k] = val
 
@@ -136,9 +141,3 @@ class PostRunResponse(BaseModel):
     object: Optional[PostRunResponseBody] = None
     r"""Workflow queued"""
     
-
-InputsTypedDict = Union[str, float]
-
-
-Inputs = Union[str, float]
-
