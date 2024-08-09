@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from comfydeploy.models.components import httpmetadata as components_httpmetadata
-from comfydeploy.types import BaseModel, Nullable, UNSET_SENTINEL
+from comfydeploy.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from comfydeploy.utils import FieldMetadata, QueryParamMetadata
 from enum import Enum
 import pydantic
@@ -161,9 +161,10 @@ class GetRunResponseBodyTypedDict(TypedDict):
     is_realtime: bool
     webhook: Nullable[str]
     webhook_status: Nullable[WebhookStatus]
-    outputs: List[OutputsTypedDict]
+    webhook_intermediate_status: bool
     workflow_api: NotRequired[GetRunWorkflowAPITypedDict]
     run_log: NotRequired[RunLogTypedDict]
+    outputs: NotRequired[Nullable[List[OutputsTypedDict]]]
     
 
 class GetRunResponseBody(BaseModel):
@@ -193,14 +194,15 @@ class GetRunResponseBody(BaseModel):
     is_realtime: bool
     webhook: Nullable[str]
     webhook_status: Nullable[WebhookStatus]
-    outputs: List[Outputs]
+    webhook_intermediate_status: bool
     workflow_api: Optional[GetRunWorkflowAPI] = None
     run_log: Optional[RunLog] = None
+    outputs: OptionalNullable[List[Outputs]] = UNSET
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["workflow_api", "run_log"]
-        nullable_fields = ["workflow_version_id", "workflow_id", "machine_id", "ended_at", "queued_at", "started_at", "gpu_event_id", "gpu", "machine_version", "machine_type", "modal_function_call_id", "user_id", "org_id", "live_status", "webhook", "webhook_status"]
+        optional_fields = ["workflow_api", "run_log", "outputs"]
+        nullable_fields = ["workflow_version_id", "workflow_id", "machine_id", "ended_at", "queued_at", "started_at", "gpu_event_id", "gpu", "machine_version", "machine_type", "modal_function_call_id", "user_id", "org_id", "live_status", "webhook", "webhook_status", "outputs"]
         null_default_fields = []
 
         serialized = handler(self)
@@ -211,18 +213,13 @@ class GetRunResponseBody(BaseModel):
             k = f.alias or n
             val = serialized.get(k)
 
+            optional_nullable = k in optional_fields and k in nullable_fields
+            is_set = (self.__pydantic_fields_set__.intersection({n}) or k in null_default_fields) # pylint: disable=no-member
+
             if val is not None and val != UNSET_SENTINEL:
                 m[k] = val
             elif val != UNSET_SENTINEL and (
-                not k in optional_fields
-                or (
-                    k in optional_fields
-                    and k in nullable_fields
-                    and (
-                        self.__pydantic_fields_set__.intersection({n})
-                        or k in null_default_fields
-                    )  # pylint: disable=no-member
-                )
+                not k in optional_fields or (optional_nullable and is_set)
             ):
                 m[k] = val
 
