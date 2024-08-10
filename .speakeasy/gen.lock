@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2c1d440e-25e4-46e2-a435-ebd1f72a7373
 management:
-  docChecksum: 952904e7571e8f42d16c273c713eb53f
+  docChecksum: 806f001742c34dc266b6e299e9f4af8b
   docVersion: 0.0.1
   speakeasyVersion: 1.360.0
   generationVersion: 2.392.0
-  releaseVersion: 0.3.3
-  configChecksum: d21370c6c4de72c4143fd9d0815a2048
+  releaseVersion: 0.3.4
+  configChecksum: 9d30e2a82114b688359e7b8fe55bb1a4
   repoURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   installationURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   published: true
@@ -194,6 +194,7 @@ generatedFiles:
   - docs/models/operations/getv1workflowsworkflowidoutputsresponsebody.md
   - docs/models/operations/getv1workflowsworkflowidoutputsresponse.md
   - docs/models/operations/getdeploymentidinputsrequest.md
+  - docs/models/operations/defaultvalue.md
   - docs/models/operations/responsebody.md
   - docs/models/operations/getdeploymentidinputsresponse.md
   - docs/models/operations/environment.md
