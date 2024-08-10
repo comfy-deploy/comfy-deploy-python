@@ -5,7 +5,7 @@ from comfydeploy.models.components import httpmetadata as components_httpmetadat
 from comfydeploy.types import BaseModel
 from comfydeploy.utils import FieldMetadata, PathParamMetadata
 import pydantic
-from typing import List, Optional, TypedDict
+from typing import List, Optional, TypedDict, Union
 from typing_extensions import Annotated, NotRequired
 
 
@@ -17,10 +17,16 @@ class GetDeploymentIDInputsRequest(BaseModel):
     id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
     
 
+DefaultValueTypedDict = Union[str, float]
+
+
+DefaultValue = Union[str, float]
+
+
 class ResponseBodyTypedDict(TypedDict):
     class_type: str
     input_id: str
-    default_value: str
+    default_value: DefaultValueTypedDict
     min_value: NotRequired[float]
     max_value: NotRequired[float]
     
@@ -28,7 +34,7 @@ class ResponseBodyTypedDict(TypedDict):
 class ResponseBody(BaseModel):
     class_type: str
     input_id: str
-    default_value: str
+    default_value: DefaultValue
     min_value: Optional[float] = None
     max_value: Optional[float] = None
     
