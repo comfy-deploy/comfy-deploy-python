@@ -1,5 +1,5 @@
 workflowVersion: 1.0.0
-speakeasyVersion: 1.360.0
+speakeasyVersion: 1.361.1
 sources:
     comfydeploy-api:
         inputs:
