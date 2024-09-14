@@ -14,6 +14,7 @@ class Files(BaseSDK):
         self, *,
         type_: operations.Type,
         file_size: str,
+        file_extension: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -24,6 +25,7 @@ class Files(BaseSDK):
 
         :param type: 
         :param file_size: 
+        :param file_extension: 
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -38,6 +40,7 @@ class Files(BaseSDK):
         
         request = operations.GetUploadURLRequest(
             type=type_,
+            file_extension=file_extension,
             file_size=file_size,
         )
         
@@ -96,6 +99,7 @@ class Files(BaseSDK):
         self, *,
         type_: operations.Type,
         file_size: str,
+        file_extension: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -106,6 +110,7 @@ class Files(BaseSDK):
 
         :param type: 
         :param file_size: 
+        :param file_extension: 
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -120,6 +125,7 @@ class Files(BaseSDK):
         
         request = operations.GetUploadURLRequest(
             type=type_,
+            file_extension=file_extension,
             file_size=file_size,
         )
         

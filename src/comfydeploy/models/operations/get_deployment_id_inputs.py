@@ -4,6 +4,7 @@ from __future__ import annotations
 from comfydeploy.models.components import httpmetadata as components_httpmetadata
 from comfydeploy.types import BaseModel
 from comfydeploy.utils import FieldMetadata, PathParamMetadata
+from enum import Enum
 import pydantic
 from typing import List, Optional, TypedDict, Union
 from typing_extensions import Annotated, NotRequired
@@ -17,6 +18,23 @@ class GetDeploymentIDInputsRequest(BaseModel):
     id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
     
 
+class ClassType(str, Enum):
+    COMFY_UI_DEPLOY_EXTERNAL_TEXT = "ComfyUIDeployExternalText"
+    COMFY_UI_DEPLOY_EXTERNAL_TEXT_SINGLE_LINE = "ComfyUIDeployExternalTextSingleLine"
+    COMFY_UI_DEPLOY_EXTERNAL_IMAGE = "ComfyUIDeployExternalImage"
+    COMFY_UI_DEPLOY_EXTERNAL_IMAGE_ALPHA = "ComfyUIDeployExternalImageAlpha"
+    COMFY_UI_DEPLOY_EXTERNAL_NUMBER = "ComfyUIDeployExternalNumber"
+    COMFY_UI_DEPLOY_EXTERNAL_NUMBER_INT = "ComfyUIDeployExternalNumberInt"
+    COMFY_UI_DEPLOY_EXTERNAL_LORA = "ComfyUIDeployExternalLora"
+    COMFY_UI_DEPLOY_EXTERNAL_CHECKPOINT = "ComfyUIDeployExternalCheckpoint"
+    COMFY_DEPLOY_WEBSCOKET_IMAGE_INPUT = "ComfyDeployWebscoketImageInput"
+    COMFY_UI_DEPLOY_EXTERNAL_IMAGE_BATCH = "ComfyUIDeployExternalImageBatch"
+    COMFY_UI_DEPLOY_EXTERNAL_VIDEO = "ComfyUIDeployExternalVideo"
+    COMFY_UI_DEPLOY_EXTERNAL_BOOLEAN = "ComfyUIDeployExternalBoolean"
+    COMFY_UI_DEPLOY_EXTERNAL_NUMBER_SLIDER = "ComfyUIDeployExternalNumberSlider"
+    COMFY_UI_DEPLOY_EXTERNAL_NUMBER_SLIDER_INT = "ComfyUIDeployExternalNumberSliderInt"
+    COMFY_UI_DEPLOY_EXTERNAL_ENUM = "ComfyUIDeployExternalEnum"
+
 DefaultValueTypedDict = Union[str, float]
 
 
@@ -24,19 +42,25 @@ DefaultValue = Union[str, float]
 
 
 class ResponseBodyTypedDict(TypedDict):
-    class_type: str
+    class_type: ClassType
     input_id: str
     default_value: DefaultValueTypedDict
     min_value: NotRequired[float]
     max_value: NotRequired[float]
+    display_name: NotRequired[str]
+    description: NotRequired[str]
+    enum_values: NotRequired[List[str]]
     
 
 class ResponseBody(BaseModel):
-    class_type: str
+    class_type: ClassType
     input_id: str
     default_value: DefaultValue
     min_value: Optional[float] = None
     max_value: Optional[float] = None
+    display_name: Optional[str] = None
+    description: Optional[str] = None
+    enum_values: Optional[List[str]] = None
     
 
 class GetDeploymentIDInputsResponseTypedDict(TypedDict):

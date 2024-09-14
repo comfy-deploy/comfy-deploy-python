@@ -10,7 +10,7 @@ from comfydeploy._hooks import SDKHooks
 from comfydeploy.comfyui import Comfyui
 from comfydeploy.deployment import Deployment
 from comfydeploy.files import Files
-from comfydeploy.machines import Machines
+from comfydeploy.machine import Machine
 from comfydeploy.models import components
 from comfydeploy.run import Run
 from comfydeploy.types import OptionalNullable, UNSET
@@ -27,7 +27,7 @@ class ComfyDeploy(BaseSDK):
     comfyui: Comfyui
     workflows: Workflows
     deployment: Deployment
-    machines: Machines
+    machine: Machine
     def __init__(
         self,
         bearer_auth: Union[str, Callable[[], str]],
@@ -110,5 +110,5 @@ class ComfyDeploy(BaseSDK):
         self.comfyui = Comfyui(self.sdk_configuration)
         self.workflows = Workflows(self.sdk_configuration)
         self.deployment = Deployment(self.sdk_configuration)
-        self.machines = Machines(self.sdk_configuration)
+        self.machine = Machine(self.sdk_configuration)
     

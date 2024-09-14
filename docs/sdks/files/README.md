@@ -20,7 +20,7 @@ s = ComfyDeploy(
 )
 
 
-res = s.files.get_upload_url(type_=operations.Type.APPLICATION_OCTET_STREAM, file_size="<value>")
+res = s.files.get_upload_url(type_=operations.Type.APPLICATION_ZIP, file_size="<value>")
 
 if res.object is not None:
     # handle response
@@ -34,6 +34,7 @@ if res.object is not None:
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `type`                                                              | [operations.Type](../../models/operations/type.md)                  | :heavy_check_mark:                                                  | N/A                                                                 |
 | `file_size`                                                         | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `file_extension`                                                    | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 

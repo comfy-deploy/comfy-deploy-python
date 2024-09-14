@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from comfydeploy.models.components import httpmetadata as components_httpmetadata
-from comfydeploy.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from comfydeploy.types import BaseModel, Nullable, UNSET_SENTINEL
 from comfydeploy.utils import FieldMetadata, PathParamMetadata
 import pydantic
 from pydantic import model_serializer
@@ -27,8 +27,8 @@ class GetV1WorkflowsWorkflowIDVersionsTypedDict(TypedDict):
     dependencies: Nullable[str]
     created_at: str
     updated_at: str
-    workflow: NotRequired[Nullable[Any]]
-    workflow_api: NotRequired[Nullable[Any]]
+    workflow: NotRequired[Any]
+    workflow_api: NotRequired[Any]
     
 
 class GetV1WorkflowsWorkflowIDVersions(BaseModel):
@@ -40,13 +40,13 @@ class GetV1WorkflowsWorkflowIDVersions(BaseModel):
     dependencies: Nullable[str]
     created_at: str
     updated_at: str
-    workflow: OptionalNullable[Any] = UNSET
-    workflow_api: OptionalNullable[Any] = UNSET
+    workflow: Optional[Any] = None
+    workflow_api: Optional[Any] = None
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["workflow", "workflow_api"]
-        nullable_fields = ["comment", "snapshot", "dependencies", "workflow", "workflow_api"]
+        nullable_fields = ["comment", "snapshot", "dependencies"]
         null_default_fields = []
 
         serialized = handler(self)

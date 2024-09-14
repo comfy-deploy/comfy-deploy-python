@@ -2,10 +2,9 @@
 
 from __future__ import annotations
 from comfydeploy.models.components import httpmetadata as components_httpmetadata
-from comfydeploy.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from comfydeploy.types import BaseModel
 from enum import Enum
 import pydantic
-from pydantic import model_serializer
 from typing import Any, Dict, List, Optional, TypedDict, Union
 from typing_extensions import Annotated, NotRequired
 
@@ -130,7 +129,7 @@ class PostWorkflowRequestBodyTypedDict(TypedDict):
     snapshot: SnapshotTypedDict
     workflow_id: NotRequired[str]
     workflow_name: NotRequired[str]
-    workflow: NotRequired[Nullable[Any]]
+    workflow: NotRequired[Any]
     dependencies: NotRequired[DependenciesTypedDict]
     
 
@@ -139,35 +138,9 @@ class PostWorkflowRequestBody(BaseModel):
     snapshot: Snapshot
     workflow_id: Optional[str] = None
     workflow_name: Optional[str] = None
-    workflow: OptionalNullable[Any] = UNSET
+    workflow: Optional[Any] = None
     dependencies: Optional[Dependencies] = None
     
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = ["workflow_id", "workflow_name", "workflow", "dependencies"]
-        nullable_fields = ["workflow"]
-        null_default_fields = []
-
-        serialized = handler(self)
-
-        m = {}
-
-        for n, f in self.model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k)
-
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (self.__pydantic_fields_set__.intersection({n}) or k in null_default_fields) # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
-
-        return m
-        
 
 class PostWorkflowResponseBodyTypedDict(TypedDict):
     r"""Retrieve the output"""

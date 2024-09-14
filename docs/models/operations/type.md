@@ -12,3 +12,4 @@
 | `VIDEO_MP4`                | video/mp4                  |
 | `VIDEO_WEBM`               | video/webm                 |
 | `APPLICATION_OCTET_STREAM` | application/octet-stream   |
+| `APPLICATION_ZIP`          | application/zip            |
