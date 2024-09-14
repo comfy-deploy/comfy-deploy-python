@@ -6,7 +6,7 @@ from comfydeploy.types import BaseModel, Nullable, UNSET_SENTINEL
 from comfydeploy.utils import FieldMetadata, PathParamMetadata
 import pydantic
 from pydantic import model_serializer
-from typing import Optional, TypedDict
+from typing import Any, Optional, TypedDict
 from typing_extensions import Annotated, NotRequired
 
 
@@ -18,52 +18,20 @@ class GetWorkflowVersionVersionIDRequest(BaseModel):
     version_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
     
 
-class WorkflowTypedDict(TypedDict):
-    pass
-    
-
-class Workflow(BaseModel):
-    pass
-    
-
-class GetWorkflowVersionVersionIDWorkflowAPITypedDict(TypedDict):
-    pass
-    
-
-class GetWorkflowVersionVersionIDWorkflowAPI(BaseModel):
-    pass
-    
-
-class GetWorkflowVersionVersionIDSnapshotTypedDict(TypedDict):
-    pass
-    
-
-class GetWorkflowVersionVersionIDSnapshot(BaseModel):
-    pass
-    
-
-class GetWorkflowVersionVersionIDDependenciesTypedDict(TypedDict):
-    pass
-    
-
-class GetWorkflowVersionVersionIDDependencies(BaseModel):
-    pass
-    
-
 class GetWorkflowVersionVersionIDResponseBodyTypedDict(TypedDict):
     r"""Retrieve the output"""
     
     workflow_id: str
     id: str
-    workflow: WorkflowTypedDict
-    workflow_api: GetWorkflowVersionVersionIDWorkflowAPITypedDict
     user_id: Nullable[str]
     comment: Nullable[str]
     version: float
-    snapshot: GetWorkflowVersionVersionIDSnapshotTypedDict
-    dependencies: GetWorkflowVersionVersionIDDependenciesTypedDict
     created_at: str
     updated_at: str
+    workflow: NotRequired[Any]
+    workflow_api: NotRequired[Any]
+    snapshot: NotRequired[Any]
+    dependencies: NotRequired[Any]
     
 
 class GetWorkflowVersionVersionIDResponseBody(BaseModel):
@@ -71,19 +39,19 @@ class GetWorkflowVersionVersionIDResponseBody(BaseModel):
     
     workflow_id: str
     id: str
-    workflow: Workflow
-    workflow_api: GetWorkflowVersionVersionIDWorkflowAPI
     user_id: Nullable[str]
     comment: Nullable[str]
     version: float
-    snapshot: GetWorkflowVersionVersionIDSnapshot
-    dependencies: GetWorkflowVersionVersionIDDependencies
     created_at: str
     updated_at: str
+    workflow: Optional[Any] = None
+    workflow_api: Optional[Any] = None
+    snapshot: Optional[Any] = None
+    dependencies: Optional[Any] = None
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = []
+        optional_fields = ["workflow", "workflow_api", "snapshot", "dependencies"]
         nullable_fields = ["user_id", "comment"]
         null_default_fields = []
 

@@ -6,7 +6,7 @@ from comfydeploy.types import BaseModel, Nullable, UNSET_SENTINEL
 from comfydeploy.utils import FieldMetadata, PathParamMetadata
 import pydantic
 from pydantic import model_serializer
-from typing import Optional, TypedDict
+from typing import Any, Optional, TypedDict
 from typing_extensions import Annotated, NotRequired
 
 
@@ -18,52 +18,20 @@ class GetWorkflowIDRequest(BaseModel):
     id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
     
 
-class GetWorkflowIDWorkflowTypedDict(TypedDict):
-    pass
-    
-
-class GetWorkflowIDWorkflow(BaseModel):
-    pass
-    
-
-class GetWorkflowIDWorkflowAPITypedDict(TypedDict):
-    pass
-    
-
-class GetWorkflowIDWorkflowAPI(BaseModel):
-    pass
-    
-
-class GetWorkflowIDSnapshotTypedDict(TypedDict):
-    pass
-    
-
-class GetWorkflowIDSnapshot(BaseModel):
-    pass
-    
-
-class GetWorkflowIDDependenciesTypedDict(TypedDict):
-    pass
-    
-
-class GetWorkflowIDDependencies(BaseModel):
-    pass
-    
-
 class GetWorkflowIDResponseBodyTypedDict(TypedDict):
     r"""Retrieve the output"""
     
     workflow_id: str
     id: str
-    workflow: GetWorkflowIDWorkflowTypedDict
-    workflow_api: GetWorkflowIDWorkflowAPITypedDict
     user_id: Nullable[str]
     comment: Nullable[str]
     version: float
-    snapshot: GetWorkflowIDSnapshotTypedDict
-    dependencies: GetWorkflowIDDependenciesTypedDict
     created_at: str
     updated_at: str
+    workflow: NotRequired[Any]
+    workflow_api: NotRequired[Any]
+    snapshot: NotRequired[Any]
+    dependencies: NotRequired[Any]
     
 
 class GetWorkflowIDResponseBody(BaseModel):
@@ -71,19 +39,19 @@ class GetWorkflowIDResponseBody(BaseModel):
     
     workflow_id: str
     id: str
-    workflow: GetWorkflowIDWorkflow
-    workflow_api: GetWorkflowIDWorkflowAPI
     user_id: Nullable[str]
     comment: Nullable[str]
     version: float
-    snapshot: GetWorkflowIDSnapshot
-    dependencies: GetWorkflowIDDependencies
     created_at: str
     updated_at: str
+    workflow: Optional[Any] = None
+    workflow_api: Optional[Any] = None
+    snapshot: Optional[Any] = None
+    dependencies: Optional[Any] = None
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = []
+        optional_fields = ["workflow", "workflow_api", "snapshot", "dependencies"]
         nullable_fields = ["user_id", "comment"]
         null_default_fields = []
 

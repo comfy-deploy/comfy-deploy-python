@@ -108,12 +108,13 @@ asyncio.run(main())
 * [get_input_definition](docs/sdks/deployment/README.md#get_input_definition) - Get comfyui workflow inputs definition
 * [get](docs/sdks/deployment/README.md#get) - Get all deployed workflows
 
-### [machines](docs/sdks/machines/README.md)
+### [machine](docs/sdks/machine/README.md)
 
-* [post_gpu_event](docs/sdks/machines/README.md#post_gpu_event) - Register a machine event
-* [get_v1_machines](docs/sdks/machines/README.md#get_v1_machines) - Retrieve all machines for a user
-* [post_v1_machines](docs/sdks/machines/README.md#post_v1_machines) - Create a new machine
-* [get_v1_machines_machine_id_](docs/sdks/machines/README.md#get_v1_machines_machine_id_) - Retrieve a specific machine by ID
+* [post_gpu_event](docs/sdks/machine/README.md#post_gpu_event) - Register a machine event
+* [list_events](docs/sdks/machine/README.md#list_events) - Get recent gpu events
+* [get_v1_machines](docs/sdks/machine/README.md#get_v1_machines) - Retrieve all machines for a user
+* [post_v1_machines](docs/sdks/machine/README.md#post_v1_machines) - Create a new machine
+* [get_v1_machines_machine_id_](docs/sdks/machine/README.md#get_v1_machines_machine_id_) - Retrieve a specific machine by ID
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Start Error Handling [errors] -->

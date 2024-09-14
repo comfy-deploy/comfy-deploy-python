@@ -5,9 +5,9 @@ from comfydeploy import utils
 from comfydeploy._hooks import HookContext
 from comfydeploy.models import components, errors, operations
 from comfydeploy.types import BaseModel, OptionalNullable, UNSET
-from typing import Any, Optional, Union, cast
+from typing import Any, List, Optional, Union, cast
 
-class Machines(BaseSDK):
+class Machine(BaseSDK):
     
     
     def post_gpu_event(
@@ -160,6 +160,172 @@ class Machines(BaseSDK):
             data = utils.unmarshal_json(http_res.text, errors.PostGpuEventResponseBodyData)
             data.http_meta = components.HTTPMetadata(request=req, response=http_res)
             raise errors.PostGpuEventResponseBody(data=data)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    def list_events(
+        self, *,
+        machine_id: str,
+        status: operations.Status,
+        limit: Optional[float] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> operations.GetMachineMachineIDEventsResponse:
+        r"""Get recent gpu events
+
+        :param machine_id: 
+        :param status: 
+        :param limit: 
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        request = operations.GetMachineMachineIDEventsRequest(
+            machine_id=machine_id,
+            status=status,
+            limit=limit,
+        )
+        
+        req = self.build_request(
+            method="GET",
+            path="/machine/{machine_id}/events",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = self.do_request(
+            hook_ctx=HookContext(operation_id="get_/machine/{machine_id}/events", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["401","4XX","500","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return operations.GetMachineMachineIDEventsResponse(response_bodies=utils.unmarshal_json(http_res.text, Optional[List[operations.GetMachineMachineIDEventsResponseBody]]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+        if utils.match_response(http_res, ["401","4XX","5XX"], "*"):
+            raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            data = utils.unmarshal_json(http_res.text, errors.GetMachineMachineIDEventsResponseBodyData)
+            data.http_meta = components.HTTPMetadata(request=req, response=http_res)
+            raise errors.GetMachineMachineIDEventsResponseBody(data=data)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    async def list_events_async(
+        self, *,
+        machine_id: str,
+        status: operations.Status,
+        limit: Optional[float] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> operations.GetMachineMachineIDEventsResponse:
+        r"""Get recent gpu events
+
+        :param machine_id: 
+        :param status: 
+        :param limit: 
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        request = operations.GetMachineMachineIDEventsRequest(
+            machine_id=machine_id,
+            status=status,
+            limit=limit,
+        )
+        
+        req = self.build_request(
+            method="GET",
+            path="/machine/{machine_id}/events",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(operation_id="get_/machine/{machine_id}/events", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["401","4XX","500","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return operations.GetMachineMachineIDEventsResponse(response_bodies=utils.unmarshal_json(http_res.text, Optional[List[operations.GetMachineMachineIDEventsResponseBody]]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+        if utils.match_response(http_res, ["401","4XX","5XX"], "*"):
+            raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            data = utils.unmarshal_json(http_res.text, errors.GetMachineMachineIDEventsResponseBodyData)
+            data.http_meta = components.HTTPMetadata(request=req, response=http_res)
+            raise errors.GetMachineMachineIDEventsResponseBody(data=data)
         
         content_type = http_res.headers.get("Content-Type")
         raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)

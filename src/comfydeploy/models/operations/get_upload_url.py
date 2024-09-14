@@ -18,15 +18,18 @@ class Type(str, Enum):
     VIDEO_MP4 = "video/mp4"
     VIDEO_WEBM = "video/webm"
     APPLICATION_OCTET_STREAM = "application/octet-stream"
+    APPLICATION_ZIP = "application/zip"
 
 class GetUploadURLRequestTypedDict(TypedDict):
     type: Type
     file_size: str
+    file_extension: NotRequired[str]
     
 
 class GetUploadURLRequest(BaseModel):
     type: Annotated[Type, FieldMetadata(query=QueryParamMetadata(style="form", explode=True))]
     file_size: Annotated[str, FieldMetadata(query=QueryParamMetadata(style="form", explode=True))]
+    file_extension: Annotated[Optional[str], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = None
     
 
 class GetUploadURLResponseBodyTypedDict(TypedDict):

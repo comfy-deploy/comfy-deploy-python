@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from comfydeploy.models.components import httpmetadata as components_httpmetadata
-from comfydeploy.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from comfydeploy.types import BaseModel, Nullable, UNSET_SENTINEL
 from enum import Enum
 import pydantic
 from pydantic import model_serializer
@@ -61,12 +61,12 @@ class PostV1MachinesResponseBodyTypedDict(TypedDict):
     keep_warm: float
     allow_background_volume_commits: bool
     gpu_workspace: bool
-    snapshot: NotRequired[Nullable[Any]]
-    ws_gpu: NotRequired[Nullable[Any]]
-    object_info: NotRequired[Nullable[Any]]
-    dependencies: NotRequired[Nullable[Any]]
-    extra_docker_commands: NotRequired[Nullable[Any]]
-    docker_command_steps: NotRequired[Nullable[Any]]
+    snapshot: NotRequired[Any]
+    ws_gpu: NotRequired[Any]
+    object_info: NotRequired[Any]
+    dependencies: NotRequired[Any]
+    extra_docker_commands: NotRequired[Any]
+    docker_command_steps: NotRequired[Any]
     
 
 class PostV1MachinesResponseBody(BaseModel):
@@ -103,17 +103,17 @@ class PostV1MachinesResponseBody(BaseModel):
     keep_warm: float
     allow_background_volume_commits: bool
     gpu_workspace: bool
-    snapshot: OptionalNullable[Any] = UNSET
-    ws_gpu: OptionalNullable[Any] = UNSET
-    object_info: OptionalNullable[Any] = UNSET
-    dependencies: OptionalNullable[Any] = UNSET
-    extra_docker_commands: OptionalNullable[Any] = UNSET
-    docker_command_steps: OptionalNullable[Any] = UNSET
+    snapshot: Optional[Any] = None
+    ws_gpu: Optional[Any] = None
+    object_info: Optional[Any] = None
+    dependencies: Optional[Any] = None
+    extra_docker_commands: Optional[Any] = None
+    docker_command_steps: Optional[Any] = None
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["snapshot", "ws_gpu", "object_info", "dependencies", "extra_docker_commands", "docker_command_steps"]
-        nullable_fields = ["org_id", "machine_version", "pod_id", "base_docker_image", "build_machine_instance_id", "build_log", "modal_app_id", "target_workflow_id", "snapshot", "ws_gpu", "object_info", "dependencies", "extra_docker_commands", "docker_command_steps"]
+        nullable_fields = ["org_id", "machine_version", "pod_id", "base_docker_image", "build_machine_instance_id", "build_log", "modal_app_id", "target_workflow_id"]
         null_default_fields = []
 
         serialized = handler(self)

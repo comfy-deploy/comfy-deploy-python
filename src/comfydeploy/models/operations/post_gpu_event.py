@@ -15,6 +15,7 @@ class GpuType(str, Enum):
     L4 = "L4"
     A10_G = "A10G"
     A100 = "A100"
+    A100_80_GB = "A100-80GB"
     H100 = "H100"
 
 class WsGpuType(str, Enum):

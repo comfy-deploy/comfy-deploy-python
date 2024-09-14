@@ -42,7 +42,7 @@ class Origin(str, Enum):
     PUBLIC_TEMPLATE = "public-template"
     WORKSPACE = "workspace"
 
-class Status(str, Enum):
+class GetRunStatus(str, Enum):
     NOT_STARTED = "not-started"
     RUNNING = "running"
     UPLOADING = "uploading"
@@ -58,6 +58,7 @@ class GetRunGpu(str, Enum):
     L4 = "L4"
     A10_G = "A10G"
     A100 = "A100"
+    A100_80_GB = "A100-80GB"
     H100 = "H100"
 
 class MachineType(str, Enum):
@@ -139,11 +140,11 @@ class GetRunResponseBodyTypedDict(TypedDict):
     
     id: str
     workflow_version_id: Nullable[str]
-    workflow_inputs: WorkflowInputsTypedDict
+    workflow_inputs: Nullable[WorkflowInputsTypedDict]
     workflow_id: Nullable[str]
     machine_id: Nullable[str]
     origin: Origin
-    status: Status
+    status: GetRunStatus
     ended_at: Nullable[str]
     created_at: str
     updated_at: str
@@ -162,7 +163,9 @@ class GetRunResponseBodyTypedDict(TypedDict):
     webhook: Nullable[str]
     webhook_status: Nullable[WebhookStatus]
     webhook_intermediate_status: bool
-    workflow_api: NotRequired[GetRunWorkflowAPITypedDict]
+    batch_id: Nullable[str]
+    favorite: bool
+    workflow_api: NotRequired[Nullable[GetRunWorkflowAPITypedDict]]
     run_log: NotRequired[RunLogTypedDict]
     outputs: NotRequired[Nullable[List[OutputsTypedDict]]]
     
@@ -172,11 +175,11 @@ class GetRunResponseBody(BaseModel):
     
     id: str
     workflow_version_id: Nullable[str]
-    workflow_inputs: WorkflowInputs
+    workflow_inputs: Nullable[WorkflowInputs]
     workflow_id: Nullable[str]
     machine_id: Nullable[str]
     origin: Origin
-    status: Status
+    status: GetRunStatus
     ended_at: Nullable[str]
     created_at: str
     updated_at: str
@@ -195,14 +198,16 @@ class GetRunResponseBody(BaseModel):
     webhook: Nullable[str]
     webhook_status: Nullable[WebhookStatus]
     webhook_intermediate_status: bool
-    workflow_api: Optional[GetRunWorkflowAPI] = None
+    batch_id: Nullable[str]
+    favorite: bool
+    workflow_api: OptionalNullable[GetRunWorkflowAPI] = UNSET
     run_log: Optional[RunLog] = None
     outputs: OptionalNullable[List[Outputs]] = UNSET
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["workflow_api", "run_log", "outputs"]
-        nullable_fields = ["workflow_version_id", "workflow_id", "machine_id", "ended_at", "queued_at", "started_at", "gpu_event_id", "gpu", "machine_version", "machine_type", "modal_function_call_id", "user_id", "org_id", "live_status", "webhook", "webhook_status", "outputs"]
+        nullable_fields = ["workflow_version_id", "workflow_inputs", "workflow_id", "machine_id", "ended_at", "queued_at", "started_at", "gpu_event_id", "gpu", "machine_version", "machine_type", "modal_function_call_id", "user_id", "org_id", "live_status", "webhook", "webhook_status", "batch_id", "workflow_api", "outputs"]
         null_default_fields = []
 
         serialized = handler(self)

@@ -1,9 +1,10 @@
-# Machines
-(*machines*)
+# Machine
+(*machine*)
 
 ### Available Operations
 
 * [post_gpu_event](#post_gpu_event) - Register a machine event
+* [list_events](#list_events) - Get recent gpu events
 * [get_v1_machines](#get_v1_machines) - Retrieve all machines for a user
 * [post_v1_machines](#post_v1_machines) - Create a new machine
 * [get_v1_machines_machine_id_](#get_v1_machines_machine_id_) - Retrieve a specific machine by ID
@@ -22,7 +23,7 @@ s = ComfyDeploy(
 )
 
 
-res = s.machines.post_gpu_event()
+res = s.machine.post_gpu_event()
 
 if res.object is not None:
     # handle response
@@ -48,6 +49,49 @@ if res.object is not None:
 | errors.PostGpuEventResponseBody | 500                             | application/json                |
 | errors.SDKError                 | 4xx-5xx                         | */*                             |
 
+## list_events
+
+Get recent gpu events
+
+### Example Usage
+
+```python
+from comfydeploy import ComfyDeploy
+from comfydeploy.models import operations
+
+s = ComfyDeploy(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+)
+
+
+res = s.machine.list_events(machine_id="<value>", status=operations.Status.RUNNING)
+
+if res.response_bodies is not None:
+    # handle response
+    pass
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `machine_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `status`                                                            | [operations.Status](../../models/operations/status.md)              | :heavy_check_mark:                                                  | N/A                                                                 |
+| `limit`                                                             | *Optional[float]*                                                   | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+
+### Response
+
+**[operations.GetMachineMachineIDEventsResponse](../../models/operations/getmachinemachineideventsresponse.md)**
+### Errors
+
+| Error Object                                 | Status Code                                  | Content Type                                 |
+| -------------------------------------------- | -------------------------------------------- | -------------------------------------------- |
+| errors.GetMachineMachineIDEventsResponseBody | 500                                          | application/json                             |
+| errors.SDKError                              | 4xx-5xx                                      | */*                                          |
+
 ## get_v1_machines
 
 Retrieve details of all machines for the authenticated user, with pagination and optional field selection
@@ -62,7 +106,7 @@ s = ComfyDeploy(
 )
 
 
-res = s.machines.get_v1_machines()
+res = s.machine.get_v1_machines()
 
 if res.object is not None:
     # handle response
@@ -104,7 +148,7 @@ s = ComfyDeploy(
 )
 
 
-res = s.machines.post_v1_machines()
+res = s.machine.post_v1_machines()
 
 if res.object is not None:
     # handle response
@@ -144,7 +188,7 @@ s = ComfyDeploy(
 )
 
 
-res = s.machines.get_v1_machines_machine_id_(machine_id="<value>")
+res = s.machine.get_v1_machines_machine_id_(machine_id="<value>")
 
 if res.object is not None:
     # handle response

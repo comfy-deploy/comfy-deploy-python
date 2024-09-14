@@ -63,7 +63,6 @@ s = ComfyDeploy(
 
 res = s.run.create(request={
     "deployment_id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
-    "workflow_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
     "inputs": {
         "input_text": "value1",
         "input_url": "https://example.png",
