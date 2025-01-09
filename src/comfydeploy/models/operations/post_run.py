@@ -10,6 +10,7 @@ from typing_extensions import Annotated, NotRequired
 
 
 class Gpu(str, Enum):
+    CPU = "CPU"
     T4 = "T4"
     L4 = "L4"
     A10_G = "A10G"

@@ -3,11 +3,11 @@ info:
   title: CodeSamples overlay for python target
   version: 0.0.0
 actions:
-  - target: $["paths"]["/v1/workflows/{workflow_id}/outputs"]["get"]
+  - target: $["paths"]["/workflow/{id}"]["get"]
     update:
       x-codeSamples:
         - lang: python
-          label: get_/v1/workflows/{workflow_id}/outputs
+          label: get_/workflow/{id}
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -16,173 +16,28 @@ actions:
             )
 
 
-            res = s.workflows.get_outputs(request={
-                "workflow_id": "<value>",
-            })
+            res = s.comfyui.get_workflow_id_(id="<value>")
 
             if res.object is not None:
                 # handle response
                 pass
-  - target: $["paths"]["/gpu_event"]["post"]
+  - target: $["paths"]["/machine/{machine_id}/events"]["get"]
     update:
       x-codeSamples:
         - lang: python
-          label: post_/gpu_event
+          label: get_/machine/{machine_id}/events
           source: |-
             from comfydeploy import ComfyDeploy
+            from comfydeploy.models import operations
 
             s = ComfyDeploy(
                 bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
             )
 
 
-            res = s.machine.post_gpu_event()
-
-            if res.object is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/v1/machines/{machine_id}"]["get"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: get_/v1/machines/{machine_id}
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.machine.get_v1_machines_machine_id_(machine_id="<value>")
-
-            if res.object is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/run"]["get"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: get_/run
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.run.get(run_id="<value>")
-
-            if res.object is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/websocket/{deployment_id}"]["get"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: get_/websocket/{deployment_id}
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.websocket.get(deployment_id="<value>")
-
-            if res.object is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/auth-response/{request_id}"]["get"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: response/{request_id}
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.comfyui.get_auth_response_request_id_(request_id="<value>")
-
-            if res.two_hundred_application_json_object is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/machine-endpoint"]["post"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: endpoint
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.workflows.post_machine_endpoint()
-
-            if res.object is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/v1/workflows"]["get"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: get_/v1/workflows
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.workflows.get_all()
+            res = s.machine.list_events(machine_id="<value>", status=operations.Status.RUNNING)
 
             if res.response_bodies is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/workflow-version/{version_id}"]["get"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: version/{version_id}
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.comfyui.get_workflow_version_version_id_(version_id="<value>")
-
-            if res.object is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/v1/workflows/{workflow_id}"]["get"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: get_/v1/workflows/{workflow_id}
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.workflows.get(workflow_id="<value>")
-
-            if res.object is not None:
                 # handle response
                 pass
   - target: $["paths"]["/v1/machines"]["get"]
@@ -222,6 +77,134 @@ actions:
             if res.object is not None:
                 # handle response
                 pass
+  - target: $["paths"]["/auth-response/{request_id}"]["get"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: response/{request_id}
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            s = ComfyDeploy(
+                bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+            )
+
+
+            res = s.comfyui.get_auth_response_request_id_(request_id="<value>")
+
+            if res.two_hundred_application_json_object is not None:
+                # handle response
+                pass
+  - target: $["paths"]["/workflow-version/{version_id}"]["get"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: version/{version_id}
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            s = ComfyDeploy(
+                bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+            )
+
+
+            res = s.comfyui.get_workflow_version_version_id_(version_id="<value>")
+
+            if res.object is not None:
+                # handle response
+                pass
+  - target: $["paths"]["/v1/machines"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: post_/v1/machines
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            s = ComfyDeploy(
+                bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+            )
+
+
+            res = s.machine.post_v1_machines()
+
+            if res.object is not None:
+                # handle response
+                pass
+  - target: $["paths"]["/v1/machines/{machine_id}"]["get"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: get_/v1/machines/{machine_id}
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            s = ComfyDeploy(
+                bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+            )
+
+
+            res = s.machine.get_v1_machines_machine_id_(machine_id="<value>")
+
+            if res.object is not None:
+                # handle response
+                pass
+  - target: $["paths"]["/v1/workflows"]["get"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: get_/v1/workflows
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            s = ComfyDeploy(
+                bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+            )
+
+
+            res = s.workflows.get_all()
+
+            if res.response_bodies is not None:
+                # handle response
+                pass
+  - target: $["paths"]["/v1/workflows"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: post_/v1/workflows
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            s = ComfyDeploy(
+                bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+            )
+
+
+            res = s.workflows.create()
+
+            if res.object is not None:
+                # handle response
+                pass
+  - target: $["paths"]["/v1/workflows/{workflow_id}/outputs"]["get"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: get_/v1/workflows/{workflow_id}/outputs
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            s = ComfyDeploy(
+                bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+            )
+
+
+            res = s.workflows.get_outputs(request={
+                "workflow_id": "<value>",
+            })
+
+            if res.object is not None:
+                # handle response
+                pass
   - target: $["paths"]["/workflow"]["post"]
     update:
       x-codeSamples:
@@ -240,11 +223,11 @@ actions:
             if res.object is not None:
                 # handle response
                 pass
-  - target: $["paths"]["/workflow/{id}"]["get"]
+  - target: $["paths"]["/machine-endpoint"]["post"]
     update:
       x-codeSamples:
         - lang: python
-          label: get_/workflow/{id}
+          label: endpoint
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -253,7 +236,25 @@ actions:
             )
 
 
-            res = s.comfyui.get_workflow_id_(id="<value>")
+            res = s.workflows.post_machine_endpoint()
+
+            if res.object is not None:
+                # handle response
+                pass
+  - target: $["paths"]["/v1/workflows/{workflow_id}"]["get"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: get_/v1/workflows/{workflow_id}
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            s = ComfyDeploy(
+                bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+            )
+
+
+            res = s.workflows.get(workflow_id="<value>")
 
             if res.object is not None:
                 # handle response
@@ -294,6 +295,42 @@ actions:
             if res.response_bodies is not None:
                 # handle response
                 pass
+  - target: $["paths"]["/gpu_event"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: post_/gpu_event
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            s = ComfyDeploy(
+                bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+            )
+
+
+            res = s.machine.post_gpu_event()
+
+            if res.object is not None:
+                # handle response
+                pass
+  - target: $["paths"]["/run"]["get"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: get_/run
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            s = ComfyDeploy(
+                bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+            )
+
+
+            res = s.run.get(run_id="<value>")
+
+            if res.object is not None:
+                # handle response
+                pass
   - target: $["paths"]["/run"]["post"]
     update:
       x-codeSamples:
@@ -319,11 +356,11 @@ actions:
             if res.object is not None:
                 # handle response
                 pass
-  - target: $["paths"]["/v1/workflows"]["post"]
+  - target: $["paths"]["/websocket/{deployment_id}"]["get"]
     update:
       x-codeSamples:
         - lang: python
-          label: post_/v1/workflows
+          label: get_/websocket/{deployment_id}
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -332,44 +369,7 @@ actions:
             )
 
 
-            res = s.workflows.create()
-
-            if res.object is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/machine/{machine_id}/events"]["get"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: get_/machine/{machine_id}/events
-          source: |-
-            from comfydeploy import ComfyDeploy
-            from comfydeploy.models import operations
-
-            s = ComfyDeploy(
-                bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.machine.list_events(machine_id="<value>", status=operations.Status.RUNNING)
-
-            if res.response_bodies is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/v1/machines"]["post"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: post_/v1/machines
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.machine.post_v1_machines()
+            res = s.websocket.get(deployment_id="<value>")
 
             if res.object is not None:
                 # handle response

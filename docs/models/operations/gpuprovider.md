@@ -7,3 +7,4 @@
 | -------- | -------- |
 | `MODAL`  | modal    |
 | `RUNPOD` | runpod   |
+| `FAL`    | fal      |

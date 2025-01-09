@@ -28,6 +28,7 @@ class GetMachineMachineIDEventsRequest(BaseModel):
     
 
 class GetMachineMachineIDEventsGpu(str, Enum):
+    CPU = "CPU"
     T4 = "T4"
     L4 = "L4"
     A10_G = "A10G"
@@ -41,6 +42,7 @@ class WsGpu(str, Enum):
 class ProviderType(str, Enum):
     MODAL = "modal"
     RUNPOD = "runpod"
+    FAL = "fal"
 
 class GetMachineMachineIDEventsResponseBodyTypedDict(TypedDict):
     id: str
@@ -54,6 +56,12 @@ class GetMachineMachineIDEventsResponseBodyTypedDict(TypedDict):
     provider_type: ProviderType
     created_at: str
     updated_at: str
+    cost_item_title: Nullable[str]
+    cost: Nullable[float]
+    session_timeout: Nullable[float]
+    session_id: Nullable[str]
+    modal_function_id: Nullable[str]
+    tunnel_url: Nullable[str]
     
 
 class GetMachineMachineIDEventsResponseBody(BaseModel):
@@ -68,11 +76,17 @@ class GetMachineMachineIDEventsResponseBody(BaseModel):
     provider_type: Annotated[ProviderType, pydantic.Field(alias="providerType")]
     created_at: str
     updated_at: str
+    cost_item_title: Nullable[str]
+    cost: Nullable[float]
+    session_timeout: Nullable[float]
+    session_id: Nullable[str]
+    modal_function_id: Nullable[str]
+    tunnel_url: Nullable[str]
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = []
-        nullable_fields = ["org_id", "machine_id", "start_time", "end_time", "gpu", "ws_gpu"]
+        nullable_fields = ["org_id", "machine_id", "start_time", "end_time", "gpu", "ws_gpu", "cost_item_title", "cost", "session_timeout", "session_id", "modal_function_id", "tunnel_url"]
         null_default_fields = []
 
         serialized = handler(self)

@@ -54,6 +54,7 @@ class GetRunStatus(str, Enum):
     CANCELLED = "cancelled"
 
 class GetRunGpu(str, Enum):
+    CPU = "CPU"
     T4 = "T4"
     L4 = "L4"
     A10_G = "A10G"
@@ -165,6 +166,7 @@ class GetRunResponseBodyTypedDict(TypedDict):
     webhook_intermediate_status: bool
     batch_id: Nullable[str]
     favorite: bool
+    model_id: Nullable[str]
     workflow_api: NotRequired[Nullable[GetRunWorkflowAPITypedDict]]
     run_log: NotRequired[RunLogTypedDict]
     outputs: NotRequired[Nullable[List[OutputsTypedDict]]]
@@ -200,6 +202,7 @@ class GetRunResponseBody(BaseModel):
     webhook_intermediate_status: bool
     batch_id: Nullable[str]
     favorite: bool
+    model_id: Nullable[str]
     workflow_api: OptionalNullable[GetRunWorkflowAPI] = UNSET
     run_log: Optional[RunLog] = None
     outputs: OptionalNullable[List[Outputs]] = UNSET
@@ -207,7 +210,7 @@ class GetRunResponseBody(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["workflow_api", "run_log", "outputs"]
-        nullable_fields = ["workflow_version_id", "workflow_inputs", "workflow_id", "machine_id", "ended_at", "queued_at", "started_at", "gpu_event_id", "gpu", "machine_version", "machine_type", "modal_function_call_id", "user_id", "org_id", "live_status", "webhook", "webhook_status", "batch_id", "workflow_api", "outputs"]
+        nullable_fields = ["workflow_version_id", "workflow_inputs", "workflow_id", "machine_id", "ended_at", "queued_at", "started_at", "gpu_event_id", "gpu", "machine_version", "machine_type", "modal_function_call_id", "user_id", "org_id", "live_status", "webhook", "webhook_status", "batch_id", "model_id", "workflow_api", "outputs"]
         null_default_fields = []
 
         serialized = handler(self)

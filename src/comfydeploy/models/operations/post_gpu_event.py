@@ -11,6 +11,7 @@ from typing_extensions import Annotated, NotRequired
 
 
 class GpuType(str, Enum):
+    CPU = "CPU"
     T4 = "T4"
     L4 = "L4"
     A10_G = "A10G"
@@ -28,6 +29,7 @@ class EventType(str, Enum):
 class GpuProvider(str, Enum):
     MODAL = "modal"
     RUNPOD = "runpod"
+    FAL = "fal"
 
 class PostGpuEventRequestBodyTypedDict(TypedDict):
     machine_id: str
@@ -40,6 +42,8 @@ class PostGpuEventRequestBodyTypedDict(TypedDict):
     is_workspace: NotRequired[Nullable[bool]]
     user_id: NotRequired[Nullable[str]]
     org_id: NotRequired[Nullable[str]]
+    session_id: NotRequired[Nullable[str]]
+    modal_function_id: NotRequired[Nullable[str]]
     
 
 class PostGpuEventRequestBody(BaseModel):
@@ -53,11 +57,13 @@ class PostGpuEventRequestBody(BaseModel):
     is_workspace: OptionalNullable[bool] = UNSET
     user_id: OptionalNullable[str] = UNSET
     org_id: OptionalNullable[str] = UNSET
+    session_id: OptionalNullable[str] = UNSET
+    modal_function_id: OptionalNullable[str] = UNSET
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["gpuType", "wsGpuType", "event_id", "is_workspace", "user_id", "org_id"]
-        nullable_fields = ["gpuType", "wsGpuType", "event_id", "is_workspace", "user_id", "org_id"]
+        optional_fields = ["gpuType", "wsGpuType", "event_id", "is_workspace", "user_id", "org_id", "session_id", "modal_function_id"]
+        nullable_fields = ["gpuType", "wsGpuType", "event_id", "is_workspace", "user_id", "org_id", "session_id", "modal_function_id"]
         null_default_fields = []
 
         serialized = handler(self)
