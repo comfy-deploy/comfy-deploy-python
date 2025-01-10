@@ -5,8 +5,8 @@ management:
   docVersion: V2
   speakeasyVersion: 1.467.0
   generationVersion: 2.492.3
-  releaseVersion: 0.6.0
-  configChecksum: 51f9d7e9490205b617ca72789edb9613
+  releaseVersion: 0.6.1
+  configChecksum: b7f4ea40dedebd61df5212b0a033aa19
   repoURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   installationURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   published: true
@@ -336,6 +336,7 @@ examples:
       responses:
         "422":
           application/json: {}
+        "200": {}
   cancel_run_run__run_id__cancel_post:
     speakeasy-default-cancel-run-run-run-id-cancel-post:
       parameters:
@@ -373,6 +374,7 @@ examples:
       responses:
         "422":
           application/json: {}
+        "200": {}
   queue_workflow_run_run_workflow_queue_post:
     speakeasy-default-queue-workflow-run-run-workflow-queue-post:
       requestBody:
@@ -398,6 +400,7 @@ examples:
       responses:
         "422":
           application/json: {}
+        "200": {}
   get_session_session__session_id__get:
     speakeasy-default-get-session-session-session-id-get:
       parameters:
