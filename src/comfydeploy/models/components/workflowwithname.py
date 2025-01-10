@@ -2,15 +2,15 @@
 
 from __future__ import annotations
 from comfydeploy.types import BaseModel
-from typing import TypedDict
+from typing_extensions import TypedDict
 
 
 class WorkflowWithNameTypedDict(TypedDict):
     id: str
     name: str
-    
+
 
 class WorkflowWithName(BaseModel):
     id: str
+
     name: str
-    

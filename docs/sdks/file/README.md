@@ -1,13 +1,15 @@
 # File
 (*file*)
 
+## Overview
+
 ### Available Operations
 
 * [upload](#upload) - Upload File
 * [create_folder_assets_folder_post](#create_folder_assets_folder_post) - Create Folder
 * [list_assets_assets_get](#list_assets_assets_get) - List Assets
-* [get_asset_assets_asset_id_get](#get_asset_assets_asset_id_get) - Get Asset
 * [delete_asset_assets_asset_id_delete](#delete_asset_assets_asset_id_delete) - Delete Asset
+* [get_asset_assets_asset_id_get](#get_asset_assets_asset_id_get) - Get Asset
 * [upload_asset_file_assets_upload_post](#upload_asset_file_assets_upload_post) - Upload Asset File
 
 ## upload
@@ -19,21 +21,21 @@ Upload File
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.file.upload(request={
+        "file": {
+            "file_name": "example.file",
+            "content": open("example.file", "rb"),
+        },
+    })
 
-res = s.file.upload(request={
-    "file": {
-        "file_name": "your_file_here",
-        "content": open("<file_path>", "rb"),
-    },
-})
+    assert res.file_upload_response is not None
 
-if res.file_upload_response is not None:
-    # handle response
-    pass
+    # Handle response
+    print(res.file_upload_response)
 
 ```
 
@@ -44,16 +46,16 @@ if res.file_upload_response is not None:
 | `request`                                                                                          | [components.BodyUploadFileFileUploadPost](../../models/components/bodyuploadfilefileuploadpost.md) | :heavy_check_mark:                                                                                 | The request object to use for the request.                                                         |
 | `retries`                                                                                          | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                   | :heavy_minus_sign:                                                                                 | Configuration to override the default retry behavior of the client.                                |
 
-
 ### Response
 
 **[operations.UploadFileFileUploadPostResponse](../../models/operations/uploadfilefileuploadpostresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## create_folder_assets_folder_post
 
@@ -64,18 +66,18 @@ Create Folder
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.file.create_folder_assets_folder_post(request={
+        "name": "<value>",
+    })
 
-res = s.file.create_folder_assets_folder_post(request={
-    "name": "<value>",
-})
+    assert res.asset_response is not None
 
-if res.asset_response is not None:
-    # handle response
-    pass
+    # Handle response
+    print(res.asset_response)
 
 ```
 
@@ -86,16 +88,16 @@ if res.asset_response is not None:
 | `request`                                                                        | [components.CreateFolderRequest](../../models/components/createfolderrequest.md) | :heavy_check_mark:                                                               | The request object to use for the request.                                       |
 | `retries`                                                                        | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                 | :heavy_minus_sign:                                                               | Configuration to override the default retry behavior of the client.              |
 
-
 ### Response
 
 **[operations.CreateFolderAssetsFolderPostResponse](../../models/operations/createfolderassetsfolderpostresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## list_assets_assets_get
 
@@ -106,16 +108,16 @@ List Assets
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.file.list_assets_assets_get()
 
-res = s.file.list_assets_assets_get()
+    assert res.response_list_assets_assets_get is not None
 
-if res.response_list_assets_assets_get is not None:
-    # handle response
-    pass
+    # Handle response
+    print(res.response_list_assets_assets_get)
 
 ```
 
@@ -126,56 +128,16 @@ if res.response_list_assets_assets_get is not None:
 | `path`                                                              | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | Folder path to list items from                                      |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
-
 ### Response
 
 **[operations.ListAssetsAssetsGetResponse](../../models/operations/listassetsassetsgetresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
-
-## get_asset_assets_asset_id_get
-
-Get Asset
-
-### Example Usage
-
-```python
-from comfydeploy import ComfyDeploy
-
-s = ComfyDeploy(
-    bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
-
-
-res = s.file.get_asset_assets_asset_id_get(asset_id="<value>")
-
-if res.asset_response is not None:
-    # handle response
-    pass
-
-```
-
-### Parameters
-
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `asset_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
-
-
-### Response
-
-**[operations.GetAssetAssetsAssetIDGetResponse](../../models/operations/getassetassetsassetidgetresponse.md)**
-### Errors
-
-| Error Object               | Status Code                | Content Type               |
-| -------------------------- | -------------------------- | -------------------------- |
-| errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## delete_asset_assets_asset_id_delete
 
@@ -186,16 +148,16 @@ Delete Asset
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.file.delete_asset_assets_asset_id_delete(asset_id="<id>")
 
-res = s.file.delete_asset_assets_asset_id_delete(asset_id="<value>")
+    assert res.any is not None
 
-if res.any is not None:
-    # handle response
-    pass
+    # Handle response
+    print(res.any)
 
 ```
 
@@ -206,16 +168,56 @@ if res.any is not None:
 | `asset_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
-
 ### Response
 
 **[operations.DeleteAssetAssetsAssetIDDeleteResponse](../../models/operations/deleteassetassetsassetiddeleteresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## get_asset_assets_asset_id_get
+
+Get Asset
+
+### Example Usage
+
+```python
+from comfydeploy import ComfyDeploy
+
+with ComfyDeploy(
+    bearer="<YOUR_BEARER_TOKEN_HERE>",
+) as comfy_deploy:
+
+    res = comfy_deploy.file.get_asset_assets_asset_id_get(asset_id="<id>")
+
+    assert res.asset_response is not None
+
+    # Handle response
+    print(res.asset_response)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `asset_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[operations.GetAssetAssetsAssetIDGetResponse](../../models/operations/getassetassetsassetidgetresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## upload_asset_file_assets_upload_post
 
@@ -226,21 +228,21 @@ Upload Asset File
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.file.upload_asset_file_assets_upload_post(body_upload_asset_file_assets_upload_post={
+        "file": {
+            "file_name": "example.file",
+            "content": open("example.file", "rb"),
+        },
+    })
 
-res = s.file.upload_asset_file_assets_upload_post(body_upload_asset_file_assets_upload_post={
-    "file": {
-        "file_name": "your_file_here",
-        "content": open("<file_path>", "rb"),
-    },
-})
+    assert res.asset_response is not None
 
-if res.asset_response is not None:
-    # handle response
-    pass
+    # Handle response
+    print(res.asset_response)
 
 ```
 
@@ -252,13 +254,13 @@ if res.asset_response is not None:
 | `parent_path`                                                                                                    | *Optional[str]*                                                                                                  | :heavy_minus_sign:                                                                                               | Parent folder path                                                                                               |
 | `retries`                                                                                                        | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                 | :heavy_minus_sign:                                                                                               | Configuration to override the default retry behavior of the client.                                              |
 
-
 ### Response
 
 **[operations.UploadAssetFileAssetsUploadPostResponse](../../models/operations/uploadassetfileassetsuploadpostresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |

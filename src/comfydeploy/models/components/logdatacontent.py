@@ -3,17 +3,17 @@
 from __future__ import annotations
 from comfydeploy.types import BaseModel
 from datetime import datetime
-from typing import TypedDict
+from typing_extensions import TypedDict
 
 
 class LogDataContentTypedDict(TypedDict):
     logs: str
     timestamp: datetime
     r"""Timestamp in UTC"""
-    
+
 
 class LogDataContent(BaseModel):
     logs: str
+
     timestamp: datetime
     r"""Timestamp in UTC"""
-    

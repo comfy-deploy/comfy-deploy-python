@@ -3,7 +3,7 @@
 from .basesdk import BaseSDK
 from .httpclient import AsyncHttpClient, HttpClient
 from .sdkconfiguration import SDKConfiguration
-from .utils.logger import Logger, NoOpLogger
+from .utils.logger import Logger, get_default_logger
 from .utils.retries import RetryConfig
 from comfydeploy import utils
 from comfydeploy._hooks import SDKHooks
@@ -17,6 +17,7 @@ from comfydeploy.session import Session
 from comfydeploy.types import OptionalNullable, UNSET
 import httpx
 from typing import Any, Callable, Dict, Optional, Union
+
 
 class ComfyDeploy(BaseSDK):
     r"""ComfyDeploy API:
@@ -36,12 +37,14 @@ class ComfyDeploy(BaseSDK):
 
 
     """
+
     run: Run
     session: Session
     deployments: Deployments
     file: File
     models: Models
     search: Search
+
     def __init__(
         self,
         bearer: Union[str, Callable[[], str]],
@@ -52,7 +55,7 @@ class ComfyDeploy(BaseSDK):
         async_client: Optional[AsyncHttpClient] = None,
         retry_config: OptionalNullable[RetryConfig] = UNSET,
         timeout_ms: Optional[int] = None,
-        debug_logger: Optional[Logger] = None
+        debug_logger: Optional[Logger] = None,
     ) -> None:
         r"""Instantiates the SDK configuring it with the provided parameters.
 
@@ -76,38 +79,42 @@ class ComfyDeploy(BaseSDK):
             async_client = httpx.AsyncClient()
 
         if debug_logger is None:
-            debug_logger = NoOpLogger()
+            debug_logger = get_default_logger()
 
         assert issubclass(
             type(async_client), AsyncHttpClient
         ), "The provided async_client must implement the AsyncHttpClient protocol."
-        
+
         security: Any = None
         if callable(bearer):
-            security = lambda: components.Security(bearer = bearer()) # pylint: disable=unnecessary-lambda-assignment
+            security = lambda: components.Security(bearer=bearer())  # pylint: disable=unnecessary-lambda-assignment
         else:
-            security = components.Security(bearer = bearer)
+            security = components.Security(bearer=bearer)
 
         if server_url is not None:
             if url_params is not None:
                 server_url = utils.template_url(server_url, url_params)
-    
 
-        BaseSDK.__init__(self, SDKConfiguration(
-            client=client,
-            async_client=async_client,
-            security=security,
-            server_url=server_url,
-            server_idx=server_idx,
-            retry_config=retry_config,
-            timeout_ms=timeout_ms,
-            debug_logger=debug_logger
-        ))
+        BaseSDK.__init__(
+            self,
+            SDKConfiguration(
+                client=client,
+                async_client=async_client,
+                security=security,
+                server_url=server_url,
+                server_idx=server_idx,
+                retry_config=retry_config,
+                timeout_ms=timeout_ms,
+                debug_logger=debug_logger,
+            ),
+        )
 
         hooks = SDKHooks()
 
         current_server_url, *_ = self.sdk_configuration.get_server_details()
-        server_url, self.sdk_configuration.client = hooks.sdk_init(current_server_url, self.sdk_configuration.client)
+        server_url, self.sdk_configuration.client = hooks.sdk_init(
+            current_server_url, self.sdk_configuration.client
+        )
         if current_server_url != server_url:
             self.sdk_configuration.server_url = server_url
 
@@ -116,7 +123,6 @@ class ComfyDeploy(BaseSDK):
 
         self._init_sdks()
 
-
     def _init_sdks(self):
         self.run = Run(self.sdk_configuration)
         self.session = Session(self.sdk_configuration)
@@ -124,4 +130,17 @@ class ComfyDeploy(BaseSDK):
         self.file = File(self.sdk_configuration)
         self.models = Models(self.sdk_configuration)
         self.search = Search(self.sdk_configuration)
-    
+
+    def __enter__(self):
+        return self
+
+    async def __aenter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self.sdk_configuration.client is not None:
+            self.sdk_configuration.client.close()
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        if self.sdk_configuration.async_client is not None:
+            await self.sdk_configuration.async_client.aclose()

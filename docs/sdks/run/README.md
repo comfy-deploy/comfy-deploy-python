@@ -1,6 +1,8 @@
 # Run
 (*run*)
 
+## Overview
+
 ### Available Operations
 
 * [get](#get) - Get Run
@@ -18,16 +20,16 @@ Get Run
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.run.get(run_id="b888f774-3e7c-4135-a18c-6b985523c4bc")
 
-res = s.run.get(run_id="b18d8d81-fd7b-4764-a31e-475cb1f36591")
+    assert res.workflow_run_model is not None
 
-if res.workflow_run_model is not None:
-    # handle response
-    pass
+    # Handle response
+    print(res.workflow_run_model)
 
 ```
 
@@ -38,16 +40,16 @@ if res.workflow_run_model is not None:
 | `run_id`                                                            | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
-
 ### Response
 
 **[operations.GetRunRunRunIDGetResponse](../../models/operations/getrunrunrunidgetresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## ~~queue~~
 
@@ -60,23 +62,23 @@ Create a new workflow run with the given parameters. This function sets up the r
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.run.queue(request={
+        "workflow_version_id": "3ec31b24-d0d3-4298-9ffa-c74003017b70",
+        "inputs": {
+            "prompt": "A beautiful landscape",
+            "seed": 42,
+        },
+        "webhook_intermediate_status": True,
+    })
 
-res = s.run.queue(request={
-    "workflow_version_id": "a3ae2c73-d11b-402e-81da-06d33c2a9088",
-    "inputs": {
-        "prompt": "A beautiful landscape",
-        "seed": 42,
-    },
-    "webhook_intermediate_status": True,
-})
+    assert res.create_run_response is not None
 
-if res.create_run_response is not None:
-    # handle response
-    pass
+    # Handle response
+    print(res.create_run_response)
 
 ```
 
@@ -87,16 +89,16 @@ if res.create_run_response is not None:
 | `request`                                                                                              | [operations.CreateRunQueueRunQueuePostData](../../models/operations/createrunqueuerunqueuepostdata.md) | :heavy_check_mark:                                                                                     | The request object to use for the request.                                                             |
 | `retries`                                                                                              | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                       | :heavy_minus_sign:                                                                                     | Configuration to override the default retry behavior of the client.                                    |
 
-
 ### Response
 
 **[operations.CreateRunQueueRunQueuePostResponse](../../models/operations/createrunqueuerunqueuepostresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## ~~sync~~
 
@@ -109,23 +111,23 @@ Create a new workflow run with the given parameters. This function sets up the r
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.run.sync(request={
+        "model_id": "<id>",
+        "inputs": {
+            "prompt": "A beautiful landscape",
+            "seed": 42,
+        },
+        "webhook_intermediate_status": True,
+    })
 
-res = s.run.sync(request={
-    "model_id": "<value>",
-    "inputs": {
-        "prompt": "A beautiful landscape",
-        "seed": 42,
-    },
-    "webhook_intermediate_status": True,
-})
+    assert res.response_create_run_sync_run_sync_post is not None
 
-if res.response_create_run_sync_run_sync_post is not None:
-    # handle response
-    pass
+    # Handle response
+    print(res.response_create_run_sync_run_sync_post)
 
 ```
 
@@ -136,16 +138,16 @@ if res.response_create_run_sync_run_sync_post is not None:
 | `request`                                                                                          | [operations.CreateRunSyncRunSyncPostData](../../models/operations/createrunsyncrunsyncpostdata.md) | :heavy_check_mark:                                                                                 | The request object to use for the request.                                                         |
 | `retries`                                                                                          | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                   | :heavy_minus_sign:                                                                                 | Configuration to override the default retry behavior of the client.                                |
 
-
 ### Response
 
 **[operations.CreateRunSyncRunSyncPostResponse](../../models/operations/createrunsyncrunsyncpostresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## ~~stream~~
 
@@ -158,24 +160,25 @@ Create a new workflow run with the given parameters. This function sets up the r
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.run.stream(request={
+        "model_id": "<id>",
+        "inputs": {
+            "prompt": "A beautiful landscape",
+            "seed": 42,
+        },
+        "webhook_intermediate_status": True,
+    })
 
-res = s.run.stream(request={
-    "model_id": "<value>",
-    "inputs": {
-        "prompt": "A beautiful landscape",
-        "seed": 42,
-    },
-    "webhook_intermediate_status": True,
-})
+    assert res.run_stream is not None
 
-if res.run_stream is not None:
-    for event in res.run_stream:
-        # handle event
-        print(event, flush=True)
+    with res.run_stream as event_stream:
+        for event in event_stream:
+            # handle event
+            print(event, flush=True)
 
 ```
 
@@ -186,16 +189,16 @@ if res.run_stream is not None:
 | `request`                                                                                                  | [operations.CreateRunStreamRunStreamPostData](../../models/operations/createrunstreamrunstreampostdata.md) | :heavy_check_mark:                                                                                         | The request object to use for the request.                                                                 |
 | `retries`                                                                                                  | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                           | :heavy_minus_sign:                                                                                         | Configuration to override the default retry behavior of the client.                                        |
 
-
 ### Response
 
 **[operations.CreateRunStreamRunStreamPostResponse](../../models/operations/createrunstreamrunstreampostresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## cancel_run_run_run_id_cancel_post
 
@@ -206,18 +209,18 @@ Cancel Run
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.run.cancel_run_run_run_id_cancel_post(run_id="<id>", cancel_function_body={
+        "function_id": "<id>",
+    })
 
-res = s.run.cancel_run_run_run_id_cancel_post(run_id="<value>", cancel_function_body={
-    "function_id": "<value>",
-})
+    assert res.any is not None
 
-if res.any is not None:
-    # handle response
-    pass
+    # Handle response
+    print(res.any)
 
 ```
 
@@ -229,13 +232,13 @@ if res.any is not None:
 | `cancel_function_body`                                                         | [components.CancelFunctionBody](../../models/components/cancelfunctionbody.md) | :heavy_check_mark:                                                             | N/A                                                                            |
 | `retries`                                                                      | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)               | :heavy_minus_sign:                                                             | Configuration to override the default retry behavior of the client.            |
 
-
 ### Response
 
 **[operations.CancelRunRunRunIDCancelPostResponse](../../models/operations/cancelrunrunrunidcancelpostresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |

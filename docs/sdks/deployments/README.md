@@ -1,6 +1,8 @@
 # Deployments
 (*deployments*)
 
+## Overview
+
 ### Available Operations
 
 * [create](#create) - Create Deployment
@@ -15,21 +17,21 @@ Create Deployment
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.deployments.create(request={
+        "workflow_version_id": "<id>",
+        "workflow_id": "<id>",
+        "machine_id": "<id>",
+        "environment": "<value>",
+    })
 
-res = s.deployments.create(request={
-    "workflow_version_id": "<value>",
-    "workflow_id": "<value>",
-    "machine_id": "<value>",
-    "environment": "<value>",
-})
+    assert res.deployment_model is not None
 
-if res.deployment_model is not None:
-    # handle response
-    pass
+    # Handle response
+    print(res.deployment_model)
 
 ```
 
@@ -40,16 +42,16 @@ if res.deployment_model is not None:
 | `request`                                                                  | [components.DeploymentCreate](../../models/components/deploymentcreate.md) | :heavy_check_mark:                                                         | The request object to use for the request.                                 |
 | `retries`                                                                  | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)           | :heavy_minus_sign:                                                         | Configuration to override the default retry behavior of the client.        |
 
-
 ### Response
 
 **[operations.CreateDeploymentDeploymentPostResponse](../../models/operations/createdeploymentdeploymentpostresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## list
 
@@ -60,16 +62,16 @@ Get Deployments
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.deployments.list()
 
-res = s.deployments.list()
+    assert res.response_get_deployments_deployments_get is not None
 
-if res.response_get_deployments_deployments_get is not None:
-    # handle response
-    pass
+    # Handle response
+    print(res.response_get_deployments_deployments_get)
 
 ```
 
@@ -80,13 +82,13 @@ if res.response_get_deployments_deployments_get is not None:
 | `environment`                                                                                          | [OptionalNullable[components.DeploymentEnvironment]](../../models/components/deploymentenvironment.md) | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
 | `retries`                                                                                              | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                       | :heavy_minus_sign:                                                                                     | Configuration to override the default retry behavior of the client.                                    |
 
-
 ### Response
 
 **[operations.GetDeploymentsDeploymentsGetResponse](../../models/operations/getdeploymentsdeploymentsgetresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |

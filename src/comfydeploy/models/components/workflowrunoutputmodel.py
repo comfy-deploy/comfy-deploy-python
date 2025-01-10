@@ -2,17 +2,23 @@
 
 from __future__ import annotations
 from .mediaitem import MediaItem, MediaItemTypedDict
-from comfydeploy.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from comfydeploy.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from datetime import datetime
 from pydantic import model_serializer
-from typing import Any, Dict, List, TypedDict, Union
-from typing_extensions import NotRequired
+from typing import Any, Dict, List, Union
+from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-DataTypedDict = Union[MediaItemTypedDict, str]
+DataTypedDict = TypeAliasType("DataTypedDict", Union[MediaItemTypedDict, str])
 
 
-Data = Union[MediaItem, str]
+Data = TypeAliasType("Data", Union[MediaItem, str])
 
 
 class WorkflowRunOutputModelTypedDict(TypedDict):
@@ -24,18 +30,25 @@ class WorkflowRunOutputModelTypedDict(TypedDict):
     updated_at: datetime
     type: NotRequired[Nullable[str]]
     node_id: NotRequired[Nullable[str]]
-    
+
 
 class WorkflowRunOutputModel(BaseModel):
     id: str
+
     run_id: str
+
     data: Dict[str, List[Data]]
+
     node_meta: Nullable[Any]
+
     created_at: datetime
+
     updated_at: datetime
+
     type: OptionalNullable[str] = UNSET
+
     node_id: OptionalNullable[str] = UNSET
-    
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["type", "node_id"]
@@ -49,9 +62,13 @@ class WorkflowRunOutputModel(BaseModel):
         for n, f in self.model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
+            serialized.pop(k, None)
 
             optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (self.__pydantic_fields_set__.intersection({n}) or k in null_default_fields) # pylint: disable=no-member
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
 
             if val is not None and val != UNSET_SENTINEL:
                 m[k] = val
@@ -61,4 +78,3 @@ class WorkflowRunOutputModel(BaseModel):
                 m[k] = val
 
         return m
-        

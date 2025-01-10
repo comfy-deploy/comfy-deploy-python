@@ -6,11 +6,18 @@ from .logupdateevent import LogUpdateEvent, LogUpdateEventTypedDict
 from comfydeploy.utils import get_discriminator
 from pydantic import Discriminator, Tag
 from typing import Union
-from typing_extensions import Annotated
+from typing_extensions import Annotated, TypeAliasType
 
 
-RunStreamTypedDict = Union[LogUpdateEventTypedDict, EventUpdateEventTypedDict]
+RunStreamTypedDict = TypeAliasType(
+    "RunStreamTypedDict", Union[LogUpdateEventTypedDict, EventUpdateEventTypedDict]
+)
 
 
-RunStream = Annotated[Union[Annotated[EventUpdateEvent, Tag("event_update")], Annotated[LogUpdateEvent, Tag("log_update")]], Discriminator(lambda m: get_discriminator(m, "event", "event"))]
-
+RunStream = Annotated[
+    Union[
+        Annotated[EventUpdateEvent, Tag("event_update")],
+        Annotated[LogUpdateEvent, Tag("log_update")],
+    ],
+    Discriminator(lambda m: get_discriminator(m, "event", "event")),
+]

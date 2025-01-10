@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 from comfydeploy.types import BaseModel
-from typing import TypedDict
+from typing_extensions import TypedDict
 
 
 class WorkflowRunWebhookResponseTypedDict(TypedDict):
     status: str
-    
+
 
 class WorkflowRunWebhookResponse(BaseModel):
     status: str
-    

@@ -5,26 +5,30 @@ from comfydeploy.models.components import httpmetadata as components_httpmetadat
 from comfydeploy.types import BaseModel
 from comfydeploy.utils import FieldMetadata, PathParamMetadata
 import pydantic
-from typing import Any, Optional, TypedDict
-from typing_extensions import Annotated, NotRequired
+from typing import Any, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class DeleteAssetAssetsAssetIDDeleteRequestTypedDict(TypedDict):
     asset_id: str
-    
+
 
 class DeleteAssetAssetsAssetIDDeleteRequest(BaseModel):
-    asset_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
-    
+    asset_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
+
 
 class DeleteAssetAssetsAssetIDDeleteResponseTypedDict(TypedDict):
     http_meta: components_httpmetadata.HTTPMetadataTypedDict
     any: NotRequired[Any]
     r"""Successful Response"""
-    
+
 
 class DeleteAssetAssetsAssetIDDeleteResponse(BaseModel):
-    http_meta: Annotated[Optional[components_httpmetadata.HTTPMetadata], pydantic.Field(exclude=True)] = None
+    http_meta: Annotated[
+        Optional[components_httpmetadata.HTTPMetadata], pydantic.Field(exclude=True)
+    ] = None
+
     any: Optional[Any] = None
     r"""Successful Response"""
-    

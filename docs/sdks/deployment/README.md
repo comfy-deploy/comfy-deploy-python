@@ -1,6 +1,8 @@
 # Deployment
 (*run.deployment*)
 
+## Overview
+
 ### Available Operations
 
 * [queue](#queue) - Deployment - Queue
@@ -16,25 +18,23 @@ Create a new deployment run with the given parameters.
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.run.deployment.queue(request={
+        "deployment_id": "15e79589-12c9-453c-a41a-348fdd7de957",
+        "inputs": {
+            "prompt": "A beautiful landscape",
+            "seed": 42,
+        },
+        "webhook": "https://myapp.com/webhook",
+    })
 
-res = s.run.deployment.queue(request={
-    "deployment_id": "12345678-1234-5678-1234-567812345678",
-    "inputs": {
-        "num_inference_steps": 30,
-        "prompt": "A futuristic cityscape",
-        "seed": 123456,
-    },
-    "webhook": "https://myapp.com/webhook",
-    "webhook_intermediate_status": True,
-})
+    assert res.create_run_response is not None
 
-if res.create_run_response is not None:
-    # handle response
-    pass
+    # Handle response
+    print(res.create_run_response)
 
 ```
 
@@ -45,16 +45,16 @@ if res.create_run_response is not None:
 | `request`                                                                          | [components.DeploymentRunRequest](../../models/components/deploymentrunrequest.md) | :heavy_check_mark:                                                                 | The request object to use for the request.                                         |
 | `retries`                                                                          | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                   | :heavy_minus_sign:                                                                 | Configuration to override the default retry behavior of the client.                |
 
-
 ### Response
 
 **[operations.QueueDeploymentRunRunDeploymentQueuePostResponse](../../models/operations/queuedeploymentrunrundeploymentqueuepostresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## sync
 
@@ -65,25 +65,23 @@ Create a new deployment run with the given parameters.
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.run.deployment.sync(request={
+        "deployment_id": "15e79589-12c9-453c-a41a-348fdd7de957",
+        "inputs": {
+            "prompt": "A beautiful landscape",
+            "seed": 42,
+        },
+        "webhook": "https://myapp.com/webhook",
+    })
 
-res = s.run.deployment.sync(request={
-    "deployment_id": "12345678-1234-5678-1234-567812345678",
-    "inputs": {
-        "num_inference_steps": 30,
-        "prompt": "A futuristic cityscape",
-        "seed": 123456,
-    },
-    "webhook": "https://myapp.com/webhook",
-    "webhook_intermediate_status": True,
-})
+    assert res.response_sync_deployment_run_run_deployment_sync_post is not None
 
-if res.response_sync_deployment_run_run_deployment_sync_post is not None:
-    # handle response
-    pass
+    # Handle response
+    print(res.response_sync_deployment_run_run_deployment_sync_post)
 
 ```
 
@@ -94,16 +92,16 @@ if res.response_sync_deployment_run_run_deployment_sync_post is not None:
 | `request`                                                                          | [components.DeploymentRunRequest](../../models/components/deploymentrunrequest.md) | :heavy_check_mark:                                                                 | The request object to use for the request.                                         |
 | `retries`                                                                          | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                   | :heavy_minus_sign:                                                                 | Configuration to override the default retry behavior of the client.                |
 
-
 ### Response
 
 **[operations.SyncDeploymentRunRunDeploymentSyncPostResponse](../../models/operations/syncdeploymentrunrundeploymentsyncpostresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## stream
 
@@ -114,26 +112,25 @@ Create a new deployment run with the given parameters. This function sets up the
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.run.deployment.stream(request={
+        "deployment_id": "15e79589-12c9-453c-a41a-348fdd7de957",
+        "inputs": {
+            "prompt": "A beautiful landscape",
+            "seed": 42,
+        },
+        "webhook": "https://myapp.com/webhook",
+    })
 
-res = s.run.deployment.stream(request={
-    "deployment_id": "12345678-1234-5678-1234-567812345678",
-    "inputs": {
-        "num_inference_steps": 30,
-        "prompt": "A futuristic cityscape",
-        "seed": 123456,
-    },
-    "webhook": "https://myapp.com/webhook",
-    "webhook_intermediate_status": True,
-})
+    assert res.run_stream is not None
 
-if res.run_stream is not None:
-    for event in res.run_stream:
-        # handle event
-        print(event, flush=True)
+    with res.run_stream as event_stream:
+        for event in event_stream:
+            # handle event
+            print(event, flush=True)
 
 ```
 
@@ -144,13 +141,13 @@ if res.run_stream is not None:
 | `request`                                                                          | [components.DeploymentRunRequest](../../models/components/deploymentrunrequest.md) | :heavy_check_mark:                                                                 | The request object to use for the request.                                         |
 | `retries`                                                                          | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                   | :heavy_minus_sign:                                                                 | Configuration to override the default retry behavior of the client.                |
 
-
 ### Response
 
 **[operations.CreateRunDeploymentStreamRunDeploymentStreamPostResponse](../../models/operations/createrundeploymentstreamrundeploymentstreampostresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
