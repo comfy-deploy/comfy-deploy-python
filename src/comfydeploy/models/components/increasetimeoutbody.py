@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from comfydeploy.types import BaseModel
-from typing import TypedDict
+from typing_extensions import TypedDict
 
 
 class IncreaseTimeoutBodyTypedDict(TypedDict):
@@ -10,11 +10,13 @@ class IncreaseTimeoutBodyTypedDict(TypedDict):
     session_id: str
     timeout: int
     gpu: str
-    
+
 
 class IncreaseTimeoutBody(BaseModel):
     machine_id: str
+
     session_id: str
+
     timeout: int
+
     gpu: str
-    

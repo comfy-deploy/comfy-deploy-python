@@ -17,7 +17,7 @@ from .metadata import (
     MultipartFormMetadata,
     find_field_metadata,
 )
-from .values import _val_to_string
+from .values import _is_set, _val_to_string
 
 
 def _populate_form(
@@ -27,7 +27,7 @@ def _populate_form(
     delimiter: str,
     form: Dict[str, List[str]],
 ):
-    if obj is None:
+    if not _is_set(obj):
         return form
 
     if isinstance(obj, BaseModel):
@@ -41,7 +41,7 @@ def _populate_form(
                 continue
 
             val = getattr(obj, name)
-            if val is None:
+            if not _is_set(val):
                 continue
 
             if explode:
@@ -54,7 +54,7 @@ def _populate_form(
     elif isinstance(obj, Dict):
         items = []
         for key, value in obj.items():
-            if value is None:
+            if not _is_set(value):
                 continue
 
             if explode:
@@ -68,7 +68,7 @@ def _populate_form(
         items = []
 
         for value in obj:
-            if value is None:
+            if not _is_set(value):
                 continue
 
             if explode:
@@ -102,20 +102,19 @@ def serialize_multipart_form(
         field = request_fields[name]
 
         val = getattr(request, name)
-        if val is None:
+        if not _is_set(val):
             continue
 
         field_metadata = find_field_metadata(field, MultipartFormMetadata)
         if not field_metadata:
             continue
 
-        f_name = field.alias if field.alias is not None else name
+        f_name = field.alias if field.alias else name
 
         if field_metadata.file:
             file_fields: Dict[str, FieldInfo] = val.__class__.model_fields
 
             file_name = ""
-            field_name = ""
             content = None
             content_type = None
 
@@ -131,20 +130,15 @@ def serialize_multipart_form(
                 elif file_field_name == "content_type":
                     content_type = getattr(val, file_field_name, None)
                 else:
-                    field_name = (
-                        file_field.alias
-                        if file_field.alias is not None
-                        else file_field_name
-                    )
                     file_name = getattr(val, file_field_name)
 
-            if field_name == "" or file_name == "" or content is None:
+            if file_name == "" or content is None:
                 raise ValueError("invalid multipart/form-data file")
 
             if content_type is not None:
-                files[field_name] = (file_name, content, content_type)
+                files[f_name] = (file_name, content, content_type)
             else:
-                files[field_name] = (file_name, content)
+                files[f_name] = (file_name, content)
         elif field_metadata.json:
             files[f_name] = (
                 None,
@@ -156,7 +150,7 @@ def serialize_multipart_form(
                 values = []
 
                 for value in val:
-                    if value is None:
+                    if not _is_set(value):
                         continue
                     values.append(_val_to_string(value))
 
@@ -176,7 +170,7 @@ def serialize_form_data(data: Any) -> Dict[str, Any]:
             field = data_fields[name]
 
             val = getattr(data, name)
-            if val is None:
+            if not _is_set(val):
                 continue
 
             metadata = find_field_metadata(field, FormMetadata)
@@ -200,7 +194,8 @@ def serialize_form_data(data: Any) -> Dict[str, Any]:
                     raise ValueError(f"Invalid form style for field {name}")
     elif isinstance(data, Dict):
         for key, value in data.items():
-            form[key] = [_val_to_string(value)]
+            if _is_set(value):
+                form[key] = [_val_to_string(value)]
     else:
         raise TypeError(f"Invalid request body type {type(data)} for form data")
 

@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 from comfydeploy.types import BaseModel
-from typing import TypedDict
+from typing_extensions import TypedDict
 
 
 class CancelFunctionBodyTypedDict(TypedDict):
     function_id: str
-    
+
 
 class CancelFunctionBody(BaseModel):
     function_id: str
-    

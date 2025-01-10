@@ -5,26 +5,40 @@ from comfydeploy.types import BaseModel
 from comfydeploy.utils import FieldMetadata, MultipartFormMetadata
 import io
 import pydantic
-from typing import IO, Optional, TypedDict, Union
-from typing_extensions import Annotated, NotRequired
+from typing import IO, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class BodyUploadAssetFileAssetsUploadPostFileTypedDict(TypedDict):
     file_name: str
     content: Union[bytes, IO[bytes], io.BufferedReader]
     content_type: NotRequired[str]
-    
+
 
 class BodyUploadAssetFileAssetsUploadPostFile(BaseModel):
-    file_name: Annotated[str, pydantic.Field(alias="file"), FieldMetadata(multipart=True)]
-    content: Annotated[Union[bytes, IO[bytes], io.BufferedReader], pydantic.Field(alias=""), FieldMetadata(multipart=MultipartFormMetadata(content=True))]
-    content_type: Annotated[Optional[str], pydantic.Field(alias="Content-Type"), FieldMetadata(multipart=True)] = None
-    
+    file_name: Annotated[
+        str, pydantic.Field(alias="fileName"), FieldMetadata(multipart=True)
+    ]
+
+    content: Annotated[
+        Union[bytes, IO[bytes], io.BufferedReader],
+        pydantic.Field(alias=""),
+        FieldMetadata(multipart=MultipartFormMetadata(content=True)),
+    ]
+
+    content_type: Annotated[
+        Optional[str],
+        pydantic.Field(alias="Content-Type"),
+        FieldMetadata(multipart=True),
+    ] = None
+
 
 class BodyUploadAssetFileAssetsUploadPostTypedDict(TypedDict):
     file: BodyUploadAssetFileAssetsUploadPostFileTypedDict
-    
+
 
 class BodyUploadAssetFileAssetsUploadPost(BaseModel):
-    file: Annotated[BodyUploadAssetFileAssetsUploadPostFile, pydantic.Field(alias=""), FieldMetadata(multipart=MultipartFormMetadata(file=True))]
-    
+    file: Annotated[
+        BodyUploadAssetFileAssetsUploadPostFile,
+        FieldMetadata(multipart=MultipartFormMetadata(file=True)),
+    ]

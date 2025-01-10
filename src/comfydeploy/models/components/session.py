@@ -3,7 +3,7 @@
 from __future__ import annotations
 from comfydeploy.types import BaseModel
 from datetime import datetime
-from typing import TypedDict
+from typing_extensions import TypedDict
 
 
 class SessionTypedDict(TypedDict):
@@ -14,14 +14,19 @@ class SessionTypedDict(TypedDict):
     created_at: datetime
     timeout: int
     machine_id: str
-    
+
 
 class Session(BaseModel):
     session_id: str
+
     gpu_event_id: str
+
     url: str
+
     gpu: str
+
     created_at: datetime
+
     timeout: int
+
     machine_id: str
-    

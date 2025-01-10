@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from comfydeploy.types import BaseModel
-from typing import TypedDict
+from typing_extensions import TypedDict
 
 
 class DeploymentCreateTypedDict(TypedDict):
@@ -10,11 +10,13 @@ class DeploymentCreateTypedDict(TypedDict):
     workflow_id: str
     machine_id: str
     environment: str
-    
+
 
 class DeploymentCreate(BaseModel):
     workflow_version_id: str
+
     workflow_id: str
+
     machine_id: str
+
     environment: str
-    

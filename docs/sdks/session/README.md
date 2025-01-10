@@ -1,6 +1,8 @@
 # Session
 (*session*)
 
+## Overview
+
 ### Available Operations
 
 * [get](#get) - Get Session
@@ -18,16 +20,16 @@ Get Session
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.session.get(session_id="<id>")
 
-res = s.session.get(session_id="<value>")
+    assert res.session is not None
 
-if res.session is not None:
-    # handle response
-    pass
+    # Handle response
+    print(res.session)
 
 ```
 
@@ -38,16 +40,16 @@ if res.session is not None:
 | `session_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
-
 ### Response
 
 **[operations.GetSessionSessionSessionIDGetResponse](../../models/operations/getsessionsessionsessionidgetresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## cancel
 
@@ -58,16 +60,16 @@ Delete Session
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.session.cancel(session_id="<id>")
 
-res = s.session.cancel(session_id="<value>")
+    assert res.delete_session_response is not None
 
-if res.delete_session_response is not None:
-    # handle response
-    pass
+    # Handle response
+    print(res.delete_session_response)
 
 ```
 
@@ -78,16 +80,16 @@ if res.delete_session_response is not None:
 | `session_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
-
 ### Response
 
 **[operations.DeleteSessionSessionSessionIDDeleteResponse](../../models/operations/deletesessionsessionsessioniddeleteresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## list
 
@@ -98,16 +100,16 @@ Get Machine Sessions
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.session.list(machine_id="<id>")
 
-res = s.session.list(machine_id="<value>")
+    assert res.response_get_machine_sessions_sessions_get is not None
 
-if res.response_get_machine_sessions_sessions_get is not None:
-    # handle response
-    pass
+    # Handle response
+    print(res.response_get_machine_sessions_sessions_get)
 
 ```
 
@@ -118,16 +120,16 @@ if res.response_get_machine_sessions_sessions_get is not None:
 | `machine_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
-
 ### Response
 
 **[operations.GetMachineSessionsSessionsGetResponse](../../models/operations/getmachinesessionssessionsgetresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## increase_timeout_session_increase_timeout_post
 
@@ -138,21 +140,21 @@ Increase Timeout
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.session.increase_timeout_session_increase_timeout_post(request={
+        "machine_id": "<id>",
+        "session_id": "d1cbd355-89fb-45f4-9778-6137629fc60d",
+        "timeout": 465465,
+        "gpu": "<value>",
+    })
 
-res = s.session.increase_timeout_session_increase_timeout_post(request={
-    "machine_id": "<value>",
-    "session_id": "d712cbb0-db3d-45d5-a8f9-ef1b452fb427",
-    "timeout": 36199,
-    "gpu": "<value>",
-})
+    assert res.any is not None
 
-if res.any is not None:
-    # handle response
-    pass
+    # Handle response
+    print(res.any)
 
 ```
 
@@ -163,16 +165,16 @@ if res.any is not None:
 | `request`                                                                        | [components.IncreaseTimeoutBody](../../models/components/increasetimeoutbody.md) | :heavy_check_mark:                                                               | The request object to use for the request.                                       |
 | `retries`                                                                        | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                 | :heavy_minus_sign:                                                               | Configuration to override the default retry behavior of the client.              |
 
-
 ### Response
 
 **[operations.IncreaseTimeoutSessionIncreaseTimeoutPostResponse](../../models/operations/increasetimeoutsessionincreasetimeoutpostresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## create
 
@@ -183,18 +185,18 @@ Create Session
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.session.create(request={
+        "machine_id": "<id>",
+    })
 
-res = s.session.create(request={
-    "machine_id": "<value>",
-})
+    assert res.create_session_response is not None
 
-if res.create_session_response is not None:
-    # handle response
-    pass
+    # Handle response
+    print(res.create_session_response)
 
 ```
 
@@ -205,13 +207,13 @@ if res.create_session_response is not None:
 | `request`                                                                    | [components.CreateSessionBody](../../models/components/createsessionbody.md) | :heavy_check_mark:                                                           | The request object to use for the request.                                   |
 | `retries`                                                                    | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)             | :heavy_minus_sign:                                                           | Configuration to override the default retry behavior of the client.          |
 
-
 ### Response
 
 **[operations.CreateSessionSessionPostResponse](../../models/operations/createsessionsessionpostresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |

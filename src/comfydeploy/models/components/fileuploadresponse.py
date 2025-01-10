@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from comfydeploy.types import BaseModel
-from typing import TypedDict
+from typing_extensions import TypedDict
 
 
 class FileUploadResponseTypedDict(TypedDict):
@@ -14,15 +14,17 @@ class FileUploadResponseTypedDict(TypedDict):
     r"""The original name of the uploaded file"""
     file_url: str
     r"""The URL where the uploaded file can be accessed"""
-    
+
 
 class FileUploadResponse(BaseModel):
     message: str
     r"""A message indicating the result of the file upload"""
+
     file_id: str
     r"""The unique identifier for the uploaded file"""
+
     file_name: str
     r"""The original name of the uploaded file"""
+
     file_url: str
     r"""The URL where the uploaded file can be accessed"""
-    

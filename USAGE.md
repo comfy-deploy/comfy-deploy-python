@@ -3,16 +3,16 @@
 # Synchronous Example
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.run.get(run_id="b888f774-3e7c-4135-a18c-6b985523c4bc")
 
-res = s.run.get(run_id="b18d8d81-fd7b-4764-a31e-475cb1f36591")
+    assert res.workflow_run_model is not None
 
-if res.workflow_run_model is not None:
-    # handle response
-    pass
+    # Handle response
+    print(res.workflow_run_model)
 ```
 
 </br>
@@ -24,13 +24,16 @@ import asyncio
 from comfydeploy import ComfyDeploy
 
 async def main():
-    s = ComfyDeploy(
+    async with ComfyDeploy(
         bearer="<YOUR_BEARER_TOKEN_HERE>",
-    )
-    res = await s.run.get_async(run_id="58ccc65b-c928-4154-952e-30c048b8c2b5")
-    if res.workflow_run_model is not None:
-        # handle response
-        pass
+    ) as comfy_deploy:
+
+        res = await comfy_deploy.run.get_async(run_id="b888f774-3e7c-4135-a18c-6b985523c4bc")
+
+        assert res.workflow_run_model is not None
+
+        # Handle response
+        print(res.workflow_run_model)
 
 asyncio.run(main())
 ```

@@ -3,14 +3,22 @@
 from __future__ import annotations
 from comfydeploy.types import BaseModel
 from comfydeploy.utils import FieldMetadata, SecurityMetadata
-from typing import TypedDict
-from typing_extensions import Annotated
+from typing_extensions import Annotated, TypedDict
 
 
 class SecurityTypedDict(TypedDict):
     bearer: str
-    
+
 
 class Security(BaseModel):
-    bearer: Annotated[str, FieldMetadata(security=SecurityMetadata(scheme=True, scheme_type="http", sub_type="bearer", field_name="Authorization"))]
-    
+    bearer: Annotated[
+        str,
+        FieldMetadata(
+            security=SecurityMetadata(
+                scheme=True,
+                scheme_type="http",
+                sub_type="bearer",
+                field_name="Authorization",
+            )
+        ),
+    ]

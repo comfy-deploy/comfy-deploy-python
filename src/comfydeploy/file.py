@@ -5,17 +5,21 @@ from comfydeploy import utils
 from comfydeploy._hooks import HookContext
 from comfydeploy.models import components, errors, operations
 from comfydeploy.types import BaseModel, OptionalNullable, UNSET
-from typing import Any, List, Optional, Union, cast
+from typing import Any, List, Mapping, Optional, Union, cast
+
 
 class File(BaseSDK):
-    
-    
     def upload(
-        self, *,
-        request: Union[components.BodyUploadFileFileUploadPost, components.BodyUploadFileFileUploadPostTypedDict],
+        self,
+        *,
+        request: Union[
+            components.BodyUploadFileFileUploadPost,
+            components.BodyUploadFileFileUploadPostTypedDict,
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> operations.UploadFileFileUploadPostResponse:
         r"""Upload File
 
@@ -23,20 +27,21 @@ class File(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(request, components.BodyUploadFileFileUploadPost)
         request = cast(components.BodyUploadFileFileUploadPost, request)
-        
-        req = self.build_request(
+
+        req = self._build_request(
             method="POST",
             path="/file/upload",
             base_url=base_url,
@@ -47,52 +52,74 @@ class File(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request, False, False, "multipart", components.BodyUploadFileFileUploadPost),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request,
+                False,
+                False,
+                "multipart",
+                components.BodyUploadFileFileUploadPost,
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="upload_file_file_upload_post", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="upload_file_file_upload_post",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return operations.UploadFileFileUploadPostResponse(file_upload_response=utils.unmarshal_json(http_res.text, Optional[components.FileUploadResponse]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+            return operations.UploadFileFileUploadPostResponse(
+                file_upload_response=utils.unmarshal_json(
+                    http_res.text, Optional[components.FileUploadResponse]
+                ),
+                http_meta=components.HTTPMetadata(request=req, response=http_res),
+            )
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
             raise errors.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise errors.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
     async def upload_async(
-        self, *,
-        request: Union[components.BodyUploadFileFileUploadPost, components.BodyUploadFileFileUploadPostTypedDict],
+        self,
+        *,
+        request: Union[
+            components.BodyUploadFileFileUploadPost,
+            components.BodyUploadFileFileUploadPostTypedDict,
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> operations.UploadFileFileUploadPostResponse:
         r"""Upload File
 
@@ -100,20 +127,21 @@ class File(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(request, components.BodyUploadFileFileUploadPost)
         request = cast(components.BodyUploadFileFileUploadPost, request)
-        
-        req = self.build_request(
+
+        req = self._build_request_async(
             method="POST",
             path="/file/upload",
             base_url=base_url,
@@ -124,52 +152,73 @@ class File(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request, False, False, "multipart", components.BodyUploadFileFileUploadPost),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request,
+                False,
+                False,
+                "multipart",
+                components.BodyUploadFileFileUploadPost,
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="upload_file_file_upload_post", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="upload_file_file_upload_post",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return operations.UploadFileFileUploadPostResponse(file_upload_response=utils.unmarshal_json(http_res.text, Optional[components.FileUploadResponse]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+            return operations.UploadFileFileUploadPostResponse(
+                file_upload_response=utils.unmarshal_json(
+                    http_res.text, Optional[components.FileUploadResponse]
+                ),
+                http_meta=components.HTTPMetadata(request=req, response=http_res),
+            )
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
             raise errors.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise errors.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
     def create_folder_assets_folder_post(
-        self, *,
-        request: Union[components.CreateFolderRequest, components.CreateFolderRequestTypedDict],
+        self,
+        *,
+        request: Union[
+            components.CreateFolderRequest, components.CreateFolderRequestTypedDict
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> operations.CreateFolderAssetsFolderPostResponse:
         r"""Create Folder
 
@@ -177,20 +226,21 @@ class File(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(request, components.CreateFolderRequest)
         request = cast(components.CreateFolderRequest, request)
-        
-        req = self.build_request(
+
+        req = self._build_request(
             method="POST",
             path="/assets/folder",
             base_url=base_url,
@@ -201,52 +251,69 @@ class File(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request, False, False, "json", components.CreateFolderRequest),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request, False, False, "json", components.CreateFolderRequest
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="create_folder_assets_folder_post", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="create_folder_assets_folder_post",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return operations.CreateFolderAssetsFolderPostResponse(asset_response=utils.unmarshal_json(http_res.text, Optional[components.AssetResponse]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+            return operations.CreateFolderAssetsFolderPostResponse(
+                asset_response=utils.unmarshal_json(
+                    http_res.text, Optional[components.AssetResponse]
+                ),
+                http_meta=components.HTTPMetadata(request=req, response=http_res),
+            )
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
             raise errors.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise errors.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
     async def create_folder_assets_folder_post_async(
-        self, *,
-        request: Union[components.CreateFolderRequest, components.CreateFolderRequestTypedDict],
+        self,
+        *,
+        request: Union[
+            components.CreateFolderRequest, components.CreateFolderRequestTypedDict
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> operations.CreateFolderAssetsFolderPostResponse:
         r"""Create Folder
 
@@ -254,20 +321,21 @@ class File(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(request, components.CreateFolderRequest)
         request = cast(components.CreateFolderRequest, request)
-        
-        req = self.build_request(
+
+        req = self._build_request_async(
             method="POST",
             path="/assets/folder",
             base_url=base_url,
@@ -278,52 +346,67 @@ class File(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request, False, False, "json", components.CreateFolderRequest),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request, False, False, "json", components.CreateFolderRequest
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="create_folder_assets_folder_post", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="create_folder_assets_folder_post",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return operations.CreateFolderAssetsFolderPostResponse(asset_response=utils.unmarshal_json(http_res.text, Optional[components.AssetResponse]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+            return operations.CreateFolderAssetsFolderPostResponse(
+                asset_response=utils.unmarshal_json(
+                    http_res.text, Optional[components.AssetResponse]
+                ),
+                http_meta=components.HTTPMetadata(request=req, response=http_res),
+            )
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
             raise errors.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise errors.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
     def list_assets_assets_get(
-        self, *,
+        self,
+        *,
         path: Optional[str] = "/",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> operations.ListAssetsAssetsGetResponse:
         r"""List Assets
 
@@ -331,20 +414,21 @@ class File(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = operations.ListAssetsAssetsGetRequest(
             path=path,
         )
-        
-        req = self.build_request(
+
+        req = self._build_request(
             method="GET",
             path="/assets",
             base_url=base_url,
@@ -355,51 +439,64 @@ class File(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="list_assets_assets_get", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="list_assets_assets_get",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return operations.ListAssetsAssetsGetResponse(response_list_assets_assets_get=utils.unmarshal_json(http_res.text, Optional[List[components.AssetResponse]]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+            return operations.ListAssetsAssetsGetResponse(
+                response_list_assets_assets_get=utils.unmarshal_json(
+                    http_res.text, Optional[List[components.AssetResponse]]
+                ),
+                http_meta=components.HTTPMetadata(request=req, response=http_res),
+            )
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
             raise errors.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise errors.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
     async def list_assets_assets_get_async(
-        self, *,
+        self,
+        *,
         path: Optional[str] = "/",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> operations.ListAssetsAssetsGetResponse:
         r"""List Assets
 
@@ -407,20 +504,21 @@ class File(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = operations.ListAssetsAssetsGetRequest(
             path=path,
         )
-        
-        req = self.build_request(
+
+        req = self._build_request_async(
             method="GET",
             path="/assets",
             base_url=base_url,
@@ -431,224 +529,86 @@ class File(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="list_assets_assets_get", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="list_assets_assets_get",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return operations.ListAssetsAssetsGetResponse(response_list_assets_assets_get=utils.unmarshal_json(http_res.text, Optional[List[components.AssetResponse]]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+            return operations.ListAssetsAssetsGetResponse(
+                response_list_assets_assets_get=utils.unmarshal_json(
+                    http_res.text, Optional[List[components.AssetResponse]]
+                ),
+                http_meta=components.HTTPMetadata(request=req, response=http_res),
+            )
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
             raise errors.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
         content_type = http_res.headers.get("Content-Type")
-        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
-
-    
-    
-    def get_asset_assets_asset_id_get(
-        self, *,
-        asset_id: str,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-    ) -> operations.GetAssetAssetsAssetIDGetResponse:
-        r"""Get Asset
-
-        :param asset_id: 
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-        
-        if server_url is not None:
-            base_url = server_url
-        
-        request = operations.GetAssetAssetsAssetIDGetRequest(
-            asset_id=asset_id,
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise errors.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
         )
-        
-        req = self.build_request(
-            method="GET",
-            path="/assets/{asset_id}",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=False,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            security=self.sdk_configuration.security,
-            timeout_ms=timeout_ms,
-        )
-        
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
 
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
-        http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="get_asset_assets__asset_id__get", oauth2_scopes=[], security_source=self.sdk_configuration.security),
-            request=req,
-            error_status_codes=["422","4XX","5XX"],
-            retry_config=retry_config
-        )
-        
-        data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return operations.GetAssetAssetsAssetIDGetResponse(asset_response=utils.unmarshal_json(http_res.text, Optional[components.AssetResponse]), http_meta=components.HTTPMetadata(request=req, response=http_res))
-        if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
-
-    
-    
-    async def get_asset_assets_asset_id_get_async(
-        self, *,
-        asset_id: str,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-    ) -> operations.GetAssetAssetsAssetIDGetResponse:
-        r"""Get Asset
-
-        :param asset_id: 
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-        
-        if server_url is not None:
-            base_url = server_url
-        
-        request = operations.GetAssetAssetsAssetIDGetRequest(
-            asset_id=asset_id,
-        )
-        
-        req = self.build_request(
-            method="GET",
-            path="/assets/{asset_id}",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=False,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            security=self.sdk_configuration.security,
-            timeout_ms=timeout_ms,
-        )
-        
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="get_asset_assets__asset_id__get", oauth2_scopes=[], security_source=self.sdk_configuration.security),
-            request=req,
-            error_status_codes=["422","4XX","5XX"],
-            retry_config=retry_config
-        )
-        
-        data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return operations.GetAssetAssetsAssetIDGetResponse(asset_response=utils.unmarshal_json(http_res.text, Optional[components.AssetResponse]), http_meta=components.HTTPMetadata(request=req, response=http_res))
-        if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
-
-    
-    
     def delete_asset_assets_asset_id_delete(
-        self, *,
+        self,
+        *,
         asset_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> operations.DeleteAssetAssetsAssetIDDeleteResponse:
         r"""Delete Asset
 
-        :param asset_id: 
+        :param asset_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = operations.DeleteAssetAssetsAssetIDDeleteRequest(
             asset_id=asset_id,
         )
-        
-        req = self.build_request(
+
+        req = self._build_request(
             method="DELETE",
             path="/assets/{asset_id}",
             base_url=base_url,
@@ -659,72 +619,84 @@ class File(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="delete_asset_assets__asset_id__delete", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="delete_asset_assets__asset_id__delete",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return operations.DeleteAssetAssetsAssetIDDeleteResponse(any=utils.unmarshal_json(http_res.text, Optional[Any]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+            return operations.DeleteAssetAssetsAssetIDDeleteResponse(
+                any=utils.unmarshal_json(http_res.text, Optional[Any]),
+                http_meta=components.HTTPMetadata(request=req, response=http_res),
+            )
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
             raise errors.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise errors.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
     async def delete_asset_assets_asset_id_delete_async(
-        self, *,
+        self,
+        *,
         asset_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> operations.DeleteAssetAssetsAssetIDDeleteResponse:
         r"""Delete Asset
 
-        :param asset_id: 
+        :param asset_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = operations.DeleteAssetAssetsAssetIDDeleteRequest(
             asset_id=asset_id,
         )
-        
-        req = self.build_request(
+
+        req = self._build_request_async(
             method="DELETE",
             path="/assets/{asset_id}",
             base_url=base_url,
@@ -735,155 +707,273 @@ class File(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="delete_asset_assets__asset_id__delete", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="delete_asset_assets__asset_id__delete",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return operations.DeleteAssetAssetsAssetIDDeleteResponse(any=utils.unmarshal_json(http_res.text, Optional[Any]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+            return operations.DeleteAssetAssetsAssetIDDeleteResponse(
+                any=utils.unmarshal_json(http_res.text, Optional[Any]),
+                http_meta=components.HTTPMetadata(request=req, response=http_res),
+            )
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
             raise errors.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
-    def upload_asset_file_assets_upload_post(
-        self, *,
-        body_upload_asset_file_assets_upload_post: Union[components.BodyUploadAssetFileAssetsUploadPost, components.BodyUploadAssetFileAssetsUploadPostTypedDict],
-        parent_path: Optional[str] = "/",
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise errors.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    def get_asset_assets_asset_id_get(
+        self,
+        *,
+        asset_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> operations.UploadAssetFileAssetsUploadPostResponse:
-        r"""Upload Asset File
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> operations.GetAssetAssetsAssetIDGetResponse:
+        r"""Get Asset
 
-        :param body_upload_asset_file_assets_upload_post: 
-        :param parent_path: Parent folder path
+        :param asset_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
-        request = operations.UploadAssetFileAssetsUploadPostRequest(
-            parent_path=parent_path,
-            body_upload_asset_file_assets_upload_post=utils.get_pydantic_model(body_upload_asset_file_assets_upload_post, components.BodyUploadAssetFileAssetsUploadPost),
+
+        request = operations.GetAssetAssetsAssetIDGetRequest(
+            asset_id=asset_id,
         )
-        
-        req = self.build_request(
-            method="POST",
-            path="/assets/upload",
+
+        req = self._build_request(
+            method="GET",
+            path="/assets/{asset_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
-            request_has_path_params=False,
+            request_body_required=False,
+            request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.body_upload_asset_file_assets_upload_post, False, False, "multipart", components.BodyUploadAssetFileAssetsUploadPost),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="upload_asset_file_assets_upload_post", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="get_asset_assets__asset_id__get",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return operations.UploadAssetFileAssetsUploadPostResponse(asset_response=utils.unmarshal_json(http_res.text, Optional[components.AssetResponse]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+            return operations.GetAssetAssetsAssetIDGetResponse(
+                asset_response=utils.unmarshal_json(
+                    http_res.text, Optional[components.AssetResponse]
+                ),
+                http_meta=components.HTTPMetadata(request=req, response=http_res),
+            )
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
             raise errors.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
-    async def upload_asset_file_assets_upload_post_async(
-        self, *,
-        body_upload_asset_file_assets_upload_post: Union[components.BodyUploadAssetFileAssetsUploadPost, components.BodyUploadAssetFileAssetsUploadPostTypedDict],
-        parent_path: Optional[str] = "/",
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise errors.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    async def get_asset_assets_asset_id_get_async(
+        self,
+        *,
+        asset_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> operations.UploadAssetFileAssetsUploadPostResponse:
-        r"""Upload Asset File
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> operations.GetAssetAssetsAssetIDGetResponse:
+        r"""Get Asset
 
-        :param body_upload_asset_file_assets_upload_post: 
-        :param parent_path: Parent folder path
+        :param asset_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
+        request = operations.GetAssetAssetsAssetIDGetRequest(
+            asset_id=asset_id,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/assets/{asset_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                operation_id="get_asset_assets__asset_id__get",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return operations.GetAssetAssetsAssetIDGetResponse(
+                asset_response=utils.unmarshal_json(
+                    http_res.text, Optional[components.AssetResponse]
+                ),
+                http_meta=components.HTTPMetadata(request=req, response=http_res),
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
+            raise errors.HTTPValidationError(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise errors.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    def upload_asset_file_assets_upload_post(
+        self,
+        *,
+        body_upload_asset_file_assets_upload_post: Union[
+            components.BodyUploadAssetFileAssetsUploadPost,
+            components.BodyUploadAssetFileAssetsUploadPostTypedDict,
+        ],
+        parent_path: Optional[str] = "/",
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> operations.UploadAssetFileAssetsUploadPostResponse:
+        r"""Upload Asset File
+
+        :param body_upload_asset_file_assets_upload_post:
+        :param parent_path: Parent folder path
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+
         request = operations.UploadAssetFileAssetsUploadPostRequest(
             parent_path=parent_path,
-            body_upload_asset_file_assets_upload_post=utils.get_pydantic_model(body_upload_asset_file_assets_upload_post, components.BodyUploadAssetFileAssetsUploadPost),
+            body_upload_asset_file_assets_upload_post=utils.get_pydantic_model(
+                body_upload_asset_file_assets_upload_post,
+                components.BodyUploadAssetFileAssetsUploadPost,
+            ),
         )
-        
-        req = self.build_request(
+
+        req = self._build_request(
             method="POST",
             path="/assets/upload",
             base_url=base_url,
@@ -894,42 +984,165 @@ class File(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.body_upload_asset_file_assets_upload_post, False, False, "multipart", components.BodyUploadAssetFileAssetsUploadPost),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.body_upload_asset_file_assets_upload_post,
+                False,
+                False,
+                "multipart",
+                components.BodyUploadAssetFileAssetsUploadPost,
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="upload_asset_file_assets_upload_post", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                operation_id="upload_asset_file_assets_upload_post",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return operations.UploadAssetFileAssetsUploadPostResponse(asset_response=utils.unmarshal_json(http_res.text, Optional[components.AssetResponse]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+            return operations.UploadAssetFileAssetsUploadPostResponse(
+                asset_response=utils.unmarshal_json(
+                    http_res.text, Optional[components.AssetResponse]
+                ),
+                http_meta=components.HTTPMetadata(request=req, response=http_res),
+            )
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
             raise errors.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise errors.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    async def upload_asset_file_assets_upload_post_async(
+        self,
+        *,
+        body_upload_asset_file_assets_upload_post: Union[
+            components.BodyUploadAssetFileAssetsUploadPost,
+            components.BodyUploadAssetFileAssetsUploadPostTypedDict,
+        ],
+        parent_path: Optional[str] = "/",
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> operations.UploadAssetFileAssetsUploadPostResponse:
+        r"""Upload Asset File
+
+        :param body_upload_asset_file_assets_upload_post:
+        :param parent_path: Parent folder path
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+
+        request = operations.UploadAssetFileAssetsUploadPostRequest(
+            parent_path=parent_path,
+            body_upload_asset_file_assets_upload_post=utils.get_pydantic_model(
+                body_upload_asset_file_assets_upload_post,
+                components.BodyUploadAssetFileAssetsUploadPost,
+            ),
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/assets/upload",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.body_upload_asset_file_assets_upload_post,
+                False,
+                False,
+                "multipart",
+                components.BodyUploadAssetFileAssetsUploadPost,
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                operation_id="upload_asset_file_assets_upload_post",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return operations.UploadAssetFileAssetsUploadPostResponse(
+                asset_response=utils.unmarshal_json(
+                    http_res.text, Optional[components.AssetResponse]
+                ),
+                http_meta=components.HTTPMetadata(request=req, response=http_res),
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
+            raise errors.HTTPValidationError(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise errors.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
