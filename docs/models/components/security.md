@@ -5,4 +5,4 @@
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `bearer_auth`      | *str*              | :heavy_check_mark: | N/A                |
+| `bearer`           | *str*              | :heavy_check_mark: | N/A                |

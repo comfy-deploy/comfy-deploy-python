@@ -4,24 +4,25 @@ from .basesdk import BaseSDK
 from comfydeploy import utils
 from comfydeploy._hooks import HookContext
 from comfydeploy.models import components, errors, operations
-from comfydeploy.types import OptionalNullable, UNSET
-from typing import Any, List, Optional
+from comfydeploy.types import BaseModel, OptionalNullable, UNSET
+from comfydeploy.utils import eventstreaming
+from typing import Any, List, Optional, Union, cast
 
 class Deployment(BaseSDK):
     
     
-    def get_input_definition(
+    def queue(
         self, *,
-        id: str,
+        request: Union[components.DeploymentRunRequest, components.DeploymentRunRequestTypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> operations.GetDeploymentIDInputsResponse:
-        r"""Get comfyui workflow inputs definition
+    ) -> operations.QueueDeploymentRunRunDeploymentQueuePostResponse:
+        r"""Deployment - Queue
 
-        Use this to retrieve comfyui workflow inputs definition by id
+        Create a new deployment run with the given parameters.
 
-        :param id: 
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -34,180 +35,23 @@ class Deployment(BaseSDK):
         if server_url is not None:
             base_url = server_url
         
-        request = operations.GetDeploymentIDInputsRequest(
-            id=id,
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(request, components.DeploymentRunRequest)
+        request = cast(components.DeploymentRunRequest, request)
         
         req = self.build_request(
-            method="GET",
-            path="/deployment/{id}/inputs",
+            method="POST",
+            path="/run/deployment/queue",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            security=self.sdk_configuration.security,
-            timeout_ms=timeout_ms,
-        )
-        
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
-        http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="get_/deployment/{id}/inputs", oauth2_scopes=[], security_source=self.sdk_configuration.security),
-            request=req,
-            error_status_codes=["401","4XX","500","5XX"],
-            retry_config=retry_config
-        )
-        
-        data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return operations.GetDeploymentIDInputsResponse(response_bodies=utils.unmarshal_json(http_res.text, Optional[List[operations.ResponseBody]]), http_meta=components.HTTPMetadata(request=req, response=http_res))
-        if utils.match_response(http_res, ["401","4XX","5XX"], "*"):
-            raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.GetDeploymentIDInputsResponseBodyData)
-            data.http_meta = components.HTTPMetadata(request=req, response=http_res)
-            raise errors.GetDeploymentIDInputsResponseBody(data=data)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
-
-    
-    
-    async def get_input_definition_async(
-        self, *,
-        id: str,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-    ) -> operations.GetDeploymentIDInputsResponse:
-        r"""Get comfyui workflow inputs definition
-
-        Use this to retrieve comfyui workflow inputs definition by id
-
-        :param id: 
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-        
-        if server_url is not None:
-            base_url = server_url
-        
-        request = operations.GetDeploymentIDInputsRequest(
-            id=id,
-        )
-        
-        req = self.build_request(
-            method="GET",
-            path="/deployment/{id}/inputs",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=False,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            security=self.sdk_configuration.security,
-            timeout_ms=timeout_ms,
-        )
-        
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="get_/deployment/{id}/inputs", oauth2_scopes=[], security_source=self.sdk_configuration.security),
-            request=req,
-            error_status_codes=["401","4XX","500","5XX"],
-            retry_config=retry_config
-        )
-        
-        data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return operations.GetDeploymentIDInputsResponse(response_bodies=utils.unmarshal_json(http_res.text, Optional[List[operations.ResponseBody]]), http_meta=components.HTTPMetadata(request=req, response=http_res))
-        if utils.match_response(http_res, ["401","4XX","5XX"], "*"):
-            raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.GetDeploymentIDInputsResponseBodyData)
-            data.http_meta = components.HTTPMetadata(request=req, response=http_res)
-            raise errors.GetDeploymentIDInputsResponseBody(data=data)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
-
-    
-    
-    def get(
-        self, *,
-        environment: Optional[operations.Environment] = None,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-    ) -> operations.GetDeploymentResponse:
-        r"""Get all deployed workflows
-
-        Get all deployed workflows
-
-        :param environment: 
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-        
-        if server_url is not None:
-            base_url = server_url
-        
-        request = operations.GetDeploymentRequest(
-            environment=environment,
-        )
-        
-        req = self.build_request(
-            method="GET",
-            path="/deployment",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(request, False, False, "json", components.DeploymentRunRequest),
             timeout_ms=timeout_ms,
         )
         
@@ -226,19 +70,18 @@ class Deployment(BaseSDK):
             ])                
         
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="get_/deployment", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(operation_id="queue_deployment_run_run_deployment_queue_post", oauth2_scopes=[], security_source=self.sdk_configuration.security),
             request=req,
-            error_status_codes=["4XX","500","5XX"],
+            error_status_codes=["422","4XX","5XX"],
             retry_config=retry_config
         )
         
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return operations.GetDeploymentResponse(response_bodies=utils.unmarshal_json(http_res.text, Optional[List[operations.GetDeploymentResponseBody]]), http_meta=components.HTTPMetadata(request=req, response=http_res))
-        if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.GetDeploymentResponseBodyData)
-            data.http_meta = components.HTTPMetadata(request=req, response=http_res)
-            raise errors.GetDeploymentResponseBody(data=data)
+            return operations.QueueDeploymentRunRunDeploymentQueuePostResponse(create_run_response=utils.unmarshal_json(http_res.text, Optional[components.CreateRunResponse]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+        if utils.match_response(http_res, "422", "application/json"):
+            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
+            raise errors.HTTPValidationError(data=data)
         if utils.match_response(http_res, ["4XX","5XX"], "*"):
             raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
         
@@ -247,18 +90,18 @@ class Deployment(BaseSDK):
 
     
     
-    async def get_async(
+    async def queue_async(
         self, *,
-        environment: Optional[operations.Environment] = None,
+        request: Union[components.DeploymentRunRequest, components.DeploymentRunRequestTypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> operations.GetDeploymentResponse:
-        r"""Get all deployed workflows
+    ) -> operations.QueueDeploymentRunRunDeploymentQueuePostResponse:
+        r"""Deployment - Queue
 
-        Get all deployed workflows
+        Create a new deployment run with the given parameters.
 
-        :param environment: 
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -271,22 +114,23 @@ class Deployment(BaseSDK):
         if server_url is not None:
             base_url = server_url
         
-        request = operations.GetDeploymentRequest(
-            environment=environment,
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(request, components.DeploymentRunRequest)
+        request = cast(components.DeploymentRunRequest, request)
         
         req = self.build_request(
-            method="GET",
-            path="/deployment",
+            method="POST",
+            path="/run/deployment/queue",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(request, False, False, "json", components.DeploymentRunRequest),
             timeout_ms=timeout_ms,
         )
         
@@ -305,19 +149,336 @@ class Deployment(BaseSDK):
             ])                
         
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="get_/deployment", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(operation_id="queue_deployment_run_run_deployment_queue_post", oauth2_scopes=[], security_source=self.sdk_configuration.security),
             request=req,
-            error_status_codes=["4XX","500","5XX"],
+            error_status_codes=["422","4XX","5XX"],
             retry_config=retry_config
         )
         
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return operations.GetDeploymentResponse(response_bodies=utils.unmarshal_json(http_res.text, Optional[List[operations.GetDeploymentResponseBody]]), http_meta=components.HTTPMetadata(request=req, response=http_res))
-        if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.GetDeploymentResponseBodyData)
-            data.http_meta = components.HTTPMetadata(request=req, response=http_res)
-            raise errors.GetDeploymentResponseBody(data=data)
+            return operations.QueueDeploymentRunRunDeploymentQueuePostResponse(create_run_response=utils.unmarshal_json(http_res.text, Optional[components.CreateRunResponse]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+        if utils.match_response(http_res, "422", "application/json"):
+            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
+            raise errors.HTTPValidationError(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    def sync(
+        self, *,
+        request: Union[components.DeploymentRunRequest, components.DeploymentRunRequestTypedDict],
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> operations.SyncDeploymentRunRunDeploymentSyncPostResponse:
+        r"""Deployment - Sync
+
+        Create a new deployment run with the given parameters.
+
+        :param request: The request object to send.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(request, components.DeploymentRunRequest)
+        request = cast(components.DeploymentRunRequest, request)
+        
+        req = self.build_request(
+            method="POST",
+            path="/run/deployment/sync",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(request, False, False, "json", components.DeploymentRunRequest),
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = self.do_request(
+            hook_ctx=HookContext(operation_id="sync_deployment_run_run_deployment_sync_post", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["422","4XX","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return operations.SyncDeploymentRunRunDeploymentSyncPostResponse(response_sync_deployment_run_run_deployment_sync_post=utils.unmarshal_json(http_res.text, Optional[List[components.WorkflowRunOutputModel]]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+        if utils.match_response(http_res, "422", "application/json"):
+            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
+            raise errors.HTTPValidationError(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    async def sync_async(
+        self, *,
+        request: Union[components.DeploymentRunRequest, components.DeploymentRunRequestTypedDict],
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> operations.SyncDeploymentRunRunDeploymentSyncPostResponse:
+        r"""Deployment - Sync
+
+        Create a new deployment run with the given parameters.
+
+        :param request: The request object to send.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(request, components.DeploymentRunRequest)
+        request = cast(components.DeploymentRunRequest, request)
+        
+        req = self.build_request(
+            method="POST",
+            path="/run/deployment/sync",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(request, False, False, "json", components.DeploymentRunRequest),
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(operation_id="sync_deployment_run_run_deployment_sync_post", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["422","4XX","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return operations.SyncDeploymentRunRunDeploymentSyncPostResponse(response_sync_deployment_run_run_deployment_sync_post=utils.unmarshal_json(http_res.text, Optional[List[components.WorkflowRunOutputModel]]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+        if utils.match_response(http_res, "422", "application/json"):
+            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
+            raise errors.HTTPValidationError(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    def stream(
+        self, *,
+        request: Union[components.DeploymentRunRequest, components.DeploymentRunRequestTypedDict],
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> operations.CreateRunDeploymentStreamRunDeploymentStreamPostResponse:
+        r"""Deployment - Stream
+
+        Create a new deployment run with the given parameters. This function sets up the run and initiates the execution process. For callback information, see [Callbacks](#tag/callbacks/POST/\{callback_url\}).
+
+        :param request: The request object to send.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(request, components.DeploymentRunRequest)
+        request = cast(components.DeploymentRunRequest, request)
+        
+        req = self.build_request(
+            method="POST",
+            path="/run/deployment/stream",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="text/event-stream",
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(request, False, False, "json", components.DeploymentRunRequest),
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = self.do_request(
+            hook_ctx=HookContext(operation_id="create_run_deployment_stream_run_deployment_stream_post", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["422","4XX","5XX"],
+            stream=True,
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "text/event-stream"):
+            return operations.CreateRunDeploymentStreamRunDeploymentStreamPostResponse(run_stream=eventstreaming.stream_events(http_res, lambda raw: utils.unmarshal_json(raw, components.RunStream)), http_meta=components.HTTPMetadata(request=req, response=http_res))
+        if utils.match_response(http_res, "422", "application/json"):
+            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
+            raise errors.HTTPValidationError(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    async def stream_async(
+        self, *,
+        request: Union[components.DeploymentRunRequest, components.DeploymentRunRequestTypedDict],
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> operations.CreateRunDeploymentStreamRunDeploymentStreamPostResponse:
+        r"""Deployment - Stream
+
+        Create a new deployment run with the given parameters. This function sets up the run and initiates the execution process. For callback information, see [Callbacks](#tag/callbacks/POST/\{callback_url\}).
+
+        :param request: The request object to send.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(request, components.DeploymentRunRequest)
+        request = cast(components.DeploymentRunRequest, request)
+        
+        req = self.build_request(
+            method="POST",
+            path="/run/deployment/stream",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="text/event-stream",
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(request, False, False, "json", components.DeploymentRunRequest),
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(operation_id="create_run_deployment_stream_run_deployment_stream_post", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["422","4XX","5XX"],
+            stream=True,
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "text/event-stream"):
+            return operations.CreateRunDeploymentStreamRunDeploymentStreamPostResponse(run_stream=eventstreaming.stream_events_async(http_res, lambda raw: utils.unmarshal_json(raw, components.RunStream)), http_meta=components.HTTPMetadata(request=req, response=http_res))
+        if utils.match_response(http_res, "422", "application/json"):
+            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
+            raise errors.HTTPValidationError(data=data)
         if utils.match_response(http_res, ["4XX","5XX"], "*"):
             raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
         

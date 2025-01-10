@@ -1,0 +1,15 @@
+# WorkflowRunOutputModel
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `id`                                                                 | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `run_id`                                                             | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `data`                                                               | Dict[str, List[[components.Data](../../models/components/data.md)]]  | :heavy_check_mark:                                                   | N/A                                                                  |
+| `node_meta`                                                          | *Nullable[Any]*                                                      | :heavy_check_mark:                                                   | N/A                                                                  |
+| `created_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | N/A                                                                  |
+| `updated_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | N/A                                                                  |
+| `type`                                                               | *OptionalNullable[str]*                                              | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `node_id`                                                            | *OptionalNullable[str]*                                              | :heavy_minus_sign:                                                   | N/A                                                                  |

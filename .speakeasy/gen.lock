@@ -1,21 +1,23 @@
 lockVersion: 2.0.0
 id: 2c1d440e-25e4-46e2-a435-ebd1f72a7373
 management:
-  docChecksum: 1e32ba51cd494b4e4b0c391f470f0d30
-  docVersion: 0.0.1
+  docChecksum: 69e7ed1c4e2f158cef4ec88a2e8330f5
+  docVersion: V2
   speakeasyVersion: 1.361.1
   generationVersion: 2.393.4
-  releaseVersion: 0.4.1
-  configChecksum: c387a63c5951cd4a5149bf4822b2d1b2
+  releaseVersion: 0.5.0
+  configChecksum: 4229e7295a10841570e30b16f7b276e5
   repoURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   installationURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   published: true
 features:
   python:
     additionalDependencies: 1.0.0
+    callbacks: 2.0.0
     constsAndDefaults: 1.0.2
     core: 5.3.7
     defaultEnabledRetries: 0.2.0
+    deprecations: 3.0.0
     devContainers: 3.0.0
     envVarSecurityUsage: 0.3.1
     flattening: 3.0.0
@@ -23,22 +25,27 @@ features:
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
     globalServerURLs: 3.0.0
+    groups: 3.0.0
+    multipartFileContentType: 1.0.0
     nameOverrides: 3.0.0
     nullables: 1.0.0
     responseFormat: 1.0.0
     retries: 3.0.0
     sdkHooks: 1.0.0
+    serverEvents: 1.0.2
     unions: 3.0.2
+    uploadStreams: 1.0.0
     webhooks: 2.0.0
 generatedFiles:
   - src/comfydeploy/sdkconfiguration.py
-  - src/comfydeploy/run.py
-  - src/comfydeploy/files.py
-  - src/comfydeploy/websocket.py
-  - src/comfydeploy/comfyui.py
-  - src/comfydeploy/workflows.py
   - src/comfydeploy/deployment.py
-  - src/comfydeploy/machine.py
+  - src/comfydeploy/workflow.py
+  - src/comfydeploy/run.py
+  - src/comfydeploy/session.py
+  - src/comfydeploy/deployments.py
+  - src/comfydeploy/file.py
+  - src/comfydeploy/models_.py
+  - src/comfydeploy/search.py
   - src/comfydeploy/sdk.py
   - .vscode/settings.json
   - poetry.toml
@@ -70,206 +77,218 @@ generatedFiles:
   - src/comfydeploy/utils/url.py
   - src/comfydeploy/utils/values.py
   - src/comfydeploy/models/errors/sdkerror.py
-  - src/comfydeploy/models/operations/get_run.py
-  - src/comfydeploy/models/operations/post_run.py
-  - src/comfydeploy/models/operations/get_upload_url.py
-  - src/comfydeploy/models/operations/get_websocket_deployment_id_.py
-  - src/comfydeploy/models/operations/get_auth_response_request_id_.py
-  - src/comfydeploy/models/operations/post_workflow.py
-  - src/comfydeploy/models/operations/get_workflow_version_version_id_.py
-  - src/comfydeploy/models/operations/get_workflow_id_.py
-  - src/comfydeploy/models/operations/post_machine_endpoint.py
-  - src/comfydeploy/models/operations/get_v1_workflows.py
-  - src/comfydeploy/models/operations/post_v1_workflows.py
-  - src/comfydeploy/models/operations/get_v1_workflows_workflow_id_.py
-  - src/comfydeploy/models/operations/get_v1_workflows_workflow_id_outputs.py
-  - src/comfydeploy/models/operations/get_deployment_id_inputs.py
-  - src/comfydeploy/models/operations/get_deployment.py
-  - src/comfydeploy/models/operations/post_gpu_event.py
-  - src/comfydeploy/models/operations/get_machine_machine_id_events.py
-  - src/comfydeploy/models/operations/get_v1_machines.py
-  - src/comfydeploy/models/operations/post_v1_machines.py
-  - src/comfydeploy/models/operations/get_v1_machines_machine_id_.py
+  - src/comfydeploy/models/operations/get_run_run_run_id_get.py
+  - src/comfydeploy/models/operations/create_run_queue_run_queue_post.py
+  - src/comfydeploy/models/operations/create_run_sync_run_sync_post.py
+  - src/comfydeploy/models/operations/create_run_stream_run_stream_post.py
+  - src/comfydeploy/models/operations/cancel_run_run_run_id_cancel_post.py
+  - src/comfydeploy/models/operations/queue_deployment_run_run_deployment_queue_post.py
+  - src/comfydeploy/models/operations/sync_deployment_run_run_deployment_sync_post.py
+  - src/comfydeploy/models/operations/create_run_deployment_stream_run_deployment_stream_post.py
+  - src/comfydeploy/models/operations/queue_workflow_run_run_workflow_queue_post.py
+  - src/comfydeploy/models/operations/sync_workflow_run_run_workflow_sync_post.py
+  - src/comfydeploy/models/operations/create_run_workflow_stream_run_workflow_stream_post.py
+  - src/comfydeploy/models/operations/get_session_session_session_id_get.py
+  - src/comfydeploy/models/operations/delete_session_session_session_id_delete.py
+  - src/comfydeploy/models/operations/get_machine_sessions_sessions_get.py
+  - src/comfydeploy/models/operations/increase_timeout_session_increase_timeout_post.py
+  - src/comfydeploy/models/operations/create_session_session_post.py
+  - src/comfydeploy/models/operations/create_deployment_deployment_post.py
+  - src/comfydeploy/models/operations/get_deployments_deployments_get.py
+  - src/comfydeploy/models/operations/upload_file_file_upload_post.py
+  - src/comfydeploy/models/operations/create_folder_assets_folder_post.py
+  - src/comfydeploy/models/operations/list_assets_assets_get.py
+  - src/comfydeploy/models/operations/get_asset_assets_asset_id_get.py
+  - src/comfydeploy/models/operations/delete_asset_assets_asset_id_delete.py
+  - src/comfydeploy/models/operations/upload_asset_file_assets_upload_post.py
+  - src/comfydeploy/models/operations/public_models_models_get.py
+  - src/comfydeploy/models/operations/search_search_model_get.py
   - src/comfydeploy/models/operations/__init__.py
+  - src/comfydeploy/models/components/workflowrunmodel.py
+  - src/comfydeploy/models/components/workflowrunoutputmodel.py
+  - src/comfydeploy/models/components/mediaitem.py
   - src/comfydeploy/models/components/httpmetadata.py
+  - src/comfydeploy/models/components/validationerror.py
+  - src/comfydeploy/models/components/createrunresponse.py
+  - src/comfydeploy/models/components/workflowrunversionrequest.py
+  - src/comfydeploy/models/components/workflowrunrequest.py
+  - src/comfydeploy/models/components/deploymentrunrequest.py
+  - src/comfydeploy/models/components/modelrunrequest.py
+  - src/comfydeploy/models/components/workflowrunwebhookbody.py
+  - src/comfydeploy/models/components/workflowrunstatus.py
+  - src/comfydeploy/models/components/workflowrunwebhookresponse.py
+  - src/comfydeploy/models/components/runstream.py
+  - src/comfydeploy/models/components/logupdateevent.py
+  - src/comfydeploy/models/components/logdatacontent.py
+  - src/comfydeploy/models/components/eventupdateevent.py
+  - src/comfydeploy/models/components/eventupdate.py
+  - src/comfydeploy/models/components/cancelfunctionbody.py
+  - src/comfydeploy/models/components/session.py
+  - src/comfydeploy/models/components/deletesessionresponse.py
+  - src/comfydeploy/models/components/gpueventmodel.py
+  - src/comfydeploy/models/components/gpuprovidertype.py
+  - src/comfydeploy/models/components/workspacegpu.py
+  - src/comfydeploy/models/components/machinegpu_output.py
+  - src/comfydeploy/models/components/increasetimeoutbody.py
+  - src/comfydeploy/models/components/createsessionresponse.py
+  - src/comfydeploy/models/components/createsessionbody.py
+  - src/comfydeploy/models/components/api_routes_types_machinegpu_2.py
+  - src/comfydeploy/models/components/deploymentmodel.py
+  - src/comfydeploy/models/components/outputmodel.py
+  - src/comfydeploy/models/components/inputmodel.py
+  - src/comfydeploy/models/components/workflowwithname.py
+  - src/comfydeploy/models/components/deploymentenvironment.py
+  - src/comfydeploy/models/components/deploymentcreate.py
+  - src/comfydeploy/models/components/fileuploadresponse.py
+  - src/comfydeploy/models/components/body_upload_file_file_upload_post.py
+  - src/comfydeploy/models/components/assetresponse.py
+  - src/comfydeploy/models/components/createfolderrequest.py
+  - src/comfydeploy/models/components/body_upload_asset_file_assets_upload_post.py
+  - src/comfydeploy/models/components/modelwithmetadata.py
+  - src/comfydeploy/models/components/modeloutput.py
+  - src/comfydeploy/models/components/modelinput.py
+  - src/comfydeploy/models/components/searchmodelsresponse.py
+  - src/comfydeploy/models/components/modelsearchquery.py
   - src/comfydeploy/models/components/security.py
   - src/comfydeploy/models/components/__init__.py
-  - src/comfydeploy/models/errors/get_run.py
-  - src/comfydeploy/models/errors/post_run.py
-  - src/comfydeploy/models/errors/get_upload_url.py
-  - src/comfydeploy/models/errors/get_websocket_deployment_id_.py
-  - src/comfydeploy/models/errors/get_auth_response_request_id_.py
-  - src/comfydeploy/models/errors/post_workflow.py
-  - src/comfydeploy/models/errors/get_workflow_version_version_id_.py
-  - src/comfydeploy/models/errors/get_workflow_id_.py
-  - src/comfydeploy/models/errors/post_machine_endpoint.py
-  - src/comfydeploy/models/errors/get_v1_workflows.py
-  - src/comfydeploy/models/errors/post_v1_workflows.py
-  - src/comfydeploy/models/errors/get_v1_workflows_workflow_id_.py
-  - src/comfydeploy/models/errors/get_v1_workflows_workflow_id_outputs.py
-  - src/comfydeploy/models/errors/get_deployment_id_inputs.py
-  - src/comfydeploy/models/errors/get_deployment.py
-  - src/comfydeploy/models/errors/post_gpu_event.py
-  - src/comfydeploy/models/errors/get_machine_machine_id_events.py
-  - src/comfydeploy/models/errors/get_v1_machines.py
-  - src/comfydeploy/models/errors/post_v1_machines.py
-  - src/comfydeploy/models/errors/get_v1_machines_machine_id_.py
+  - src/comfydeploy/models/errors/httpvalidationerror.py
   - src/comfydeploy/models/errors/__init__.py
-  - src/comfydeploy/models/webhooks/runupdates.py
+  - src/comfydeploy/models/callbacks/create_run_queue_run_queue_post.py
+  - src/comfydeploy/models/callbacks/create_run_sync_run_sync_post.py
+  - src/comfydeploy/models/callbacks/create_run_stream_run_stream_post.py
+  - src/comfydeploy/models/callbacks/create_run_deployment_stream_run_deployment_stream_post.py
+  - src/comfydeploy/models/callbacks/create_run_workflow_stream_run_workflow_stream_post.py
+  - src/comfydeploy/models/callbacks/__init__.py
+  - src/comfydeploy/models/webhooks/run_update_request_body_webhook_post.py
   - src/comfydeploy/models/webhooks/__init__.py
-  - docs/models/operations/getrunrequest.md
-  - docs/models/operations/workflowinputs.md
-  - docs/models/operations/getrunworkflowapi.md
-  - docs/models/operations/origin.md
-  - docs/models/operations/getrunstatus.md
-  - docs/models/operations/getrungpu.md
-  - docs/models/operations/machinetype.md
-  - docs/models/operations/runlog.md
-  - docs/models/operations/webhookstatus.md
-  - docs/models/operations/images.md
-  - docs/models/operations/getrunfiles.md
-  - docs/models/operations/gifs.md
-  - docs/models/operations/data.md
-  - docs/models/operations/outputs.md
-  - docs/models/operations/getrunresponsebody.md
-  - docs/models/operations/getrunresponse.md
-  - docs/models/operations/gpu.md
-  - docs/models/operations/runorigin.md
-  - docs/models/operations/inputs.md
-  - docs/models/operations/postrunrequestbody.md
-  - docs/models/operations/postrunresponsebody.md
-  - docs/models/operations/postrunresponse.md
-  - docs/models/operations/type.md
-  - docs/models/operations/getuploadurlrequest.md
-  - docs/models/operations/getuploadurlresponsebody.md
-  - docs/models/operations/getuploadurlresponse.md
-  - docs/models/operations/getwebsocketdeploymentidrequest.md
-  - docs/models/operations/getwebsocketdeploymentidresponsebody.md
-  - docs/models/operations/getwebsocketdeploymentidresponse.md
-  - docs/models/operations/getauthresponserequestidrequest.md
-  - docs/models/operations/getauthresponserequestidcomfyuiresponsebody.md
-  - docs/models/operations/getauthresponserequestidresponsebody.md
-  - docs/models/operations/getauthresponserequestidresponse.md
-  - docs/models/operations/workflowapi.md
-  - docs/models/operations/gitcustomnodes.md
-  - docs/models/operations/snapshot.md
-  - docs/models/operations/node.md
-  - docs/models/operations/one.md
-  - docs/models/operations/installtype.md
-  - docs/models/operations/customnodes.md
-  - docs/models/operations/models.md
-  - docs/models/operations/files.md
-  - docs/models/operations/dependencies.md
-  - docs/models/operations/postworkflowrequestbody.md
-  - docs/models/operations/postworkflowresponsebody.md
-  - docs/models/operations/postworkflowresponse.md
-  - docs/models/operations/getworkflowversionversionidrequest.md
-  - docs/models/operations/getworkflowversionversionidresponsebody.md
-  - docs/models/operations/getworkflowversionversionidresponse.md
-  - docs/models/operations/getworkflowidrequest.md
-  - docs/models/operations/getworkflowidresponsebody.md
-  - docs/models/operations/getworkflowidresponse.md
-  - docs/models/operations/postmachineendpointrequestbody.md
-  - docs/models/operations/postmachineendpointresponsebody.md
-  - docs/models/operations/postmachineendpointresponse.md
-  - docs/models/operations/getv1workflowsrequest.md
-  - docs/models/operations/user.md
-  - docs/models/operations/versions.md
-  - docs/models/operations/getv1workflowsresponsebody.md
-  - docs/models/operations/getv1workflowsresponse.md
-  - docs/models/operations/workflowjson.md
-  - docs/models/operations/postv1workflowsrequestbody.md
-  - docs/models/operations/postv1workflowsresponsebody.md
-  - docs/models/operations/postv1workflowsresponse.md
-  - docs/models/operations/getv1workflowsworkflowidrequest.md
-  - docs/models/operations/getv1workflowsworkflowidversions.md
-  - docs/models/operations/getv1workflowsworkflowidresponsebody.md
-  - docs/models/operations/getv1workflowsworkflowidresponse.md
-  - docs/models/operations/queryparamrunorigin.md
-  - docs/models/operations/getv1workflowsworkflowidoutputsrequest.md
-  - docs/models/operations/getv1workflowsworkflowidoutputsoutputs.md
-  - docs/models/operations/getv1workflowsworkflowidoutputsresponsebody.md
-  - docs/models/operations/getv1workflowsworkflowidoutputsresponse.md
-  - docs/models/operations/getdeploymentidinputsrequest.md
-  - docs/models/operations/classtype.md
-  - docs/models/operations/defaultvalue.md
-  - docs/models/operations/responsebody.md
-  - docs/models/operations/getdeploymentidinputsresponse.md
-  - docs/models/operations/environment.md
-  - docs/models/operations/getdeploymentrequest.md
-  - docs/models/operations/getdeploymentclasstype.md
-  - docs/models/operations/getdeploymentdefaultvalue.md
-  - docs/models/operations/inputsdefinition.md
-  - docs/models/operations/getdeploymentresponsebody.md
-  - docs/models/operations/getdeploymentresponse.md
-  - docs/models/operations/gputype.md
-  - docs/models/operations/wsgputype.md
-  - docs/models/operations/eventtype.md
-  - docs/models/operations/gpuprovider.md
-  - docs/models/operations/postgpueventrequestbody.md
-  - docs/models/operations/postgpueventresponsebody.md
-  - docs/models/operations/postgpueventresponse.md
-  - docs/models/operations/status.md
-  - docs/models/operations/getmachinemachineideventsrequest.md
-  - docs/models/operations/getmachinemachineideventsgpu.md
-  - docs/models/operations/wsgpu.md
-  - docs/models/operations/providertype.md
-  - docs/models/operations/getmachinemachineideventsresponsebody.md
-  - docs/models/operations/getmachinemachineideventsresponse.md
-  - docs/models/operations/fields.md
-  - docs/models/operations/getv1machinesrequest.md
-  - docs/models/operations/machines.md
-  - docs/models/operations/getv1machinesresponsebody.md
-  - docs/models/operations/getv1machinesresponse.md
-  - docs/models/operations/postv1machinesrequestbody.md
-  - docs/models/operations/postv1machinestype.md
-  - docs/models/operations/postv1machinesstatus.md
-  - docs/models/operations/postv1machinesgpu.md
-  - docs/models/operations/postv1machinesresponsebody.md
-  - docs/models/operations/postv1machinesresponse.md
-  - docs/models/operations/getv1machinesmachineidrequest.md
-  - docs/models/operations/getv1machinesmachineidresponsebody.md
-  - docs/models/operations/getv1machinesmachineidresponse.md
+  - docs/models/operations/getrunrunrunidgetrequest.md
+  - docs/models/operations/getrunrunrunidgetresponse.md
+  - docs/models/operations/createrunqueuerunqueuepostdata.md
+  - docs/models/operations/createrunqueuerunqueuepostresponse.md
+  - docs/models/operations/createrunsyncrunsyncpostdata.md
+  - docs/models/operations/createrunsyncrunsyncpostresponse.md
+  - docs/models/operations/createrunstreamrunstreampostdata.md
+  - docs/models/operations/createrunstreamrunstreampostresponse.md
+  - docs/models/operations/cancelrunrunrunidcancelpostrequest.md
+  - docs/models/operations/cancelrunrunrunidcancelpostresponse.md
+  - docs/models/operations/queuedeploymentrunrundeploymentqueuepostresponse.md
+  - docs/models/operations/syncdeploymentrunrundeploymentsyncpostresponse.md
+  - docs/models/operations/createrundeploymentstreamrundeploymentstreampostresponse.md
+  - docs/models/operations/queueworkflowrunrunworkflowqueuepostresponse.md
+  - docs/models/operations/syncworkflowrunrunworkflowsyncpostresponse.md
+  - docs/models/operations/createrunworkflowstreamrunworkflowstreampostresponse.md
+  - docs/models/operations/getsessionsessionsessionidgetrequest.md
+  - docs/models/operations/getsessionsessionsessionidgetresponse.md
+  - docs/models/operations/deletesessionsessionsessioniddeleterequest.md
+  - docs/models/operations/deletesessionsessionsessioniddeleteresponse.md
+  - docs/models/operations/getmachinesessionssessionsgetrequest.md
+  - docs/models/operations/getmachinesessionssessionsgetresponse.md
+  - docs/models/operations/increasetimeoutsessionincreasetimeoutpostresponse.md
+  - docs/models/operations/createsessionsessionpostresponse.md
+  - docs/models/operations/createdeploymentdeploymentpostresponse.md
+  - docs/models/operations/getdeploymentsdeploymentsgetrequest.md
+  - docs/models/operations/getdeploymentsdeploymentsgetresponse.md
+  - docs/models/operations/uploadfilefileuploadpostresponse.md
+  - docs/models/operations/createfolderassetsfolderpostresponse.md
+  - docs/models/operations/listassetsassetsgetrequest.md
+  - docs/models/operations/listassetsassetsgetresponse.md
+  - docs/models/operations/getassetassetsassetidgetrequest.md
+  - docs/models/operations/getassetassetsassetidgetresponse.md
+  - docs/models/operations/deleteassetassetsassetiddeleterequest.md
+  - docs/models/operations/deleteassetassetsassetiddeleteresponse.md
+  - docs/models/operations/uploadassetfileassetsuploadpostrequest.md
+  - docs/models/operations/uploadassetfileassetsuploadpostresponse.md
+  - docs/models/operations/publicmodelsmodelsgetresponse.md
+  - docs/models/operations/searchsearchmodelgetrequest.md
+  - docs/models/operations/searchsearchmodelgetresponse.md
+  - docs/models/components/workflowrunmodel.md
+  - docs/models/components/data.md
+  - docs/models/components/workflowrunoutputmodel.md
+  - docs/models/components/mediaitem.md
   - docs/models/components/httpmetadata.md
+  - docs/models/components/loc.md
+  - docs/models/components/validationerror.md
+  - docs/models/components/createrunresponse.md
+  - docs/models/components/workflowrunversionrequestinputs.md
+  - docs/models/components/workflowrunversionrequestgpu.md
+  - docs/models/components/workflowrunversionrequest.md
+  - docs/models/components/workflowrunrequestinputs.md
+  - docs/models/components/workflowrunrequestgpu.md
+  - docs/models/components/workflowapijson.md
+  - docs/models/components/workflow.md
+  - docs/models/components/workflowrunrequest.md
+  - docs/models/components/inputs.md
+  - docs/models/components/gpu.md
+  - docs/models/components/deploymentrunrequest.md
+  - docs/models/components/modelrunrequestinputs.md
+  - docs/models/components/modelrunrequestgpu.md
+  - docs/models/components/modelrunrequest.md
+  - docs/models/components/workflowrunwebhookbody.md
+  - docs/models/components/workflowrunstatus.md
+  - docs/models/components/workflowrunwebhookresponse.md
+  - docs/models/components/runstream.md
+  - docs/models/components/event.md
+  - docs/models/components/logupdateevent.md
+  - docs/models/components/logdatacontent.md
+  - docs/models/components/eventupdateeventevent.md
+  - docs/models/components/eventupdateevent.md
+  - docs/models/components/eventupdate.md
+  - docs/models/components/cancelfunctionbody.md
+  - docs/models/components/session.md
+  - docs/models/components/deletesessionresponse.md
+  - docs/models/components/gpueventmodel.md
+  - docs/models/components/gpuprovidertype.md
+  - docs/models/components/workspacegpu.md
+  - docs/models/components/machinegpuoutput.md
+  - docs/models/components/increasetimeoutbody.md
+  - docs/models/components/createsessionresponse.md
+  - docs/models/components/createsessionbody.md
+  - docs/models/components/apiroutestypesmachinegpu2.md
+  - docs/models/components/shareoptions.md
+  - docs/models/components/showcasemedia.md
+  - docs/models/components/deploymentmodel.md
+  - docs/models/components/outputmodel.md
+  - docs/models/components/defaultvalue.md
+  - docs/models/components/minvalue.md
+  - docs/models/components/maxvalue.md
+  - docs/models/components/step.md
+  - docs/models/components/inputmodel.md
+  - docs/models/components/workflowwithname.md
+  - docs/models/components/deploymentenvironment.md
+  - docs/models/components/deploymentcreate.md
+  - docs/models/components/fileuploadresponse.md
+  - docs/models/components/file.md
+  - docs/models/components/bodyuploadfilefileuploadpost.md
+  - docs/models/components/assetresponse.md
+  - docs/models/components/createfolderrequest.md
+  - docs/models/components/bodyuploadassetfileassetsuploadpostfile.md
+  - docs/models/components/bodyuploadassetfileassetsuploadpost.md
+  - docs/models/components/modelwithmetadata.md
+  - docs/models/components/modeloutputclasstype.md
+  - docs/models/components/modeloutput.md
+  - docs/models/components/two.md
+  - docs/models/components/classtype.md
+  - docs/models/components/modelinput.md
+  - docs/models/components/searchmodelsresponse.md
+  - docs/models/components/modelsearchquery.md
   - docs/models/components/security.md
-  - docs/models/errors/getrunrunresponsebody.md
-  - docs/models/errors/getrunresponsebody.md
-  - docs/models/errors/postrunresponsebody.md
-  - docs/models/errors/getuploadurlresponsebody.md
-  - docs/models/errors/getwebsocketdeploymentidresponsebody.md
-  - docs/models/errors/getauthresponserequestidresponsebody.md
-  - docs/models/errors/postworkflowresponsebody.md
-  - docs/models/errors/getworkflowversionversionidresponsebody.md
-  - docs/models/errors/getworkflowidresponsebody.md
-  - docs/models/errors/postmachineendpointresponsebody.md
-  - docs/models/errors/getv1workflowsresponsebody.md
-  - docs/models/errors/postv1workflowsresponsebody.md
-  - docs/models/errors/getv1workflowsworkflowidresponsebody.md
-  - docs/models/errors/getv1workflowsworkflowidoutputsresponsebody.md
-  - docs/models/errors/getdeploymentidinputsresponsebody.md
-  - docs/models/errors/getdeploymentresponsebody.md
-  - docs/models/errors/postgpueventresponsebody.md
-  - docs/models/errors/getmachinemachineideventsresponsebody.md
-  - docs/models/errors/getv1machinesresponsebody.md
-  - docs/models/errors/postv1machinesresponsebody.md
-  - docs/models/errors/getv1machinesmachineidresponsebody.md
-  - docs/models/webhooks/runupdatesresponse.md
-  - docs/models/webhooks/status.md
-  - docs/models/webhooks/images.md
-  - docs/models/webhooks/files.md
-  - docs/models/webhooks/gifs.md
-  - docs/models/webhooks/data.md
-  - docs/models/webhooks/outputs.md
-  - docs/models/webhooks/runupdatesrequestbody.md
+  - docs/models/errors/httpvalidationerror.md
+  - docs/models/callbacks/createrunqueuerunqueuepostrunupdaterequestbodywebhookpostresponse.md
+  - docs/models/callbacks/createrunsyncrunsyncpostrunupdaterequestbodywebhookpostresponse.md
+  - docs/models/callbacks/createrunstreamrunstreampostrunupdaterequestbodywebhookpostresponse.md
+  - docs/models/callbacks/createrundeploymentstreamrundeploymentstreampostrunupdaterequestbodywebhookpostresponse.md
+  - docs/models/callbacks/createrunworkflowstreamrunworkflowstreampostrunupdaterequestbodywebhookpostresponse.md
+  - docs/models/webhooks/runupdaterequestbodywebhookpostresponse.md
   - docs/sdks/comfydeploy/README.md
   - docs/models/utils/retryconfig.md
   - docs/sdks/run/README.md
-  - docs/sdks/files/README.md
-  - docs/sdks/websocket/README.md
-  - docs/sdks/comfyui/README.md
-  - docs/sdks/workflows/README.md
   - docs/sdks/deployment/README.md
-  - docs/sdks/machine/README.md
+  - docs/sdks/workflow/README.md
+  - docs/sdks/session/README.md
+  - docs/sdks/deployments/README.md
+  - docs/sdks/file/README.md
+  - docs/sdks/models/README.md
+  - docs/sdks/search/README.md
   - USAGE.md
   - .gitattributes
   - .devcontainer/README.md

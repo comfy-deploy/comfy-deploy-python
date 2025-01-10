@@ -1,0 +1,16 @@
+# ModelWithMetadata
+
+
+## Fields
+
+| Field                                                                  | Type                                                                   | Required                                                               | Description                                                            |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `id`                                                                   | *str*                                                                  | :heavy_check_mark:                                                     | N/A                                                                    |
+| `name`                                                                 | *str*                                                                  | :heavy_check_mark:                                                     | N/A                                                                    |
+| `inputs`                                                               | List[[components.ModelInput](../../models/components/modelinput.md)]   | :heavy_check_mark:                                                     | N/A                                                                    |
+| `outputs`                                                              | List[[components.ModelOutput](../../models/components/modeloutput.md)] | :heavy_check_mark:                                                     | N/A                                                                    |
+| `is_comfyui`                                                           | *Optional[bool]*                                                       | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `preview_image`                                                        | *OptionalNullable[str]*                                                | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `tags`                                                                 | List[*str*]                                                            | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `fal_id`                                                               | *OptionalNullable[str]*                                                | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `cost_per_megapixel`                                                   | *OptionalNullable[float]*                                              | :heavy_minus_sign:                                                     | N/A                                                                    |

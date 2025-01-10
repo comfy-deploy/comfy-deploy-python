@@ -1,9 +1,0 @@
-# PostV1MachinesResponse
-
-
-## Fields
-
-| Field                                                                                                    | Type                                                                                                     | Required                                                                                                 | Description                                                                                              |
-| -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `http_meta`                                                                                              | [components.HTTPMetadata](../../models/components/httpmetadata.md)                                       | :heavy_check_mark:                                                                                       | N/A                                                                                                      |
-| `object`                                                                                                 | [Optional[operations.PostV1MachinesResponseBody]](../../models/operations/postv1machinesresponsebody.md) | :heavy_minus_sign:                                                                                       | Machine created successfully                                                                             |

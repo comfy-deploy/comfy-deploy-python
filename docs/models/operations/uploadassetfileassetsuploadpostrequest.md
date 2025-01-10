@@ -1,0 +1,9 @@
+# UploadAssetFileAssetsUploadPostRequest
+
+
+## Fields
+
+| Field                                                                                                            | Type                                                                                                             | Required                                                                                                         | Description                                                                                                      |
+| ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `body_upload_asset_file_assets_upload_post`                                                                      | [components.BodyUploadAssetFileAssetsUploadPost](../../models/components/bodyuploadassetfileassetsuploadpost.md) | :heavy_check_mark:                                                                                               | N/A                                                                                                              |
+| `parent_path`                                                                                                    | *Optional[str]*                                                                                                  | :heavy_minus_sign:                                                                                               | Parent folder path                                                                                               |

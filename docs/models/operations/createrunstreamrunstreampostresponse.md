@@ -1,0 +1,9 @@
+# CreateRunStreamRunStreamPostResponse
+
+
+## Fields
+
+| Field                                                                                                      | Type                                                                                                       | Required                                                                                                   | Description                                                                                                |
+| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `http_meta`                                                                                                | [components.HTTPMetadata](../../models/components/httpmetadata.md)                                         | :heavy_check_mark:                                                                                         | N/A                                                                                                        |
+| `run_stream`                                                                                               | *Optional[Union[Generator[components.RunStream, None, None], AsyncGenerator[components.RunStream, None]]]* | :heavy_minus_sign:                                                                                         | Stream of workflow run events                                                                              |

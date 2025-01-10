@@ -1,9 +1,0 @@
-# GetV1WorkflowsResponse
-
-
-## Fields
-
-| Field                                                                                                | Type                                                                                                 | Required                                                                                             | Description                                                                                          |
-| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `http_meta`                                                                                          | [components.HTTPMetadata](../../models/components/httpmetadata.md)                                   | :heavy_check_mark:                                                                                   | N/A                                                                                                  |
-| `response_bodies`                                                                                    | List[[operations.GetV1WorkflowsResponseBody](../../models/operations/getv1workflowsresponsebody.md)] | :heavy_minus_sign:                                                                                   | Workflows retrieved successfully                                                                     |

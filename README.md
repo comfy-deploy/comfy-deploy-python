@@ -40,13 +40,13 @@ poetry add comfydeploy
 from comfydeploy import ComfyDeploy
 
 s = ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+    bearer="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
-res = s.run.get(run_id="<value>")
+res = s.run.get(run_id="b18d8d81-fd7b-4764-a31e-475cb1f36591")
 
-if res.object is not None:
+if res.workflow_run_model is not None:
     # handle response
     pass
 ```
@@ -61,10 +61,10 @@ from comfydeploy import ComfyDeploy
 
 async def main():
     s = ComfyDeploy(
-        bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+        bearer="<YOUR_BEARER_TOKEN_HERE>",
     )
-    res = await s.run.get_async(run_id="<value>")
-    if res.object is not None:
+    res = await s.run.get_async(run_id="58ccc65b-c928-4154-952e-30c048b8c2b5")
+    if res.workflow_run_model is not None:
         # handle response
         pass
 
@@ -77,44 +77,53 @@ asyncio.run(main())
 
 ### [run](docs/sdks/run/README.md)
 
-* [get](docs/sdks/run/README.md#get) - Get workflow run output
-* [create](docs/sdks/run/README.md#create) - Run a workflow via deployment_id
+* [get](docs/sdks/run/README.md#get) - Get Run
+* [~~queue~~](docs/sdks/run/README.md#queue) - Queue a workflow :warning: **Deprecated**
+* [~~sync~~](docs/sdks/run/README.md#sync) - Run a workflow in sync :warning: **Deprecated**
+* [~~stream~~](docs/sdks/run/README.md#stream) - Run a workflow in stream :warning: **Deprecated**
+* [cancel_run_run_run_id_cancel_post](docs/sdks/run/README.md#cancel_run_run_run_id_cancel_post) - Cancel Run
 
-### [files](docs/sdks/files/README.md)
+### [run.deployment](docs/sdks/deployment/README.md)
 
-* [get_upload_url](docs/sdks/files/README.md#get_upload_url) - Upload any files to the storage
+* [queue](docs/sdks/deployment/README.md#queue) - Deployment - Queue
+* [sync](docs/sdks/deployment/README.md#sync) - Deployment - Sync
+* [stream](docs/sdks/deployment/README.md#stream) - Deployment - Stream
 
-### [websocket](docs/sdks/websocket/README.md)
+### [run.workflow](docs/sdks/workflow/README.md)
 
-* [get](docs/sdks/websocket/README.md#get) - Get a websocket url for a specific deployment
+* [queue](docs/sdks/workflow/README.md#queue) - Workflow - Queue
+* [sync](docs/sdks/workflow/README.md#sync) - Workflow - Sync
+* [stream](docs/sdks/workflow/README.md#stream) - Workflow - Stream
 
-### [comfyui](docs/sdks/comfyui/README.md)
+### [session](docs/sdks/session/README.md)
 
-* [get_auth_response_request_id_](docs/sdks/comfyui/README.md#get_auth_response_request_id_) - Get an API Key with code
-* [post_workflow](docs/sdks/comfyui/README.md#post_workflow) - Upload workflow from ComfyUI
-* [get_workflow_version_version_id_](docs/sdks/comfyui/README.md#get_workflow_version_version_id_) - Get comfyui workflow
-* [get_workflow_id_](docs/sdks/comfyui/README.md#get_workflow_id_) - Get comfyui workflow
+* [get](docs/sdks/session/README.md#get) - Get Session
+* [cancel](docs/sdks/session/README.md#cancel) - Delete Session
+* [list](docs/sdks/session/README.md#list) - Get Machine Sessions
+* [increase_timeout_session_increase_timeout_post](docs/sdks/session/README.md#increase_timeout_session_increase_timeout_post) - Increase Timeout
+* [create](docs/sdks/session/README.md#create) - Create Session
 
-### [workflows](docs/sdks/workflows/README.md)
+### [deployments](docs/sdks/deployments/README.md)
 
-* [post_machine_endpoint](docs/sdks/workflows/README.md#post_machine_endpoint) - Create an endpoint for a machine
-* [get_all](docs/sdks/workflows/README.md#get_all) - Retrieve workflows
-* [create](docs/sdks/workflows/README.md#create) - Create a new workflow
-* [get](docs/sdks/workflows/README.md#get) - Retrieve a specific workflow by ID
-* [get_outputs](docs/sdks/workflows/README.md#get_outputs) - Retrieve the most recent outputs for a workflow
+* [create](docs/sdks/deployments/README.md#create) - Create Deployment
+* [list](docs/sdks/deployments/README.md#list) - Get Deployments
 
-### [deployment](docs/sdks/deployment/README.md)
+### [file](docs/sdks/file/README.md)
 
-* [get_input_definition](docs/sdks/deployment/README.md#get_input_definition) - Get comfyui workflow inputs definition
-* [get](docs/sdks/deployment/README.md#get) - Get all deployed workflows
+* [upload](docs/sdks/file/README.md#upload) - Upload File
+* [create_folder_assets_folder_post](docs/sdks/file/README.md#create_folder_assets_folder_post) - Create Folder
+* [list_assets_assets_get](docs/sdks/file/README.md#list_assets_assets_get) - List Assets
+* [get_asset_assets_asset_id_get](docs/sdks/file/README.md#get_asset_assets_asset_id_get) - Get Asset
+* [delete_asset_assets_asset_id_delete](docs/sdks/file/README.md#delete_asset_assets_asset_id_delete) - Delete Asset
+* [upload_asset_file_assets_upload_post](docs/sdks/file/README.md#upload_asset_file_assets_upload_post) - Upload Asset File
 
-### [machine](docs/sdks/machine/README.md)
+### [models](docs/sdks/models/README.md)
 
-* [post_gpu_event](docs/sdks/machine/README.md#post_gpu_event) - Register a machine event
-* [list_events](docs/sdks/machine/README.md#list_events) - Get recent gpu events
-* [get_v1_machines](docs/sdks/machine/README.md#get_v1_machines) - Retrieve all machines for a user
-* [post_v1_machines](docs/sdks/machine/README.md#post_v1_machines) - Create a new machine
-* [get_v1_machines_machine_id_](docs/sdks/machine/README.md#get_v1_machines_machine_id_) - Retrieve a specific machine by ID
+* [public_models_models_get](docs/sdks/models/README.md#public_models_models_get) - Public Models
+
+### [search](docs/sdks/search/README.md)
+
+* [search_search_model_get](docs/sdks/search/README.md#search_search_model_get) - Search
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Start Error Handling [errors] -->
@@ -122,11 +131,10 @@ asyncio.run(main())
 
 Handling errors in this SDK should largely match your expectations.  All operations return a response object or raise an error.  If Error objects are specified in your OpenAPI Spec, the SDK will raise the appropriate Error type.
 
-| Error Object                 | Status Code                  | Content Type                 |
-| ---------------------------- | ---------------------------- | ---------------------------- |
-| errors.GetRunResponseBody    | 400                          | application/json             |
-| errors.GetRunRunResponseBody | 500                          | application/json             |
-| errors.SDKError              | 4xx-5xx                      | */*                          |
+| Error Object               | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4xx-5xx                    | */*                        |
 
 ### Example
 
@@ -135,24 +143,21 @@ from comfydeploy import ComfyDeploy
 from comfydeploy.models import errors
 
 s = ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+    bearer="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 res = None
 try:
-    res = s.run.get(run_id="<value>")
+    res = s.run.get(run_id="b18d8d81-fd7b-4764-a31e-475cb1f36591")
 
-except errors.GetRunResponseBody as e:
-    # handle exception
-    raise(e)
-except errors.GetRunRunResponseBody as e:
+except errors.HTTPValidationError as e:
     # handle exception
     raise(e)
 except errors.SDKError as e:
     # handle exception
     raise(e)
 
-if res.object is not None:
+if res.workflow_run_model is not None:
     # handle response
     pass
 
@@ -168,7 +173,9 @@ You can override the default server globally by passing a server index to the `s
 
 | # | Server | Variables |
 | - | ------ | --------- |
-| 0 | `https://www.comfydeploy.com/api` | None |
+| 0 | `https://api.comfydeploy.com/api` | None |
+| 1 | `https://staging.api.comfydeploy.com/api` | None |
+| 2 | `http://localhost:3011/api` | None |
 
 #### Example
 
@@ -176,14 +183,14 @@ You can override the default server globally by passing a server index to the `s
 from comfydeploy import ComfyDeploy
 
 s = ComfyDeploy(
-    server_idx=0,
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+    server_idx=2,
+    bearer="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
-res = s.run.get(run_id="<value>")
+res = s.run.get(run_id="b18d8d81-fd7b-4764-a31e-475cb1f36591")
 
-if res.object is not None:
+if res.workflow_run_model is not None:
     # handle response
     pass
 
@@ -197,14 +204,14 @@ The default server can also be overridden globally by passing a URL to the `serv
 from comfydeploy import ComfyDeploy
 
 s = ComfyDeploy(
-    server_url="https://www.comfydeploy.com/api",
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+    server_url="https://api.comfydeploy.com/api",
+    bearer="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
-res = s.run.get(run_id="<value>")
+res = s.run.get(run_id="b18d8d81-fd7b-4764-a31e-475cb1f36591")
 
-if res.object is not None:
+if res.workflow_run_model is not None:
     # handle response
     pass
 
@@ -299,22 +306,22 @@ s = ComfyDeploy(async_client=CustomClient(httpx.AsyncClient()))
 
 This SDK supports the following security scheme globally:
 
-| Name          | Type          | Scheme        |
-| ------------- | ------------- | ------------- |
-| `bearer_auth` | http          | HTTP Bearer   |
+| Name        | Type        | Scheme      |
+| ----------- | ----------- | ----------- |
+| `bearer`    | http        | HTTP Bearer |
 
-To authenticate with the API the `bearer_auth` parameter must be set when initializing the SDK client instance. For example:
+To authenticate with the API the `bearer` parameter must be set when initializing the SDK client instance. For example:
 ```python
 from comfydeploy import ComfyDeploy
 
 s = ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+    bearer="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
-res = s.run.get(run_id="<value>")
+res = s.run.get(run_id="b18d8d81-fd7b-4764-a31e-475cb1f36591")
 
-if res.object is not None:
+if res.workflow_run_model is not None:
     # handle response
     pass
 
@@ -332,14 +339,14 @@ from comfydeploy import ComfyDeploy
 from comfydeploy.utils import BackoffStrategy, RetryConfig
 
 s = ComfyDeploy(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+    bearer="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
-res = s.run.get(run_id="<value>",
+res = s.run.get(run_id="b18d8d81-fd7b-4764-a31e-475cb1f36591",
     RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
-if res.object is not None:
+if res.workflow_run_model is not None:
     # handle response
     pass
 
@@ -352,13 +359,13 @@ from comfydeploy.utils import BackoffStrategy, RetryConfig
 
 s = ComfyDeploy(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+    bearer="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
-res = s.run.get(run_id="<value>")
+res = s.run.get(run_id="b18d8d81-fd7b-4764-a31e-475cb1f36591")
 
-if res.object is not None:
+if res.workflow_run_model is not None:
     # handle response
     pass
 
@@ -388,6 +395,75 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 
 - [PyCharm Pydantic Plugin](https://docs.pydantic.dev/latest/integrations/pycharm/)
 <!-- End IDE Support [idesupport] -->
+
+<!-- Start Server-sent event streaming [eventstream] -->
+## Server-sent event streaming
+
+[Server-sent events][mdn-sse] are used to stream content from certain
+operations. These operations will expose the stream as [Generator][generator] that
+can be consumed using a simple `for` loop. The loop will
+terminate when the server no longer has any events to send and closes the
+underlying connection.
+
+```python
+from comfydeploy import ComfyDeploy
+
+s = ComfyDeploy(
+    bearer="<YOUR_BEARER_TOKEN_HERE>",
+)
+
+
+res = s.run.stream(request={
+    "model_id": "<value>",
+    "inputs": {
+        "prompt": "A beautiful landscape",
+        "seed": 42,
+    },
+    "webhook_intermediate_status": True,
+})
+
+if res.run_stream is not None:
+    for event in res.run_stream:
+        # handle event
+        print(event, flush=True)
+
+```
+
+[mdn-sse]: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events
+[generator]: https://wiki.python.org/moin/Generators
+<!-- End Server-sent event streaming [eventstream] -->
+
+<!-- Start File uploads [file-upload] -->
+## File uploads
+
+Certain SDK methods accept file objects as part of a request body or multi-part request. It is possible and typically recommended to upload files as a stream rather than reading the entire contents into memory. This avoids excessive memory consumption and potentially crashing with out-of-memory errors when working with very large files. The following example demonstrates how to attach a file stream to a request.
+
+> [!TIP]
+>
+> For endpoints that handle file uploads bytes arrays can also be used. However, using streams is recommended for large files.
+>
+
+```python
+from comfydeploy import ComfyDeploy
+
+s = ComfyDeploy(
+    bearer="<YOUR_BEARER_TOKEN_HERE>",
+)
+
+
+res = s.file.upload(request={
+    "file": {
+        "file_name": "your_file_here",
+        "content": open("<file_path>", "rb"),
+    },
+})
+
+if res.file_upload_response is not None:
+    # handle response
+    pass
+
+```
+<!-- End File uploads [file-upload] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 

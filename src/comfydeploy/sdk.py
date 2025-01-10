@@ -7,30 +7,44 @@ from .utils.logger import Logger, NoOpLogger
 from .utils.retries import RetryConfig
 from comfydeploy import utils
 from comfydeploy._hooks import SDKHooks
-from comfydeploy.comfyui import Comfyui
-from comfydeploy.deployment import Deployment
-from comfydeploy.files import Files
-from comfydeploy.machine import Machine
+from comfydeploy.deployments import Deployments
+from comfydeploy.file import File
 from comfydeploy.models import components
+from comfydeploy.models_ import Models
 from comfydeploy.run import Run
+from comfydeploy.search import Search
+from comfydeploy.session import Session
 from comfydeploy.types import OptionalNullable, UNSET
-from comfydeploy.websocket import Websocket
-from comfydeploy.workflows import Workflows
 import httpx
 from typing import Any, Callable, Dict, Optional, Union
 
 class ComfyDeploy(BaseSDK):
-    r"""Comfy Deploy API: Interact with Comfy Deploy programmatically to trigger run and retrieve output"""
+    r"""ComfyDeploy API:
+    ### Overview
+
+    Welcome to the ComfyDeploy API!
+
+    To create a run thru the API, use the [queue run endpoint](#tag/run/POST/run/deployment/queue).
+
+    Check out the [get run endpoint](#tag/run/GET/run/{run_id}), for getting the status and output of a run.
+
+    ### Authentication
+
+    To authenticate your requests, include your API key in the `Authorization` header as a bearer token. Make sure to generate an API key in the [API Keys section of your ComfyDeploy account](https://www.comfydeploy.com/api-keys).
+
+    ###
+
+
+    """
     run: Run
-    files: Files
-    websocket: Websocket
-    comfyui: Comfyui
-    workflows: Workflows
-    deployment: Deployment
-    machine: Machine
+    session: Session
+    deployments: Deployments
+    file: File
+    models: Models
+    search: Search
     def __init__(
         self,
-        bearer_auth: Union[str, Callable[[], str]],
+        bearer: Union[str, Callable[[], str]],
         server_idx: Optional[int] = None,
         server_url: Optional[str] = None,
         url_params: Optional[Dict[str, str]] = None,
@@ -42,7 +56,7 @@ class ComfyDeploy(BaseSDK):
     ) -> None:
         r"""Instantiates the SDK configuring it with the provided parameters.
 
-        :param bearer_auth: The bearer_auth required for authentication
+        :param bearer: The bearer required for authentication
         :param server_idx: The index of the server to use for all methods
         :param server_url: The server URL to use for all methods
         :param url_params: Parameters to optionally template the server URL with
@@ -69,10 +83,10 @@ class ComfyDeploy(BaseSDK):
         ), "The provided async_client must implement the AsyncHttpClient protocol."
         
         security: Any = None
-        if callable(bearer_auth):
-            security = lambda: components.Security(bearer_auth = bearer_auth()) # pylint: disable=unnecessary-lambda-assignment
+        if callable(bearer):
+            security = lambda: components.Security(bearer = bearer()) # pylint: disable=unnecessary-lambda-assignment
         else:
-            security = components.Security(bearer_auth = bearer_auth)
+            security = components.Security(bearer = bearer)
 
         if server_url is not None:
             if url_params is not None:
@@ -105,10 +119,9 @@ class ComfyDeploy(BaseSDK):
 
     def _init_sdks(self):
         self.run = Run(self.sdk_configuration)
-        self.files = Files(self.sdk_configuration)
-        self.websocket = Websocket(self.sdk_configuration)
-        self.comfyui = Comfyui(self.sdk_configuration)
-        self.workflows = Workflows(self.sdk_configuration)
-        self.deployment = Deployment(self.sdk_configuration)
-        self.machine = Machine(self.sdk_configuration)
+        self.session = Session(self.sdk_configuration)
+        self.deployments = Deployments(self.sdk_configuration)
+        self.file = File(self.sdk_configuration)
+        self.models = Models(self.sdk_configuration)
+        self.search = Search(self.sdk_configuration)
     
