@@ -17,3 +17,5 @@ targets:
             output: codeSamples.yaml
             registry:
                 location: registry.speakeasyapi.dev/comfydeploy/comfydeploy/code-samples-python-comfy-deploy
+            labelOverride:
+                fixedValue: SDK (Python)
