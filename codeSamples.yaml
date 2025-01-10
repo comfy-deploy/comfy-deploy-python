@@ -7,7 +7,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: list_assets_assets_get
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -25,7 +25,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: create_folder_assets_folder_post
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -45,7 +45,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: upload_asset_file_assets_upload_post
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -68,7 +68,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: delete_asset_assets__asset_id__delete
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -86,7 +86,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: get_asset_assets__asset_id__get
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -104,7 +104,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: create_deployment_deployment_post
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -127,7 +127,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: get_deployments_deployments_get
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -145,7 +145,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: upload_file_file_upload_post
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -168,7 +168,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: public_models_models_get
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -186,7 +186,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: queue_deployment_run_run_deployment_queue_post
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -211,7 +211,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: create_run_deployment_stream_run_deployment_stream_post
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -238,7 +238,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: sync_deployment_run_run_deployment_sync_post
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -263,7 +263,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: queue_workflow_run_run_workflow_queue_post
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -289,7 +289,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: create_run_workflow_stream_run_workflow_stream_post
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -317,7 +317,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: sync_workflow_run_run_workflow_sync_post
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -343,7 +343,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: get_run_run__run_id__get
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -361,7 +361,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: cancel_run_run__run_id__cancel_post
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -381,7 +381,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: search_search_model_get
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -399,7 +399,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: create_session_session_post
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -419,7 +419,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: increase_timeout_session_increase_timeout_post
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -442,7 +442,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: delete_session_session__session_id__delete
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -460,7 +460,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: get_session_session__session_id__get
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -478,7 +478,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: get_machine_sessions_sessions_get
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
 
@@ -496,7 +496,7 @@ actions:
     update:
       x-codeSamples:
         - lang: python
-          label: run_update__request_body__webhook__post
+          label: SDK (Python)
           source: |-
             from comfydeploy import ComfyDeploy
             from comfydeploy.models import components
