@@ -3,277 +3,6 @@ info:
   title: CodeSamples overlay for python target
   version: 0.0.0
 actions:
-  - target: $["paths"]["/run/deployment/sync"]["post"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: sync_deployment_run_run_deployment_sync_post
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.run.deployment.sync(request={
-                "inputs": {
-                    "num_inference_steps": 30,
-                    "prompt": "A futuristic cityscape",
-                    "seed": 123456,
-                },
-                "webhook": "https://myapp.com/webhook",
-                "webhook_intermediate_status": True,
-                "deployment_id": "12345678-1234-5678-1234-567812345678",
-            })
-
-            if res.response_sync_deployment_run_run_deployment_sync_post is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/deployment"]["post"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: create_deployment_deployment_post
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.deployments.create(request={
-                "workflow_version_id": "<value>",
-                "workflow_id": "<value>",
-                "machine_id": "<value>",
-                "environment": "<value>",
-            })
-
-            if res.deployment_model is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/deployments"]["get"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: get_deployments_deployments_get
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.deployments.list()
-
-            if res.response_get_deployments_deployments_get is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/assets/upload"]["post"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: upload_asset_file_assets_upload_post
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.file.upload_asset_file_assets_upload_post(body_upload_asset_file_assets_upload_post={
-                "file": {
-                    "file_name": "your_file_here",
-                    "content": open("<file_path>", "rb"),
-                },
-            })
-
-            if res.asset_response is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/models"]["get"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: public_models_models_get
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.models.public_models_models_get()
-
-            if res.response_public_models_models_get is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/assets/{asset_id}"]["get"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: get_asset_assets__asset_id__get
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.file.get_asset_assets_asset_id_get(asset_id="<value>")
-
-            if res.asset_response is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/search/model"]["get"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: search_search_model_get
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.search.search_search_model_get(query="<value>")
-
-            if res.search_models_response is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/run/deployment/queue"]["post"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: queue_deployment_run_run_deployment_queue_post
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.run.deployment.queue(request={
-                "inputs": {
-                    "num_inference_steps": 30,
-                    "prompt": "A futuristic cityscape",
-                    "seed": 123456,
-                },
-                "webhook": "https://myapp.com/webhook",
-                "webhook_intermediate_status": True,
-                "deployment_id": "12345678-1234-5678-1234-567812345678",
-            })
-
-            if res.create_run_response is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/run/deployment/stream"]["post"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: create_run_deployment_stream_run_deployment_stream_post
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.run.deployment.stream(request={
-                "inputs": {
-                    "num_inference_steps": 30,
-                    "prompt": "A futuristic cityscape",
-                    "seed": 123456,
-                },
-                "webhook": "https://myapp.com/webhook",
-                "webhook_intermediate_status": True,
-                "deployment_id": "12345678-1234-5678-1234-567812345678",
-            })
-
-            if res.run_stream is not None:
-                for event in res.run_stream:
-                    # handle event
-                    print(event, flush=True)
-  - target: $["paths"]["/run/workflow/sync"]["post"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: sync_workflow_run_run_workflow_sync_post
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.run.workflow.sync(request={
-                "inputs": {
-                    "num_inference_steps": 30,
-                    "prompt": "A futuristic cityscape",
-                    "seed": 123456,
-                },
-                "webhook": "https://myapp.com/webhook",
-                "webhook_intermediate_status": True,
-                "workflow_id": "12345678-1234-5678-1234-567812345678",
-                "workflow_api_json": {},
-            })
-
-            if res.response_sync_workflow_run_run_workflow_sync_post is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/session/increase-timeout"]["post"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: increase_timeout_session_increase_timeout_post
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.session.increase_timeout_session_increase_timeout_post(request={
-                "machine_id": "<value>",
-                "session_id": "d712cbb0-db3d-45d5-a8f9-ef1b452fb427",
-                "timeout": 36199,
-                "gpu": "<value>",
-            })
-
-            if res.any is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/assets/folder"]["post"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: create_folder_assets_folder_post
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.file.create_folder_assets_folder_post(request={
-                "name": "<value>",
-            })
-
-            if res.asset_response is not None:
-                # handle response
-                pass
   - target: $["paths"]["/assets"]["get"]
     update:
       x-codeSamples:
@@ -282,284 +11,59 @@ actions:
           source: |-
             from comfydeploy import ComfyDeploy
 
-            s = ComfyDeploy(
+            with ComfyDeploy(
                 bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
+            ) as comfy_deploy:
 
+                res = comfy_deploy.file.list_assets_assets_get()
 
-            res = s.file.list_assets_assets_get()
+                assert res.response_list_assets_assets_get is not None
 
-            if res.response_list_assets_assets_get is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/run/{run_id}"]["get"]
+                # Handle response
+                print(res.response_list_assets_assets_get)
+  - target: $["paths"]["/assets/folder"]["post"]
     update:
       x-codeSamples:
         - lang: python
-          label: get_run_run__run_id__get
+          label: create_folder_assets_folder_post
           source: |-
             from comfydeploy import ComfyDeploy
 
-            s = ComfyDeploy(
+            with ComfyDeploy(
                 bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
+            ) as comfy_deploy:
 
+                res = comfy_deploy.file.create_folder_assets_folder_post(request={
+                    "name": "<value>",
+                })
 
-            res = s.run.get(run_id="b18d8d81-fd7b-4764-a31e-475cb1f36591")
+                assert res.asset_response is not None
 
-            if res.workflow_run_model is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/run/stream"]["post"]
+                # Handle response
+                print(res.asset_response)
+  - target: $["paths"]["/assets/upload"]["post"]
     update:
       x-codeSamples:
         - lang: python
-          label: create_run_stream_run_stream_post
+          label: upload_asset_file_assets_upload_post
           source: |-
             from comfydeploy import ComfyDeploy
 
-            s = ComfyDeploy(
+            with ComfyDeploy(
                 bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
+            ) as comfy_deploy:
 
+                res = comfy_deploy.file.upload_asset_file_assets_upload_post(body_upload_asset_file_assets_upload_post={
+                    "file": {
+                        "file_name": "example.file",
+                        "content": open("example.file", "rb"),
+                    },
+                })
 
-            res = s.run.stream(request={
-                "inputs": {
-                    "prompt": "A beautiful landscape",
-                    "seed": 42,
-                },
-                "webhook_intermediate_status": True,
-                "model_id": "<value>",
-            })
+                assert res.asset_response is not None
 
-            if res.run_stream is not None:
-                for event in res.run_stream:
-                    # handle event
-                    print(event, flush=True)
-  - target: $["paths"]["/session/{session_id}"]["delete"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: delete_session_session__session_id__delete
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.session.cancel(session_id="<value>")
-
-            if res.delete_session_response is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/sessions"]["get"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: get_machine_sessions_sessions_get
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.session.list(machine_id="<value>")
-
-            if res.response_get_machine_sessions_sessions_get is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/run/queue"]["post"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: create_run_queue_run_queue_post
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.run.queue(request={
-                "inputs": {
-                    "prompt": "A beautiful landscape",
-                    "seed": 42,
-                },
-                "webhook_intermediate_status": True,
-                "workflow_version_id": "a3ae2c73-d11b-402e-81da-06d33c2a9088",
-            })
-
-            if res.create_run_response is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/run/sync"]["post"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: create_run_sync_run_sync_post
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.run.sync(request={
-                "inputs": {
-                    "prompt": "A beautiful landscape",
-                    "seed": 42,
-                },
-                "webhook_intermediate_status": True,
-                "model_id": "<value>",
-            })
-
-            if res.response_create_run_sync_run_sync_post is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/run/{run_id}/cancel"]["post"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: cancel_run_run__run_id__cancel_post
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.run.cancel_run_run_run_id_cancel_post(run_id="<value>", cancel_function_body={
-                "function_id": "<value>",
-            })
-
-            if res.any is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/run/workflow/queue"]["post"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: queue_workflow_run_run_workflow_queue_post
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.run.workflow.queue(request={
-                "inputs": {
-                    "num_inference_steps": 30,
-                    "prompt": "A futuristic cityscape",
-                    "seed": 123456,
-                },
-                "webhook": "https://myapp.com/webhook",
-                "webhook_intermediate_status": True,
-                "workflow_id": "12345678-1234-5678-1234-567812345678",
-                "workflow_api_json": {},
-            })
-
-            if res.create_run_response is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/run/workflow/stream"]["post"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: create_run_workflow_stream_run_workflow_stream_post
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.run.workflow.stream(request={
-                "inputs": {
-                    "num_inference_steps": 30,
-                    "prompt": "A futuristic cityscape",
-                    "seed": 123456,
-                },
-                "webhook": "https://myapp.com/webhook",
-                "webhook_intermediate_status": True,
-                "workflow_id": "12345678-1234-5678-1234-567812345678",
-                "workflow_api_json": {},
-            })
-
-            if res.run_stream is not None:
-                for event in res.run_stream:
-                    # handle event
-                    print(event, flush=True)
-  - target: $["paths"]["/session/{session_id}"]["get"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: get_session_session__session_id__get
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.session.get(session_id="<value>")
-
-            if res.session is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/session"]["post"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: create_session_session_post
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.session.create(request={
-                "machine_id": "<value>",
-            })
-
-            if res.create_session_response is not None:
-                # handle response
-                pass
-  - target: $["paths"]["/file/upload"]["post"]
-    update:
-      x-codeSamples:
-        - lang: python
-          label: upload_file_file_upload_post
-          source: |-
-            from comfydeploy import ComfyDeploy
-
-            s = ComfyDeploy(
-                bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
-
-
-            res = s.file.upload(request={
-                "file": {
-                    "file_name": "your_file_here",
-                    "content": open("<file_path>", "rb"),
-                },
-            })
-
-            if res.file_upload_response is not None:
-                # handle response
-                pass
+                # Handle response
+                print(res.asset_response)
   - target: $["paths"]["/assets/{asset_id}"]["delete"]
     update:
       x-codeSamples:
@@ -568,13 +72,444 @@ actions:
           source: |-
             from comfydeploy import ComfyDeploy
 
-            s = ComfyDeploy(
+            with ComfyDeploy(
                 bearer="<YOUR_BEARER_TOKEN_HERE>",
-            )
+            ) as comfy_deploy:
 
+                res = comfy_deploy.file.delete_asset_assets_asset_id_delete(asset_id="<id>")
 
-            res = s.file.delete_asset_assets_asset_id_delete(asset_id="<value>")
+                assert res.any is not None
 
-            if res.any is not None:
-                # handle response
-                pass
+                # Handle response
+                print(res.any)
+  - target: $["paths"]["/assets/{asset_id}"]["get"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: get_asset_assets__asset_id__get
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.file.get_asset_assets_asset_id_get(asset_id="<id>")
+
+                assert res.asset_response is not None
+
+                # Handle response
+                print(res.asset_response)
+  - target: $["paths"]["/deployment"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: create_deployment_deployment_post
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.deployments.create(request={
+                    "workflow_version_id": "<id>",
+                    "workflow_id": "<id>",
+                    "machine_id": "<id>",
+                    "environment": "<value>",
+                })
+
+                assert res.deployment_model is not None
+
+                # Handle response
+                print(res.deployment_model)
+  - target: $["paths"]["/deployments"]["get"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: get_deployments_deployments_get
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.deployments.list()
+
+                assert res.response_get_deployments_deployments_get is not None
+
+                # Handle response
+                print(res.response_get_deployments_deployments_get)
+  - target: $["paths"]["/file/upload"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: upload_file_file_upload_post
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.file.upload(request={
+                    "file": {
+                        "file_name": "example.file",
+                        "content": open("example.file", "rb"),
+                    },
+                })
+
+                assert res.file_upload_response is not None
+
+                # Handle response
+                print(res.file_upload_response)
+  - target: $["paths"]["/models"]["get"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: public_models_models_get
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.models.public_models_models_get()
+
+                assert res.response_public_models_models_get is not None
+
+                # Handle response
+                print(res.response_public_models_models_get)
+  - target: $["paths"]["/run/deployment/queue"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: queue_deployment_run_run_deployment_queue_post
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.run.deployment.queue(request={
+                    "inputs": {
+                        "prompt": "A beautiful landscape",
+                        "seed": 42,
+                    },
+                    "webhook": "https://myapp.com/webhook",
+                    "deployment_id": "15e79589-12c9-453c-a41a-348fdd7de957",
+                })
+
+                assert res.create_run_response is not None
+
+                # Handle response
+                print(res.create_run_response)
+  - target: $["paths"]["/run/deployment/stream"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: create_run_deployment_stream_run_deployment_stream_post
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.run.deployment.stream(request={
+                    "inputs": {
+                        "prompt": "A beautiful landscape",
+                        "seed": 42,
+                    },
+                    "webhook": "https://myapp.com/webhook",
+                    "deployment_id": "15e79589-12c9-453c-a41a-348fdd7de957",
+                })
+
+                assert res.run_stream is not None
+
+                with res.run_stream as event_stream:
+                    for event in event_stream:
+                        # handle event
+                        print(event, flush=True)
+  - target: $["paths"]["/run/deployment/sync"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: sync_deployment_run_run_deployment_sync_post
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.run.deployment.sync(request={
+                    "inputs": {
+                        "prompt": "A beautiful landscape",
+                        "seed": 42,
+                    },
+                    "webhook": "https://myapp.com/webhook",
+                    "deployment_id": "15e79589-12c9-453c-a41a-348fdd7de957",
+                })
+
+                assert res.response_sync_deployment_run_run_deployment_sync_post is not None
+
+                # Handle response
+                print(res.response_sync_deployment_run_run_deployment_sync_post)
+  - target: $["paths"]["/run/workflow/queue"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: queue_workflow_run_run_workflow_queue_post
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.run.workflow.queue(request={
+                    "inputs": {
+                        "prompt": "A beautiful landscape",
+                        "seed": 42,
+                    },
+                    "webhook": "https://myapp.com/webhook",
+                    "workflow_id": "12345678-1234-5678-1234-567812345678",
+                    "workflow_api_json": {},
+                })
+
+                assert res.create_run_response is not None
+
+                # Handle response
+                print(res.create_run_response)
+  - target: $["paths"]["/run/workflow/stream"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: create_run_workflow_stream_run_workflow_stream_post
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.run.workflow.stream(request={
+                    "inputs": {
+                        "prompt": "A beautiful landscape",
+                        "seed": 42,
+                    },
+                    "webhook": "https://myapp.com/webhook",
+                    "workflow_id": "12345678-1234-5678-1234-567812345678",
+                    "workflow_api_json": {},
+                })
+
+                assert res.run_stream is not None
+
+                with res.run_stream as event_stream:
+                    for event in event_stream:
+                        # handle event
+                        print(event, flush=True)
+  - target: $["paths"]["/run/workflow/sync"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: sync_workflow_run_run_workflow_sync_post
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.run.workflow.sync(request={
+                    "inputs": {
+                        "prompt": "A beautiful landscape",
+                        "seed": 42,
+                    },
+                    "webhook": "https://myapp.com/webhook",
+                    "workflow_id": "12345678-1234-5678-1234-567812345678",
+                    "workflow_api_json": {},
+                })
+
+                assert res.response_sync_workflow_run_run_workflow_sync_post is not None
+
+                # Handle response
+                print(res.response_sync_workflow_run_run_workflow_sync_post)
+  - target: $["paths"]["/run/{run_id}"]["get"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: get_run_run__run_id__get
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.run.get(run_id="b888f774-3e7c-4135-a18c-6b985523c4bc")
+
+                assert res.workflow_run_model is not None
+
+                # Handle response
+                print(res.workflow_run_model)
+  - target: $["paths"]["/run/{run_id}/cancel"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: cancel_run_run__run_id__cancel_post
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.run.cancel_run_run_run_id_cancel_post(run_id="<id>", cancel_function_body={
+                    "function_id": "<id>",
+                })
+
+                assert res.any is not None
+
+                # Handle response
+                print(res.any)
+  - target: $["paths"]["/search/model"]["get"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: search_search_model_get
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.search.search_search_model_get(query="<value>")
+
+                assert res.search_models_response is not None
+
+                # Handle response
+                print(res.search_models_response)
+  - target: $["paths"]["/session"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: create_session_session_post
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.session.create(request={
+                    "machine_id": "<id>",
+                })
+
+                assert res.create_session_response is not None
+
+                # Handle response
+                print(res.create_session_response)
+  - target: $["paths"]["/session/increase-timeout"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: increase_timeout_session_increase_timeout_post
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.session.increase_timeout_session_increase_timeout_post(request={
+                    "machine_id": "<id>",
+                    "session_id": "d1cbd355-89fb-45f4-9778-6137629fc60d",
+                    "timeout": 465465,
+                    "gpu": "<value>",
+                })
+
+                assert res.any is not None
+
+                # Handle response
+                print(res.any)
+  - target: $["paths"]["/session/{session_id}"]["delete"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: delete_session_session__session_id__delete
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.session.cancel(session_id="<id>")
+
+                assert res.delete_session_response is not None
+
+                # Handle response
+                print(res.delete_session_response)
+  - target: $["paths"]["/session/{session_id}"]["get"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: get_session_session__session_id__get
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.session.get(session_id="<id>")
+
+                assert res.session is not None
+
+                # Handle response
+                print(res.session)
+  - target: $["paths"]["/sessions"]["get"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: get_machine_sessions_sessions_get
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.session.list(machine_id="<id>")
+
+                assert res.response_get_machine_sessions_sessions_get is not None
+
+                # Handle response
+                print(res.response_get_machine_sessions_sessions_get)
+  - target: $["paths"]["{$request.body#/webhook}"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: run_update__request_body__webhook__post
+          source: |-
+            from comfydeploy import ComfyDeploy
+            from comfydeploy.models import components
+
+            with ComfyDeploy() as comfy_deploy:
+
+                res = comfy_deploy.callbacks.run_update_request_body_webhook_post(request={
+                    "run_id": "<id>",
+                    "status": components.WorkflowRunStatus.SUCCESS,
+                    "live_status": "<value>",
+                })
+
+                assert res.workflow_run_webhook_response is not None
+
+                # Handle response
+                print(res.workflow_run_webhook_response)

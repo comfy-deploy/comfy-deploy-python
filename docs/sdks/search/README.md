@@ -1,6 +1,8 @@
 # Search
 (*search*)
 
+## Overview
+
 ### Available Operations
 
 * [search_search_model_get](#search_search_model_get) - Search
@@ -14,16 +16,16 @@ Search
 ```python
 from comfydeploy import ComfyDeploy
 
-s = ComfyDeploy(
+with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as comfy_deploy:
 
+    res = comfy_deploy.search.search_search_model_get(query="<value>")
 
-res = s.search.search_search_model_get(query="<value>")
+    assert res.search_models_response is not None
 
-if res.search_models_response is not None:
-    # handle response
-    pass
+    # Handle response
+    print(res.search_models_response)
 
 ```
 
@@ -35,13 +37,13 @@ if res.search_models_response is not None:
 | `provider`                                                          | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
-
 ### Response
 
 **[operations.SearchSearchModelGetResponse](../../models/operations/searchsearchmodelgetresponse.md)**
+
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
+| Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |

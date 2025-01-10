@@ -3,10 +3,16 @@
 from __future__ import annotations
 from .modelinput import ModelInput, ModelInputTypedDict
 from .modeloutput import ModelOutput, ModelOutputTypedDict
-from comfydeploy.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from comfydeploy.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from pydantic import model_serializer
-from typing import List, Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import List, Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class ModelWithMetadataTypedDict(TypedDict):
@@ -19,22 +25,36 @@ class ModelWithMetadataTypedDict(TypedDict):
     tags: NotRequired[List[str]]
     fal_id: NotRequired[Nullable[str]]
     cost_per_megapixel: NotRequired[Nullable[float]]
-    
+
 
 class ModelWithMetadata(BaseModel):
     id: str
+
     name: str
+
     inputs: List[ModelInput]
+
     outputs: List[ModelOutput]
+
     is_comfyui: Optional[bool] = False
+
     preview_image: OptionalNullable[str] = UNSET
+
     tags: Optional[List[str]] = None
+
     fal_id: OptionalNullable[str] = UNSET
+
     cost_per_megapixel: OptionalNullable[float] = UNSET
-    
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["is_comfyui", "preview_image", "tags", "fal_id", "cost_per_megapixel"]
+        optional_fields = [
+            "is_comfyui",
+            "preview_image",
+            "tags",
+            "fal_id",
+            "cost_per_megapixel",
+        ]
         nullable_fields = ["preview_image", "fal_id", "cost_per_megapixel"]
         null_default_fields = []
 
@@ -45,9 +65,13 @@ class ModelWithMetadata(BaseModel):
         for n, f in self.model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
+            serialized.pop(k, None)
 
             optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (self.__pydantic_fields_set__.intersection({n}) or k in null_default_fields) # pylint: disable=no-member
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
 
             if val is not None and val != UNSET_SENTINEL:
                 m[k] = val
@@ -57,4 +81,3 @@ class ModelWithMetadata(BaseModel):
                 m[k] = val
 
         return m
-        

@@ -4,8 +4,8 @@ from __future__ import annotations
 from comfydeploy.types import BaseModel
 import httpx
 import pydantic
-from typing import Optional, TypedDict
-from typing_extensions import Annotated
+from typing import Optional
+from typing_extensions import Annotated, TypedDict
 
 
 class HTTPMetadataTypedDict(TypedDict):
@@ -13,11 +13,11 @@ class HTTPMetadataTypedDict(TypedDict):
     r"""Raw HTTP response; suitable for custom response parsing"""
     request: httpx.Request
     r"""Raw HTTP request; suitable for debugging"""
-    
+
 
 class HTTPMetadata(BaseModel):
     response: Annotated[Optional[httpx.Response], pydantic.Field(exclude=True)] = None
     r"""Raw HTTP response; suitable for custom response parsing"""
+
     request: Annotated[Optional[httpx.Request], pydantic.Field(exclude=True)] = None
     r"""Raw HTTP request; suitable for debugging"""
-    

@@ -2,15 +2,15 @@
 
 from __future__ import annotations
 from comfydeploy.types import BaseModel
-from typing import TypedDict
+from typing_extensions import TypedDict
 
 
 class OutputModelTypedDict(TypedDict):
     class_type: str
     output_id: str
-    
+
 
 class OutputModel(BaseModel):
     class_type: str
+
     output_id: str
-    

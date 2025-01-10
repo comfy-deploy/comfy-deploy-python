@@ -2,10 +2,16 @@
 
 from __future__ import annotations
 from .api_routes_types_machinegpu_2 import APIRoutesTypesMachineGPU2
-from comfydeploy.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from comfydeploy.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from pydantic import model_serializer
-from typing import Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class CreateSessionBodyTypedDict(TypedDict):
@@ -16,17 +22,20 @@ class CreateSessionBodyTypedDict(TypedDict):
     r"""The timeout in minutes"""
     wait_for_server: NotRequired[bool]
     r"""Whether to create the session asynchronously"""
-    
+
 
 class CreateSessionBody(BaseModel):
     machine_id: str
+
     gpu: OptionalNullable[APIRoutesTypesMachineGPU2] = UNSET
     r"""The GPU to use"""
+
     timeout: OptionalNullable[int] = UNSET
     r"""The timeout in minutes"""
+
     wait_for_server: Optional[bool] = False
     r"""Whether to create the session asynchronously"""
-    
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["gpu", "timeout", "wait_for_server"]
@@ -40,9 +49,13 @@ class CreateSessionBody(BaseModel):
         for n, f in self.model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
+            serialized.pop(k, None)
 
             optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (self.__pydantic_fields_set__.intersection({n}) or k in null_default_fields) # pylint: disable=no-member
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
 
             if val is not None and val != UNSET_SENTINEL:
                 m[k] = val
@@ -52,4 +65,3 @@ class CreateSessionBody(BaseModel):
                 m[k] = val
 
         return m
-        

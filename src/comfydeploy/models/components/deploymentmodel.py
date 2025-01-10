@@ -5,28 +5,34 @@ from .deploymentenvironment import DeploymentEnvironment
 from .inputmodel import InputModel, InputModelTypedDict
 from .outputmodel import OutputModel, OutputModelTypedDict
 from .workflowwithname import WorkflowWithName, WorkflowWithNameTypedDict
-from comfydeploy.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from comfydeploy.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from datetime import datetime
 from pydantic import model_serializer
-from typing import List, TypedDict
-from typing_extensions import NotRequired
+from typing import List
+from typing_extensions import NotRequired, TypedDict
 
 
 class ShareOptionsTypedDict(TypedDict):
     pass
-    
+
 
 class ShareOptions(BaseModel):
     pass
-    
+
 
 class ShowcaseMediaTypedDict(TypedDict):
     pass
-    
+
 
 class ShowcaseMedia(BaseModel):
     pass
-    
+
 
 class DeploymentModelTypedDict(TypedDict):
     id: str
@@ -45,30 +51,54 @@ class DeploymentModelTypedDict(TypedDict):
     workflow: NotRequired[Nullable[WorkflowWithNameTypedDict]]
     input_types: NotRequired[Nullable[List[InputModelTypedDict]]]
     output_types: NotRequired[Nullable[List[OutputModelTypedDict]]]
-    
+
 
 class DeploymentModel(BaseModel):
     id: str
+
     user_id: str
+
     org_id: Nullable[str]
+
     workflow_version_id: str
+
     workflow_id: str
+
     machine_id: str
+
     share_slug: Nullable[str]
+
     description: Nullable[str]
+
     share_options: Nullable[ShareOptions]
+
     showcase_media: Nullable[List[ShowcaseMedia]]
+
     environment: DeploymentEnvironment
+
     created_at: datetime
+
     updated_at: datetime
+
     workflow: OptionalNullable[WorkflowWithName] = UNSET
+
     input_types: OptionalNullable[List[InputModel]] = UNSET
+
     output_types: OptionalNullable[List[OutputModel]] = UNSET
-    
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["workflow", "input_types", "output_types"]
-        nullable_fields = ["org_id", "share_slug", "description", "share_options", "showcase_media", "workflow", "input_types", "output_types"]
+        nullable_fields = [
+            "org_id",
+            "share_slug",
+            "description",
+            "share_options",
+            "showcase_media",
+            "workflow",
+            "input_types",
+            "output_types",
+        ]
         null_default_fields = []
 
         serialized = handler(self)
@@ -78,9 +108,13 @@ class DeploymentModel(BaseModel):
         for n, f in self.model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
+            serialized.pop(k, None)
 
             optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (self.__pydantic_fields_set__.intersection({n}) or k in null_default_fields) # pylint: disable=no-member
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
 
             if val is not None and val != UNSET_SENTINEL:
                 m[k] = val
@@ -90,4 +124,3 @@ class DeploymentModel(BaseModel):
                 m[k] = val
 
         return m
-        

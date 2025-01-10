@@ -2,15 +2,14 @@
 
 from __future__ import annotations
 from comfydeploy.types import BaseModel
-from typing import TypedDict
+from typing_extensions import TypedDict
 
 
 class CreateRunResponseTypedDict(TypedDict):
     run_id: str
     r"""The ID of the run, use this to get the run status and outputs"""
-    
+
 
 class CreateRunResponse(BaseModel):
     run_id: str
     r"""The ID of the run, use this to get the run status and outputs"""
-    

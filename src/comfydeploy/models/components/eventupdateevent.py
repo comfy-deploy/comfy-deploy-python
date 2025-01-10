@@ -3,20 +3,30 @@
 from __future__ import annotations
 from .eventupdate import EventUpdate, EventUpdateTypedDict
 from comfydeploy.types import BaseModel
+from comfydeploy.utils import validate_const
 from enum import Enum
 import pydantic
-from typing import Final, Optional, TypedDict
-from typing_extensions import Annotated
+from pydantic.functional_validators import AfterValidator
+from typing import Optional
+from typing_extensions import Annotated, TypedDict
 
 
 class EventUpdateEventEvent(str, Enum):
     EVENT_UPDATE = "event_update"
 
+
 class EventUpdateEventTypedDict(TypedDict):
     data: EventUpdateTypedDict
-    
+    event: EventUpdateEventEvent
+
 
 class EventUpdateEvent(BaseModel):
     data: EventUpdate
-    EVENT: Annotated[Final[Optional[EventUpdateEventEvent]], pydantic.Field(alias="event")] = EventUpdateEventEvent.EVENT_UPDATE # type: ignore
-    
+
+    EVENT: Annotated[
+        Annotated[
+            Optional[EventUpdateEventEvent],
+            AfterValidator(validate_const(EventUpdateEventEvent.EVENT_UPDATE)),
+        ],
+        pydantic.Field(alias="event"),
+    ] = EventUpdateEventEvent.EVENT_UPDATE

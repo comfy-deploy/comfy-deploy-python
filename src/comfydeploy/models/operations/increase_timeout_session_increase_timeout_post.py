@@ -4,18 +4,20 @@ from __future__ import annotations
 from comfydeploy.models.components import httpmetadata as components_httpmetadata
 from comfydeploy.types import BaseModel
 import pydantic
-from typing import Any, Optional, TypedDict
-from typing_extensions import Annotated, NotRequired
+from typing import Any, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class IncreaseTimeoutSessionIncreaseTimeoutPostResponseTypedDict(TypedDict):
     http_meta: components_httpmetadata.HTTPMetadataTypedDict
     any: NotRequired[Any]
     r"""Successful Response"""
-    
+
 
 class IncreaseTimeoutSessionIncreaseTimeoutPostResponse(BaseModel):
-    http_meta: Annotated[Optional[components_httpmetadata.HTTPMetadata], pydantic.Field(exclude=True)] = None
+    http_meta: Annotated[
+        Optional[components_httpmetadata.HTTPMetadata], pydantic.Field(exclude=True)
+    ] = None
+
     any: Optional[Any] = None
     r"""Successful Response"""
-    
