@@ -87,7 +87,8 @@ class ComfyDeploy(BaseSDK):
 
         security: Any = None
         if callable(bearer):
-            security = lambda: components.Security(bearer=bearer())  # pylint: disable=unnecessary-lambda-assignment
+            # pylint: disable=unnecessary-lambda-assignment
+            security = lambda: components.Security(bearer=bearer())
         else:
             security = components.Security(bearer=bearer)
 
