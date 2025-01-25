@@ -15,7 +15,7 @@ actions:
                 bearer="<YOUR_BEARER_TOKEN_HERE>",
             ) as comfy_deploy:
 
-                res = comfy_deploy.file.list_assets_assets_get()
+                res = comfy_deploy.file.list_assets_assets_get(path="/")
 
                 assert res.response_list_assets_assets_get is not None
 
@@ -58,7 +58,7 @@ actions:
                         "file_name": "example.file",
                         "content": open("example.file", "rb"),
                     },
-                })
+                }, parent_path="/")
 
                 assert res.asset_response is not None
 
@@ -200,6 +200,7 @@ actions:
                         "seed": 42,
                     },
                     "webhook": "https://myapp.com/webhook",
+                    "webhook_intermediate_status": True,
                     "deployment_id": "15e79589-12c9-453c-a41a-348fdd7de957",
                 })
 
@@ -225,6 +226,7 @@ actions:
                         "seed": 42,
                     },
                     "webhook": "https://myapp.com/webhook",
+                    "webhook_intermediate_status": True,
                     "deployment_id": "15e79589-12c9-453c-a41a-348fdd7de957",
                 })
 
@@ -252,6 +254,7 @@ actions:
                         "seed": 42,
                     },
                     "webhook": "https://myapp.com/webhook",
+                    "webhook_intermediate_status": True,
                     "deployment_id": "15e79589-12c9-453c-a41a-348fdd7de957",
                 })
 
@@ -277,6 +280,7 @@ actions:
                         "seed": 42,
                     },
                     "webhook": "https://myapp.com/webhook",
+                    "webhook_intermediate_status": True,
                     "workflow_id": "12345678-1234-5678-1234-567812345678",
                     "workflow_api_json": {},
                 })
@@ -303,6 +307,7 @@ actions:
                         "seed": 42,
                     },
                     "webhook": "https://myapp.com/webhook",
+                    "webhook_intermediate_status": True,
                     "workflow_id": "12345678-1234-5678-1234-567812345678",
                     "workflow_api_json": {},
                 })
@@ -331,6 +336,7 @@ actions:
                         "seed": 42,
                     },
                     "webhook": "https://myapp.com/webhook",
+                    "webhook_intermediate_status": True,
                     "workflow_id": "12345678-1234-5678-1234-567812345678",
                     "workflow_api_json": {},
                 })
@@ -389,7 +395,7 @@ actions:
                 bearer="<YOUR_BEARER_TOKEN_HERE>",
             ) as comfy_deploy:
 
-                res = comfy_deploy.search.search_search_model_get(query="<value>")
+                res = comfy_deploy.search.search_search_model_get(query="<value>", provider="all")
 
                 assert res.search_models_response is not None
 
@@ -409,6 +415,7 @@ actions:
 
                 res = comfy_deploy.session.create(request={
                     "machine_id": "<id>",
+                    "wait_for_server": False,
                 })
 
                 assert res.create_session_response is not None
@@ -474,6 +481,44 @@ actions:
 
                 # Handle response
                 print(res.session)
+  - target: $["paths"]["/session/{session_id}/increase-timeout"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: SDK (Python)
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.session.increase_timeout_2_session_session_id_increase_timeout_post(session_id="<id>", increase_timeout_body2={
+                    "minutes": 840571,
+                })
+
+                assert res.any is not None
+
+                # Handle response
+                print(res.any)
+  - target: $["paths"]["/session/{session_id}/snapshot"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: SDK (Python)
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.session.snapshot_session_session_session_id_snapshot_post(session_id="<id>")
+
+                assert res.any is not None
+
+                # Handle response
+                print(res.any)
   - target: $["paths"]["/sessions"]["get"]
     update:
       x-codeSamples:
@@ -486,7 +531,7 @@ actions:
                 bearer="<YOUR_BEARER_TOKEN_HERE>",
             ) as comfy_deploy:
 
-                res = comfy_deploy.session.list(machine_id="<id>")
+                res = comfy_deploy.session.list()
 
                 assert res.response_get_machine_sessions_sessions_get is not None
 
@@ -507,6 +552,7 @@ actions:
                     "run_id": "<id>",
                     "status": components.WorkflowRunStatus.SUCCESS,
                     "live_status": "<value>",
+                    "progress": 0,
                 })
 
                 assert res.workflow_run_webhook_response is not None

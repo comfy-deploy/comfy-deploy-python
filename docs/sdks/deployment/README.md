@@ -29,6 +29,7 @@ with ComfyDeploy(
             "seed": 42,
         },
         "webhook": "https://myapp.com/webhook",
+        "webhook_intermediate_status": True,
     })
 
     assert res.create_run_response is not None
@@ -76,6 +77,7 @@ with ComfyDeploy(
             "seed": 42,
         },
         "webhook": "https://myapp.com/webhook",
+        "webhook_intermediate_status": True,
     })
 
     assert res.response_sync_deployment_run_run_deployment_sync_post is not None
@@ -123,6 +125,7 @@ with ComfyDeploy(
             "seed": 42,
         },
         "webhook": "https://myapp.com/webhook",
+        "webhook_intermediate_status": True,
     })
 
     assert res.run_stream is not None

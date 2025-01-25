@@ -20,7 +20,7 @@ with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
 ) as comfy_deploy:
 
-    res = comfy_deploy.search.search_search_model_get(query="<value>")
+    res = comfy_deploy.search.search_search_model_get(query="<value>", provider="all")
 
     assert res.search_models_response is not None
 
