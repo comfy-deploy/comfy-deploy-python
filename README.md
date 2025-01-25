@@ -48,6 +48,7 @@ To authenticate your requests, include your API key in the `Authorization` heade
   * [Error Handling](#error-handling)
   * [Server Selection](#server-selection)
   * [Custom HTTP Client](#custom-http-client)
+  * [Resource Management](#resource-management)
   * [Debugging](#debugging)
 * [Development](#development)
   * [Maturity](#maturity)
@@ -57,6 +58,11 @@ To authenticate your requests, include your API key in the `Authorization` heade
 
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
+
+> [!NOTE]
+> **Python version upgrade policy**
+>
+> Once a Python version reaches its [official end of life date](https://devguide.python.org/versions/), a 3-month grace period is provided for users to upgrade. Following this grace period, the minimum python version supported in the SDK will be updated.
 
 The SDK can be installed with either *pip* or *poetry* package managers.
 
@@ -216,7 +222,9 @@ with ComfyDeploy(
 * [cancel](docs/sdks/session/README.md#cancel) - Delete Session
 * [list](docs/sdks/session/README.md#list) - Get Machine Sessions
 * [increase_timeout_session_increase_timeout_post](docs/sdks/session/README.md#increase_timeout_session_increase_timeout_post) - Increase Timeout
+* [increase_timeout_2_session_session_id_increase_timeout_post](docs/sdks/session/README.md#increase_timeout_2_session_session_id_increase_timeout_post) - Increase Timeout 2
 * [create](docs/sdks/session/README.md#create) - Create Session
+* [snapshot_session_session_session_id_snapshot_post](docs/sdks/session/README.md#snapshot_session_session_session_id_snapshot_post) - Snapshot Session
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
@@ -247,6 +255,7 @@ with ComfyDeploy(
             "seed": 42,
         },
         "webhook": "https://myapp.com/webhook",
+        "webhook_intermediate_status": True,
     })
 
     assert res.run_stream is not None
@@ -521,6 +530,31 @@ class CustomClient(AsyncHttpClient):
 s = ComfyDeploy(async_client=CustomClient(httpx.AsyncClient()))
 ```
 <!-- End Custom HTTP Client [http-client] -->
+
+<!-- Start Resource Management [resource-management] -->
+## Resource Management
+
+The `ComfyDeploy` class implements the context manager protocol and registers a finalizer function to close the underlying sync and async HTTPX clients it uses under the hood. This will close HTTP connections, release memory and free up other resources held by the SDK. In short-lived Python programs and notebooks that make a few SDK method calls, resource management may not be a concern. However, in longer-lived programs, it is beneficial to create a single SDK instance via a [context manager][context-manager] and reuse it across the application.
+
+[context-manager]: https://docs.python.org/3/reference/datamodel.html#context-managers
+
+```python
+from comfydeploy import ComfyDeploy
+def main():
+    with ComfyDeploy(
+        bearer="<YOUR_BEARER_TOKEN_HERE>",
+    ) as comfy_deploy:
+        # Rest of application here...
+
+
+# Or when using async:
+async def amain():
+    async with ComfyDeploy(
+        bearer="<YOUR_BEARER_TOKEN_HERE>",
+    ) as comfy_deploy:
+        # Rest of application here...
+```
+<!-- End Resource Management [resource-management] -->
 
 <!-- Start Debugging [debug] -->
 ## Debugging
