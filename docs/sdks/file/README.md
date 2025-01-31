@@ -112,7 +112,7 @@ with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
 ) as comfy_deploy:
 
-    res = comfy_deploy.file.list_assets_assets_get()
+    res = comfy_deploy.file.list_assets_assets_get(path="/")
 
     assert res.response_list_assets_assets_get is not None
 
@@ -237,7 +237,7 @@ with ComfyDeploy(
             "file_name": "example.file",
             "content": open("example.file", "rb"),
         },
-    })
+    }, parent_path="/")
 
     assert res.asset_response is not None
 
