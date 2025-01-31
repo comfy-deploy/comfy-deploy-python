@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 from comfydeploy.models.components import (
-    gpueventmodel as components_gpueventmodel,
     httpmetadata as components_httpmetadata,
+    snapshotsessionbody as components_snapshotsessionbody,
 )
 from comfydeploy.types import (
     BaseModel,
@@ -12,27 +12,34 @@ from comfydeploy.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from comfydeploy.utils import FieldMetadata, QueryParamMetadata
+from comfydeploy.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 import pydantic
 from pydantic import model_serializer
-from typing import List, Optional
+from typing import Any, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-class GetMachineSessionsSessionsGetRequestTypedDict(TypedDict):
-    machine_id: NotRequired[Nullable[str]]
+class SnapshotSessionSessionSessionIDSnapshotPostRequestTypedDict(TypedDict):
+    session_id: str
+    snapshot_session_body: NotRequired[
+        Nullable[components_snapshotsessionbody.SnapshotSessionBodyTypedDict]
+    ]
 
 
-class GetMachineSessionsSessionsGetRequest(BaseModel):
-    machine_id: Annotated[
-        OptionalNullable[str],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+class SnapshotSessionSessionSessionIDSnapshotPostRequest(BaseModel):
+    session_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
+
+    snapshot_session_body: Annotated[
+        OptionalNullable[components_snapshotsessionbody.SnapshotSessionBody],
+        FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["machine_id"]
-        nullable_fields = ["machine_id"]
+        optional_fields = ["SnapshotSessionBody"]
+        nullable_fields = ["SnapshotSessionBody"]
         null_default_fields = []
 
         serialized = handler(self)
@@ -60,20 +67,16 @@ class GetMachineSessionsSessionsGetRequest(BaseModel):
         return m
 
 
-class GetMachineSessionsSessionsGetResponseTypedDict(TypedDict):
+class SnapshotSessionSessionSessionIDSnapshotPostResponseTypedDict(TypedDict):
     http_meta: components_httpmetadata.HTTPMetadataTypedDict
-    response_get_machine_sessions_sessions_get: NotRequired[
-        List[components_gpueventmodel.GPUEventModelTypedDict]
-    ]
+    any: NotRequired[Any]
     r"""Successful Response"""
 
 
-class GetMachineSessionsSessionsGetResponse(BaseModel):
+class SnapshotSessionSessionSessionIDSnapshotPostResponse(BaseModel):
     http_meta: Annotated[
         Optional[components_httpmetadata.HTTPMetadata], pydantic.Field(exclude=True)
     ] = None
 
-    response_get_machine_sessions_sessions_get: Optional[
-        List[components_gpueventmodel.GPUEventModel]
-    ] = None
+    any: Optional[Any] = None
     r"""Successful Response"""
