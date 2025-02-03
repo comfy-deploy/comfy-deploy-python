@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2c1d440e-25e4-46e2-a435-ebd1f72a7373
 management:
-  docChecksum: 7a7ed6fb37d85f7f90cd0e561c98f203
+  docChecksum: 4cb66e0ecc004741fc5a12afdda493a6
   docVersion: V2
-  speakeasyVersion: 1.468.9
-  generationVersion: 2.493.21
-  releaseVersion: 0.6.3
-  configChecksum: 489397d9f122b1e9952a746f44940c07
+  speakeasyVersion: 1.481.1
+  generationVersion: 2.500.5
+  releaseVersion: 0.6.4
+  configChecksum: 746318446294e4b645117db93fb1b8a5
   repoURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   installationURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   published: true
@@ -15,13 +15,13 @@ features:
     additionalDependencies: 1.0.0
     callbacks: 2.0.0
     constsAndDefaults: 1.0.5
-    core: 5.10.2
+    core: 5.10.9
     defaultEnabledRetries: 0.2.0
     deprecations: 3.0.2
     devContainers: 3.0.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.2
-    flattening: 3.1.0
+    flattening: 3.1.1
     globalSecurity: 3.0.2
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
@@ -79,6 +79,7 @@ generatedFiles:
   - docs/models/components/gpuprovidertype.md
   - docs/models/components/httpmetadata.md
   - docs/models/components/increasetimeoutbody.md
+  - docs/models/components/increasetimeoutbody2.md
   - docs/models/components/inputmodel.md
   - docs/models/components/inputs.md
   - docs/models/components/loc.md
@@ -103,6 +104,7 @@ generatedFiles:
   - docs/models/components/session.md
   - docs/models/components/shareoptions.md
   - docs/models/components/showcasemedia.md
+  - docs/models/components/snapshotsessionbody.md
   - docs/models/components/step.md
   - docs/models/components/two.md
   - docs/models/components/validationerror.md
@@ -149,6 +151,8 @@ generatedFiles:
   - docs/models/operations/getrunrunrunidgetresponse.md
   - docs/models/operations/getsessionsessionsessionidgetrequest.md
   - docs/models/operations/getsessionsessionsessionidgetresponse.md
+  - docs/models/operations/increasetimeout2sessionsessionidincreasetimeoutpostrequest.md
+  - docs/models/operations/increasetimeout2sessionsessionidincreasetimeoutpostresponse.md
   - docs/models/operations/increasetimeoutsessionincreasetimeoutpostresponse.md
   - docs/models/operations/listassetsassetsgetrequest.md
   - docs/models/operations/listassetsassetsgetresponse.md
@@ -157,6 +161,8 @@ generatedFiles:
   - docs/models/operations/queueworkflowrunrunworkflowqueuepostresponse.md
   - docs/models/operations/searchsearchmodelgetrequest.md
   - docs/models/operations/searchsearchmodelgetresponse.md
+  - docs/models/operations/snapshotsessionsessionsessionidsnapshotpostrequest.md
+  - docs/models/operations/snapshotsessionsessionsessionidsnapshotpostresponse.md
   - docs/models/operations/syncdeploymentrunrundeploymentsyncpostresponse.md
   - docs/models/operations/syncworkflowrunrunworkflowsyncpostresponse.md
   - docs/models/operations/uploadassetfileassetsuploadpostrequest.md
@@ -217,6 +223,7 @@ generatedFiles:
   - src/comfydeploy/models/components/gpuprovidertype.py
   - src/comfydeploy/models/components/httpmetadata.py
   - src/comfydeploy/models/components/increasetimeoutbody.py
+  - src/comfydeploy/models/components/increasetimeoutbody2.py
   - src/comfydeploy/models/components/inputmodel.py
   - src/comfydeploy/models/components/logdatacontent.py
   - src/comfydeploy/models/components/logupdateevent.py
@@ -232,6 +239,7 @@ generatedFiles:
   - src/comfydeploy/models/components/searchmodelsresponse.py
   - src/comfydeploy/models/components/security.py
   - src/comfydeploy/models/components/session.py
+  - src/comfydeploy/models/components/snapshotsessionbody.py
   - src/comfydeploy/models/components/validationerror.py
   - src/comfydeploy/models/components/workflowrunmodel.py
   - src/comfydeploy/models/components/workflowrunoutputmodel.py
@@ -262,12 +270,14 @@ generatedFiles:
   - src/comfydeploy/models/operations/get_machine_sessions_sessions_get.py
   - src/comfydeploy/models/operations/get_run_run_run_id_get.py
   - src/comfydeploy/models/operations/get_session_session_session_id_get.py
+  - src/comfydeploy/models/operations/increase_timeout_2_session_session_id_increase_timeout_post.py
   - src/comfydeploy/models/operations/increase_timeout_session_increase_timeout_post.py
   - src/comfydeploy/models/operations/list_assets_assets_get.py
   - src/comfydeploy/models/operations/public_models_models_get.py
   - src/comfydeploy/models/operations/queue_deployment_run_run_deployment_queue_post.py
   - src/comfydeploy/models/operations/queue_workflow_run_run_workflow_queue_post.py
   - src/comfydeploy/models/operations/search_search_model_get.py
+  - src/comfydeploy/models/operations/snapshot_session_session_session_id_snapshot_post.py
   - src/comfydeploy/models/operations/sync_deployment_run_run_deployment_sync_post.py
   - src/comfydeploy/models/operations/sync_workflow_run_run_workflow_sync_post.py
   - src/comfydeploy/models/operations/upload_asset_file_assets_upload_post.py
@@ -307,7 +317,7 @@ examples:
           run_id: "b888f774-3e7c-4135-a18c-6b985523c4bc"
       responses:
         "200":
-          application/json: {"id": "e50f7622-81da-484b-9c66-1c8a99c6b71b", "workflow_version_id": "ecd62b8f-7112-4aaf-90ab-4e43b4cca371", "workflow_inputs": "<value>", "workflow_id": "f620807a-a1f8-4cf0-95d8-9d58ee381f6b", "workflow_api": "<value>", "machine_id": "b885c09d-541c-4293-b683-64a15f8d7e75", "origin": "<value>", "status": "<value>", "created_at": "2024-02-02T12:01:38.576Z", "updated_at": "2023-04-16T15:25:27.950Z", "gpu_event_id": "<id>", "gpu": "<value>", "machine_version": "<value>", "machine_type": "<value>", "modal_function_call_id": "<id>", "user_id": "<id>", "org_id": "<id>", "live_status": "<value>", "webhook": "<value>", "webhook_status": "<value>", "number": 494415, "duration": "6188.68", "cold_start_duration": "9131.14", "cold_start_duration_total": "1865.92", "run_duration": "3787.04"}
+          application/json: {"id": "e50f7622-81da-484b-9c66-1c8a99c6b71b", "workflow_version_id": "ecd62b8f-7112-4aaf-90ab-4e43b4cca371", "workflow_inputs": "<value>", "workflow_id": "f620807a-a1f8-4cf0-95d8-9d58ee381f6b", "workflow_api": "<value>", "machine_id": "b885c09d-541c-4293-b683-64a15f8d7e75", "origin": "<value>", "status": "<value>", "created_at": "2024-02-02T12:01:38.576Z", "updated_at": "2023-04-16T15:25:27.950Z", "gpu_event_id": "<id>", "gpu": "<value>", "machine_version": "<value>", "machine_type": "<value>", "modal_function_call_id": "<id>", "user_id": "<id>", "org_id": "<id>", "live_status": "<value>", "progress": 0, "is_realtime": false, "webhook": "<value>", "webhook_status": "<value>", "webhook_intermediate_status": false, "number": 494415, "duration": 6188.69, "cold_start_duration": 9131.15, "cold_start_duration_total": 1865.92, "run_duration": 3787.04}
         "422":
           application/json: {}
   create_run_queue_run_queue_post:
@@ -325,7 +335,7 @@ examples:
         application/json: {"inputs": {"prompt": "A beautiful landscape", "seed": 42}, "webhook_intermediate_status": true, "model_id": "<id>"}
       responses:
         "200":
-          application/json: []
+          application/json: [{"id": "897be308-085c-4963-9b50-9c0142ddd3a2", "run_id": "4537c27c-77e5-4f3d-bb2d-51ced44fce80", "data": {"key": []}, "node_meta": "<value>", "created_at": "2024-01-21T13:20:51.406Z", "updated_at": "2023-09-22T22:51:52.189Z"}]
         "422":
           application/json: {}
   create_run_stream_run_stream_post:
@@ -335,7 +345,6 @@ examples:
       responses:
         "422":
           application/json: {}
-        "200": {}
   cancel_run_run__run_id__cancel_post:
     speakeasy-default-cancel-run-run-run-id-cancel-post:
       parameters:
@@ -351,7 +360,7 @@ examples:
   queue_deployment_run_run_deployment_queue_post:
     speakeasy-default-queue-deployment-run-run-deployment-queue-post:
       requestBody:
-        application/json: {"inputs": {"prompt": "A beautiful landscape", "seed": 42}, "webhook": "https://myapp.com/webhook", "deployment_id": "15e79589-12c9-453c-a41a-348fdd7de957"}
+        application/json: {"inputs": {"prompt": "A beautiful landscape", "seed": 42}, "webhook": "https://myapp.com/webhook", "webhook_intermediate_status": true, "deployment_id": "15e79589-12c9-453c-a41a-348fdd7de957"}
       responses:
         "200":
           application/json: {"run_id": "03ec31b2-4d0d-4329-88ff-ac74003017b7"}
@@ -360,24 +369,23 @@ examples:
   sync_deployment_run_run_deployment_sync_post:
     speakeasy-default-sync-deployment-run-run-deployment-sync-post:
       requestBody:
-        application/json: {"inputs": {"prompt": "A beautiful landscape", "seed": 42}, "webhook": "https://myapp.com/webhook", "deployment_id": "15e79589-12c9-453c-a41a-348fdd7de957"}
+        application/json: {"inputs": {"prompt": "A beautiful landscape", "seed": 42}, "webhook": "https://myapp.com/webhook", "webhook_intermediate_status": true, "deployment_id": "15e79589-12c9-453c-a41a-348fdd7de957"}
       responses:
         "200":
-          application/json: [{"id": "0897be30-8085-4c96-83b5-09c0142ddd3a", "run_id": "74537c27-c77e-45f3-8db2-d51ced44fce8", "data": {"key": [{"url": "https://excellent-someplace.com/", "type": "<value>", "filename": "example.file"}], "key1": ["<value>", {"url": "https://quixotic-pacemaker.name", "type": "<value>", "filename": "example.file"}, {"url": "https://stupendous-reboot.com", "type": "<value>", "filename": "example.file"}], "key2": ["<value>"]}, "node_meta": "<value>", "created_at": "2025-06-15T03:39:15.085Z", "updated_at": "2023-01-07T17:33:50.101Z"}, {"id": "7b918394-ccd6-4006-bce6-e9d017d70eb9", "run_id": "65e87a7a-7857-4bfb-b41e-75104e9739c5", "data": {"key": []}, "node_meta": "<value>", "created_at": "2023-08-28T07:34:17.021Z", "updated_at": "2024-05-07T07:06:17.977Z"}, {"id": "9f9cc0e7-be8b-46e8-8cb1-c6a768b8af61", "run_id": "a6bac807-9573-4ae1-9a78-99edf52381d0", "data": {"key": [{"url": "https://regal-pillbox.name/", "type": "<value>", "filename": "example.file"}, "<value>"], "key1": [{"url": "https://amused-completion.com/", "type": "<value>", "filename": "example.file"}, {"url": "https://stingy-pulse.org/", "type": "<value>", "filename": "example.file"}, {"url": "https://productive-populist.net/", "type": "<value>", "filename": "example.file"}], "key2": ["<value>"]}, "node_meta": "<value>", "created_at": "2024-09-02T10:46:05.380Z", "updated_at": "2025-02-12T08:26:26.046Z"}]
+          application/json: [{"id": "0897be30-8085-4c96-83b5-09c0142ddd3a", "run_id": "74537c27-c77e-45f3-8db2-d51ced44fce8", "data": {"key": [{"url": "https://excellent-someplace.com/", "type": "<value>", "filename": "example.file"}], "key1": ["<value>", {"url": "https://quixotic-pacemaker.name", "type": "<value>", "filename": "example.file"}, "<value>"], "key2": [false, {"url": "https://polished-skeleton.com/", "type": "<value>", "filename": "example.file"}, "<value>"]}, "node_meta": "<value>", "created_at": "2025-01-23T13:45:24.384Z", "updated_at": "2024-10-25T00:17:13.141Z"}, {"id": "18394ccd-6006-4ce6-be9d-017d70eb9d65", "run_id": "87a7a785-7bfb-441e-8751-04e9739c5c62", "data": {"key": [false, false]}, "node_meta": "<value>", "created_at": "2023-01-31T05:28:58.315Z", "updated_at": "2025-10-01T12:59:37.486Z"}, {"id": "7be8b6e8-cb1c-46a7-868b-8af613a6bac8", "run_id": "79573ae1-a789-49ed-af52-381d04fb16aa", "data": {"key": [{"url": "https://amused-completion.com/", "type": "<value>", "filename": "example.file"}, "<value>", {"url": "https://self-assured-validity.info", "type": "<value>", "filename": "example.file"}], "key1": []}, "node_meta": "<value>", "created_at": "2024-12-01T22:07:48.324Z", "updated_at": "2025-01-31T14:08:21.898Z"}]
         "422":
           application/json: {}
   create_run_deployment_stream_run_deployment_stream_post:
     speakeasy-default-create-run-deployment-stream-run-deployment-stream-post:
       requestBody:
-        application/json: {"inputs": {"prompt": "A beautiful landscape", "seed": 42}, "webhook": "https://myapp.com/webhook", "deployment_id": "15e79589-12c9-453c-a41a-348fdd7de957"}
+        application/json: {"inputs": {"prompt": "A beautiful landscape", "seed": 42}, "webhook": "https://myapp.com/webhook", "webhook_intermediate_status": true, "deployment_id": "15e79589-12c9-453c-a41a-348fdd7de957"}
       responses:
         "422":
           application/json: {}
-        "200": {}
   queue_workflow_run_run_workflow_queue_post:
     speakeasy-default-queue-workflow-run-run-workflow-queue-post:
       requestBody:
-        application/json: {"inputs": {"prompt": "A beautiful landscape", "seed": 42}, "webhook": "https://myapp.com/webhook", "workflow_id": "12345678-1234-5678-1234-567812345678", "workflow_api_json": {}}
+        application/json: {"inputs": {"prompt": "A beautiful landscape", "seed": 42}, "webhook": "https://myapp.com/webhook", "webhook_intermediate_status": true, "workflow_id": "12345678-1234-5678-1234-567812345678", "workflow_api_json": {}}
       responses:
         "200":
           application/json: {"run_id": "03ec31b2-4d0d-4329-88ff-ac74003017b7"}
@@ -386,20 +394,19 @@ examples:
   sync_workflow_run_run_workflow_sync_post:
     speakeasy-default-sync-workflow-run-run-workflow-sync-post:
       requestBody:
-        application/json: {"inputs": {"prompt": "A beautiful landscape", "seed": 42}, "webhook": "https://myapp.com/webhook", "workflow_id": "12345678-1234-5678-1234-567812345678", "workflow_api_json": {}}
+        application/json: {"inputs": {"prompt": "A beautiful landscape", "seed": 42}, "webhook": "https://myapp.com/webhook", "webhook_intermediate_status": true, "workflow_id": "12345678-1234-5678-1234-567812345678", "workflow_api_json": {}}
       responses:
         "200":
-          application/json: [{"id": "0897be30-8085-4c96-83b5-09c0142ddd3a", "run_id": "74537c27-c77e-45f3-8db2-d51ced44fce8", "data": {"key": [{"url": "https://excellent-someplace.com/", "type": "<value>", "filename": "example.file"}], "key1": ["<value>", {"url": "https://quixotic-pacemaker.name", "type": "<value>", "filename": "example.file"}, {"url": "https://stupendous-reboot.com", "type": "<value>", "filename": "example.file"}], "key2": ["<value>"]}, "node_meta": "<value>", "created_at": "2025-06-15T03:39:15.085Z", "updated_at": "2023-01-07T17:33:50.101Z"}, {"id": "7b918394-ccd6-4006-bce6-e9d017d70eb9", "run_id": "65e87a7a-7857-4bfb-b41e-75104e9739c5", "data": {"key": []}, "node_meta": "<value>", "created_at": "2023-08-28T07:34:17.021Z", "updated_at": "2024-05-07T07:06:17.977Z"}, {"id": "9f9cc0e7-be8b-46e8-8cb1-c6a768b8af61", "run_id": "a6bac807-9573-4ae1-9a78-99edf52381d0", "data": {"key": [{"url": "https://regal-pillbox.name/", "type": "<value>", "filename": "example.file"}, "<value>"], "key1": [{"url": "https://amused-completion.com/", "type": "<value>", "filename": "example.file"}, {"url": "https://stingy-pulse.org/", "type": "<value>", "filename": "example.file"}, {"url": "https://productive-populist.net/", "type": "<value>", "filename": "example.file"}], "key2": ["<value>"]}, "node_meta": "<value>", "created_at": "2024-09-02T10:46:05.380Z", "updated_at": "2025-02-12T08:26:26.046Z"}]
+          application/json: [{"id": "0897be30-8085-4c96-83b5-09c0142ddd3a", "run_id": "74537c27-c77e-45f3-8db2-d51ced44fce8", "data": {"key": [{"url": "https://excellent-someplace.com/", "type": "<value>", "filename": "example.file"}], "key1": ["<value>", {"url": "https://quixotic-pacemaker.name", "type": "<value>", "filename": "example.file"}, "<value>"], "key2": [false, {"url": "https://polished-skeleton.com/", "type": "<value>", "filename": "example.file"}, "<value>"]}, "node_meta": "<value>", "created_at": "2025-01-23T13:45:24.384Z", "updated_at": "2024-10-25T00:17:13.141Z"}, {"id": "18394ccd-6006-4ce6-be9d-017d70eb9d65", "run_id": "87a7a785-7bfb-441e-8751-04e9739c5c62", "data": {"key": [false, false]}, "node_meta": "<value>", "created_at": "2023-01-31T05:28:58.315Z", "updated_at": "2025-10-01T12:59:37.486Z"}, {"id": "7be8b6e8-cb1c-46a7-868b-8af613a6bac8", "run_id": "79573ae1-a789-49ed-af52-381d04fb16aa", "data": {"key": [{"url": "https://amused-completion.com/", "type": "<value>", "filename": "example.file"}, "<value>", {"url": "https://self-assured-validity.info", "type": "<value>", "filename": "example.file"}], "key1": []}, "node_meta": "<value>", "created_at": "2024-12-01T22:07:48.324Z", "updated_at": "2025-01-31T14:08:21.898Z"}]
         "422":
           application/json: {}
   create_run_workflow_stream_run_workflow_stream_post:
     speakeasy-default-create-run-workflow-stream-run-workflow-stream-post:
       requestBody:
-        application/json: {"inputs": {"prompt": "A beautiful landscape", "seed": 42}, "webhook": "https://myapp.com/webhook", "workflow_id": "12345678-1234-5678-1234-567812345678", "workflow_api_json": {}}
+        application/json: {"inputs": {"prompt": "A beautiful landscape", "seed": 42}, "webhook": "https://myapp.com/webhook", "webhook_intermediate_status": true, "workflow_id": "12345678-1234-5678-1234-567812345678", "workflow_api_json": {}}
       responses:
         "422":
           application/json: {}
-        "200": {}
   get_session_session__session_id__get:
     speakeasy-default-get-session-session-session-id-get:
       parameters:
@@ -407,7 +414,7 @@ examples:
           session_id: "<id>"
       responses:
         "200":
-          application/json: {"session_id": "<id>", "gpu_event_id": "<id>", "url": "https://normal-making.name", "gpu": "<value>", "created_at": "2025-11-29T01:50:48.954Z", "timeout": 458049, "machine_id": "<id>"}
+          application/json: {"session_id": "<id>", "gpu_event_id": "<id>", "url": "https://normal-making.name", "gpu": "<value>", "created_at": "2025-11-29T01:50:48.954Z", "timeout": 458049, "timeout_end": "2024-05-09T02:28:23.533Z", "machine_id": "<id>"}
         "422":
           application/json: {}
   delete_session_session__session_id__delete:
@@ -422,12 +429,9 @@ examples:
           application/json: {}
   get_machine_sessions_sessions_get:
     speakeasy-default-get-machine-sessions-sessions-get:
-      parameters:
-        query:
-          machine_id: "<id>"
       responses:
         "200":
-          application/json: [{"id": "8a232aa0-b11b-48a0-8057-1e9e705d0e6e", "user_id": "<id>", "org_id": "<id>", "machine_id": "1e276671-8d6d-4461-b2e0-aee1b9ddf121", "start_time": "2025-05-01T20:38:29.097Z", "end_time": "2023-06-05T08:58:03.644Z", "gpu": "A100", "gpu_provider": "runpod"}, {"id": "c8104fb4-51a7-40cf-8c8f-e07fbc60ab96", "user_id": "<id>", "org_id": "<id>", "machine_id": "d5611ff6-573e-40a6-a233-1ad7c07cc481", "start_time": "2024-09-14T02:22:04.749Z", "end_time": "2023-04-20T19:52:18.966Z", "gpu": "L4", "gpu_provider": "modal"}, {"id": "6ebd834b-7d8c-4223-a6e0-85944ebceb27", "user_id": "<id>", "org_id": "<id>", "machine_id": "d4753d0a-17c4-478e-9329-a9ec97938e1a", "start_time": "2023-09-28T14:04:50.967Z", "end_time": "2023-01-03T14:26:00.039Z", "gpu": "H100", "gpu_provider": "modal"}]
+          application/json: [{"id": "8a232aa0-b11b-48a0-8057-1e9e705d0e6e", "user_id": "<id>", "org_id": "<id>", "machine_id": "1e276671-8d6d-4461-b2e0-aee1b9ddf121", "start_time": "2025-05-01T20:38:29.097Z", "end_time": "2023-06-05T08:58:03.644Z", "gpu": "A100", "gpu_provider": "runpod"}, {"id": "c8104fb4-51a7-40cf-8c8f-e07fbc60ab96", "user_id": "<id>", "org_id": "<id>", "machine_id": "d5611ff6-573e-40a6-a233-1ad7c07cc481", "start_time": "2024-09-14T02:22:04.749Z", "end_time": "2023-04-20T19:52:18.966Z", "gpu": "A10G", "gpu_provider": "modal"}, {"id": "6ebd834b-7d8c-4223-a6e0-85944ebceb27", "user_id": "<id>", "org_id": "<id>", "machine_id": "d4753d0a-17c4-478e-9329-a9ec97938e1a", "start_time": "2023-09-28T14:04:50.967Z", "end_time": "2023-01-03T14:26:00.039Z", "gpu": "H100", "gpu_provider": "modal"}]
         "422":
           application/json: {}
   increase_timeout_session_increase_timeout_post:
@@ -439,13 +443,35 @@ examples:
           application/json: "<value>"
         "422":
           application/json: {}
+  increase_timeout_2_session__session_id__increase_timeout_post:
+    speakeasy-default-increase-timeout-2-session-session-id-increase-timeout-post:
+      parameters:
+        path:
+          session_id: "<id>"
+      requestBody:
+        application/json: {"minutes": 840571}
+      responses:
+        "200":
+          application/json: "<value>"
+        "422":
+          application/json: {}
   create_session_session_post:
     speakeasy-default-create-session-session-post:
       requestBody:
-        application/json: {"machine_id": "<id>"}
+        application/json: {"machine_id": "<id>", "wait_for_server": false}
       responses:
         "200":
           application/json: {"session_id": "7a621cf0-21cd-49cf-8540-3315211a509a"}
+        "422":
+          application/json: {}
+  snapshot_session_session__session_id__snapshot_post:
+    speakeasy-default-snapshot-session-session-session-id-snapshot-post:
+      parameters:
+        path:
+          session_id: "<id>"
+      responses:
+        "200":
+          application/json: "<value>"
         "422":
           application/json: {}
   create_deployment_deployment_post:
@@ -454,7 +480,7 @@ examples:
         application/json: {"workflow_version_id": "<id>", "workflow_id": "<id>", "machine_id": "<id>", "environment": "<value>"}
       responses:
         "200":
-          application/json: {"id": "7a621cf0-21cd-49cf-8540-3315211a509a", "user_id": "<id>", "org_id": "<id>", "workflow_version_id": "080a8e77-4c2b-4ecc-9376-91775e024985", "workflow_id": "13de0ee8-03d5-46a1-adf9-436bfd394947", "machine_id": "8bc19d4c-51e9-49df-9f42-acbeff61bc52", "share_slug": "<value>", "description": "formula other gosh carouse", "share_options": {}, "showcase_media": [{}], "environment": "staging", "created_at": "2024-02-24T22:31:50.589Z", "updated_at": "2024-09-18T22:12:00.266Z"}
+          application/json: {"id": "7a621cf0-21cd-49cf-8540-3315211a509a", "user_id": "<id>", "org_id": "<id>", "workflow_version_id": "080a8e77-4c2b-4ecc-9376-91775e024985", "workflow_id": "13de0ee8-03d5-46a1-adf9-436bfd394947", "machine_id": "8bc19d4c-51e9-49df-9f42-acbeff61bc52", "share_slug": "<value>", "description": "formula other gosh carouse", "share_options": {}, "showcase_media": [{}, {}], "environment": "staging", "created_at": "2024-02-24T22:31:50.589Z", "updated_at": "2024-09-18T22:12:00.266Z"}
         "422":
           application/json: {}
   get_deployments_deployments_get:
@@ -467,7 +493,7 @@ examples:
   upload_file_file_upload_post:
     speakeasy-default-upload-file-file-upload-post:
       requestBody:
-        multipart/form-data: {"file": {}}
+        multipart/form-data: {"file": {"": "x-file: example.file"}}
       responses:
         "200":
           application/json: {"message": "File uploaded successfully", "file_id": "img_1a2b3c4d5e6f7g8h", "file_name": "example_image.jpg", "file_url": "https://your-bucket.s3.your-region.amazonaws.com/inputs/img_1a2b3c4d5e6f7g8h.jpg"}
@@ -484,6 +510,9 @@ examples:
           application/json: {}
   list_assets_assets_get:
     speakeasy-default-list-assets-assets-get:
+      parameters:
+        query:
+          path: "/"
       responses:
         "200":
           application/json: [{"id": "<id>", "name": "<value>", "is_folder": false, "path": "/sbin", "created_at": "2025-12-25T17:21:49.793Z", "updated_at": "2025-01-18T10:50:56.287Z"}, {"id": "<id>", "name": "<value>", "is_folder": true, "path": "/etc/ppp", "created_at": "2025-12-04T16:54:21.906Z", "updated_at": "2025-04-01T12:23:51.277Z"}]
@@ -511,8 +540,11 @@ examples:
           application/json: {}
   upload_asset_file_assets_upload_post:
     speakeasy-default-upload-asset-file-assets-upload-post:
+      parameters:
+        query:
+          parent_path: "/"
       requestBody:
-        multipart/form-data: {"file": {}}
+        multipart/form-data: {"file": {"": "x-file: example.file"}}
       responses:
         "200":
           application/json: {"id": "<id>", "name": "<value>", "is_folder": false, "path": "/dev", "created_at": "2023-03-10T03:20:38.050Z", "updated_at": "2025-09-25T00:29:12.832Z"}
@@ -522,24 +554,26 @@ examples:
     speakeasy-default-public-models-models-get:
       responses:
         "200":
-          application/json: [{"id": "<id>", "name": "<value>", "inputs": [{"input_id": "<id>", "class_type": "ComfyUIDeployExternalEnum", "required": false}, {"input_id": "<id>", "class_type": "<value>", "required": false}], "outputs": [{"class_type": "ComfyDeployStdOutputImage", "output_id": "<id>"}]}, {"id": "<id>", "name": "<value>", "inputs": [{"input_id": "<id>", "class_type": "ComfyUIDeployExternalNumberInt", "required": false}, {"input_id": "<id>", "class_type": "ComfyUIDeployExternalTextAny", "required": true}], "outputs": [{"class_type": "ComfyDeployStdOutputImage", "output_id": "<id>"}, {"class_type": "ComfyDeployStdOutputAny", "output_id": "<id>"}]}, {"id": "<id>", "name": "<value>", "inputs": [{"input_id": "<id>", "class_type": "ComfyUIDeployExternalText", "required": false}, {"input_id": "<id>", "class_type": "ComfyUIDeployExternalCheckpoint", "required": true}, {"input_id": "<id>", "class_type": "ComfyUIDeployExternalTextAny", "required": false}], "outputs": []}]
+          application/json: [{"id": "<id>", "name": "<value>", "is_comfyui": false, "inputs": [{"input_id": "<id>", "class_type": "ComfyUIDeployExternalEnum", "required": false}, {"input_id": "<id>", "class_type": "<value>", "required": false}], "outputs": [{"class_type": "ComfyDeployStdOutputImage", "output_id": "<id>"}]}, {"id": "<id>", "name": "<value>", "is_comfyui": false, "inputs": [{"input_id": "<id>", "class_type": "ComfyUIDeployExternalNumberInt", "required": false}, {"input_id": "<id>", "class_type": "ComfyUIDeployExternalTextAny", "required": true}], "outputs": [{"class_type": "ComfyDeployStdOutputImage", "output_id": "<id>"}, {"class_type": "ComfyDeployStdOutputAny", "output_id": "<id>"}]}, {"id": "<id>", "name": "<value>", "is_comfyui": false, "inputs": [{"input_id": "<id>", "class_type": "ComfyUIDeployExternalText", "required": false}, {"input_id": "<id>", "class_type": "ComfyUIDeployExternalCheckpoint", "required": true}, {"input_id": "<id>", "class_type": "ComfyUIDeployExternalTextAny", "required": false}], "outputs": []}]
   search_search_model_get:
     speakeasy-default-search-search-model-get:
       parameters:
         query:
           query: "<value>"
+          provider: "all"
       responses:
         "200":
-          application/json: {}
+          application/json: {"models": [{}, {}]}
         "422":
           application/json: {}
   run_update__request_body__webhook__post:
     speakeasy-default-run-update-request-body-webhook-post:
       requestBody:
-        application/json: {"run_id": "<id>", "status": "success", "live_status": "<value>"}
+        application/json: {"run_id": "<id>", "status": "success", "live_status": "<value>", "progress": 0}
       responses:
         "200":
           application/json: {"status": "<value>"}
         "422":
           application/json: {}
+examplesVersion: 1.0.0
 generatedTests: {}
