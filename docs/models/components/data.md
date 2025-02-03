@@ -15,3 +15,9 @@ value: components.MediaItem = /* values here */
 value: str = /* values here */
 ```
 
+### `bool`
+
+```python
+value: bool = /* values here */
+```
+

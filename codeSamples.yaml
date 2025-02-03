@@ -474,6 +474,44 @@ actions:
 
                 # Handle response
                 print(res.session)
+  - target: $["paths"]["/session/{session_id}/increase-timeout"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: SDK (Python)
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.session.increase_timeout_2_session_session_id_increase_timeout_post(session_id="<id>", increase_timeout_body2={
+                    "minutes": 840571,
+                })
+
+                assert res.any is not None
+
+                # Handle response
+                print(res.any)
+  - target: $["paths"]["/session/{session_id}/snapshot"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: SDK (Python)
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.session.snapshot_session_session_session_id_snapshot_post(session_id="<id>")
+
+                assert res.any is not None
+
+                # Handle response
+                print(res.any)
   - target: $["paths"]["/sessions"]["get"]
     update:
       x-codeSamples:
@@ -486,7 +524,7 @@ actions:
                 bearer="<YOUR_BEARER_TOKEN_HERE>",
             ) as comfy_deploy:
 
-                res = comfy_deploy.session.list(machine_id="<id>")
+                res = comfy_deploy.session.list()
 
                 assert res.response_get_machine_sessions_sessions_get is not None
 

@@ -48,6 +48,7 @@ from .gpueventmodel import GPUEventModel, GPUEventModelTypedDict
 from .gpuprovidertype import GPUProviderType
 from .httpmetadata import HTTPMetadata, HTTPMetadataTypedDict
 from .increasetimeoutbody import IncreaseTimeoutBody, IncreaseTimeoutBodyTypedDict
+from .increasetimeoutbody2 import IncreaseTimeoutBody2, IncreaseTimeoutBody2TypedDict
 from .inputmodel import (
     DefaultValue,
     DefaultValueTypedDict,
@@ -86,6 +87,7 @@ from .runstream import RunStream, RunStreamTypedDict
 from .searchmodelsresponse import SearchModelsResponse, SearchModelsResponseTypedDict
 from .security import Security, SecurityTypedDict
 from .session import Session, SessionTypedDict
+from .snapshotsessionbody import SnapshotSessionBody, SnapshotSessionBodyTypedDict
 from .validationerror import (
     Loc,
     LocTypedDict,
@@ -182,6 +184,8 @@ __all__ = [
     "HTTPMetadata",
     "HTTPMetadataTypedDict",
     "IncreaseTimeoutBody",
+    "IncreaseTimeoutBody2",
+    "IncreaseTimeoutBody2TypedDict",
     "IncreaseTimeoutBodyTypedDict",
     "InputModel",
     "InputModelTypedDict",
@@ -228,6 +232,8 @@ __all__ = [
     "ShareOptionsTypedDict",
     "ShowcaseMedia",
     "ShowcaseMediaTypedDict",
+    "SnapshotSessionBody",
+    "SnapshotSessionBodyTypedDict",
     "Step",
     "StepTypedDict",
     "Two",
