@@ -115,9 +115,26 @@ actions:
                 res = comfy_deploy.deployments.create(request={
                     "workflow_version_id": "<id>",
                     "workflow_id": "<id>",
-                    "machine_id": "<id>",
                     "environment": "<value>",
                 })
+
+                assert res.deployment_model is not None
+
+                # Handle response
+                print(res.deployment_model)
+  - target: $["paths"]["/deployment/{deployment_id}"]["patch"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: SDK (Python)
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.deployments.update(deployment_id="<id>", deployment_update={})
 
                 assert res.deployment_model is not None
 
@@ -474,6 +491,44 @@ actions:
 
                 # Handle response
                 print(res.session)
+  - target: $["paths"]["/session/{session_id}/increase-timeout"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: SDK (Python)
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.session.increase_timeout_2_session_session_id_increase_timeout_post(session_id="<id>", increase_timeout_body2={
+                    "minutes": 840571,
+                })
+
+                assert res.any is not None
+
+                # Handle response
+                print(res.any)
+  - target: $["paths"]["/session/{session_id}/snapshot"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: SDK (Python)
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.session.snapshot_session_session_session_id_snapshot_post(session_id="<id>")
+
+                assert res.any is not None
+
+                # Handle response
+                print(res.any)
   - target: $["paths"]["/sessions"]["get"]
     update:
       x-codeSamples:
@@ -486,12 +541,30 @@ actions:
                 bearer="<YOUR_BEARER_TOKEN_HERE>",
             ) as comfy_deploy:
 
-                res = comfy_deploy.session.list(machine_id="<id>")
+                res = comfy_deploy.session.list()
 
                 assert res.response_get_machine_sessions_sessions_get is not None
 
                 # Handle response
                 print(res.response_get_machine_sessions_sessions_get)
+  - target: $["paths"]["/share/{username}/{slug}"]["get"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: SDK (Python)
+          source: |-
+            from comfydeploy import ComfyDeploy
+
+            with ComfyDeploy(
+                bearer="<YOUR_BEARER_TOKEN_HERE>",
+            ) as comfy_deploy:
+
+                res = comfy_deploy.deployments.get_share_deployment_share_username_slug_get(username="Albertha60", slug="<value>")
+
+                assert res.deployment_share_model is not None
+
+                # Handle response
+                print(res.deployment_share_model)
   - target: $["paths"]["{$request.body#/webhook}"]["post"]
     update:
       x-codeSamples:

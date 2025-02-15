@@ -3,6 +3,7 @@
 from __future__ import annotations
 from .deploymentenvironment import DeploymentEnvironment
 from .inputmodel import InputModel, InputModelTypedDict
+from .machinewithname import MachineWithName, MachineWithNameTypedDict
 from .outputmodel import OutputModel, OutputModelTypedDict
 from .workflowwithname import WorkflowWithName, WorkflowWithNameTypedDict
 from comfydeploy.types import (
@@ -34,6 +35,14 @@ class ShowcaseMedia(BaseModel):
     pass
 
 
+class VersionTypedDict(TypedDict):
+    pass
+
+
+class Version(BaseModel):
+    pass
+
+
 class DeploymentModelTypedDict(TypedDict):
     id: str
     user_id: str
@@ -49,8 +58,18 @@ class DeploymentModelTypedDict(TypedDict):
     created_at: datetime
     updated_at: datetime
     workflow: NotRequired[Nullable[WorkflowWithNameTypedDict]]
+    version: NotRequired[Nullable[VersionTypedDict]]
+    machine: NotRequired[Nullable[MachineWithNameTypedDict]]
     input_types: NotRequired[Nullable[List[InputModelTypedDict]]]
     output_types: NotRequired[Nullable[List[OutputModelTypedDict]]]
+    dub_link: NotRequired[Nullable[str]]
+    gpu: NotRequired[Nullable[str]]
+    machine_version_id: NotRequired[Nullable[str]]
+    modal_image_id: NotRequired[Nullable[str]]
+    concurrency_limit: NotRequired[Nullable[int]]
+    run_timeout: NotRequired[Nullable[int]]
+    idle_timeout: NotRequired[Nullable[int]]
+    keep_warm: NotRequired[Nullable[int]]
 
 
 class DeploymentModel(BaseModel):
@@ -82,13 +101,47 @@ class DeploymentModel(BaseModel):
 
     workflow: OptionalNullable[WorkflowWithName] = UNSET
 
+    version: OptionalNullable[Version] = UNSET
+
+    machine: OptionalNullable[MachineWithName] = UNSET
+
     input_types: OptionalNullable[List[InputModel]] = UNSET
 
     output_types: OptionalNullable[List[OutputModel]] = UNSET
 
+    dub_link: OptionalNullable[str] = UNSET
+
+    gpu: OptionalNullable[str] = UNSET
+
+    machine_version_id: OptionalNullable[str] = UNSET
+
+    modal_image_id: OptionalNullable[str] = UNSET
+
+    concurrency_limit: OptionalNullable[int] = UNSET
+
+    run_timeout: OptionalNullable[int] = UNSET
+
+    idle_timeout: OptionalNullable[int] = UNSET
+
+    keep_warm: OptionalNullable[int] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["workflow", "input_types", "output_types"]
+        optional_fields = [
+            "workflow",
+            "version",
+            "machine",
+            "input_types",
+            "output_types",
+            "dub_link",
+            "gpu",
+            "machine_version_id",
+            "modal_image_id",
+            "concurrency_limit",
+            "run_timeout",
+            "idle_timeout",
+            "keep_warm",
+        ]
         nullable_fields = [
             "org_id",
             "share_slug",
@@ -96,8 +149,18 @@ class DeploymentModel(BaseModel):
             "share_options",
             "showcase_media",
             "workflow",
+            "version",
+            "machine",
             "input_types",
             "output_types",
+            "dub_link",
+            "gpu",
+            "machine_version_id",
+            "modal_image_id",
+            "concurrency_limit",
+            "run_timeout",
+            "idle_timeout",
+            "keep_warm",
         ]
         null_default_fields = []
 

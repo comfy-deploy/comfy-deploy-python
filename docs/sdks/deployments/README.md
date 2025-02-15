@@ -6,7 +6,9 @@
 ### Available Operations
 
 * [create](#create) - Create Deployment
+* [update](#update) - Update Deployment
 * [list](#list) - Get Deployments
+* [get_share_deployment_share_username_slug_get](#get_share_deployment_share_username_slug_get) - Get Share Deployment
 
 ## create
 
@@ -24,7 +26,6 @@ with ComfyDeploy(
     res = comfy_deploy.deployments.create(request={
         "workflow_version_id": "<id>",
         "workflow_id": "<id>",
-        "machine_id": "<id>",
         "environment": "<value>",
     })
 
@@ -45,6 +46,47 @@ with ComfyDeploy(
 ### Response
 
 **[operations.CreateDeploymentDeploymentPostResponse](../../models/operations/createdeploymentdeploymentpostresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## update
+
+Update Deployment
+
+### Example Usage
+
+```python
+from comfydeploy import ComfyDeploy
+
+with ComfyDeploy(
+    bearer="<YOUR_BEARER_TOKEN_HERE>",
+) as comfy_deploy:
+
+    res = comfy_deploy.deployments.update(deployment_id="<id>", deployment_update={})
+
+    assert res.deployment_model is not None
+
+    # Handle response
+    print(res.deployment_model)
+
+```
+
+### Parameters
+
+| Parameter                                                                  | Type                                                                       | Required                                                                   | Description                                                                |
+| -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `deployment_id`                                                            | *str*                                                                      | :heavy_check_mark:                                                         | N/A                                                                        |
+| `deployment_update`                                                        | [components.DeploymentUpdate](../../models/components/deploymentupdate.md) | :heavy_check_mark:                                                         | N/A                                                                        |
+| `retries`                                                                  | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)           | :heavy_minus_sign:                                                         | Configuration to override the default retry behavior of the client.        |
+
+### Response
+
+**[operations.UpdateDeploymentDeploymentDeploymentIDPatchResponse](../../models/operations/updatedeploymentdeploymentdeploymentidpatchresponse.md)**
 
 ### Errors
 
@@ -85,6 +127,47 @@ with ComfyDeploy(
 ### Response
 
 **[operations.GetDeploymentsDeploymentsGetResponse](../../models/operations/getdeploymentsdeploymentsgetresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## get_share_deployment_share_username_slug_get
+
+Get Share Deployment
+
+### Example Usage
+
+```python
+from comfydeploy import ComfyDeploy
+
+with ComfyDeploy(
+    bearer="<YOUR_BEARER_TOKEN_HERE>",
+) as comfy_deploy:
+
+    res = comfy_deploy.deployments.get_share_deployment_share_username_slug_get(username="Albertha60", slug="<value>")
+
+    assert res.deployment_share_model is not None
+
+    # Handle response
+    print(res.deployment_share_model)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `username`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `slug`                                                              | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[operations.GetShareDeploymentShareUsernameSlugGetResponse](../../models/operations/getsharedeploymentshareusernamesluggetresponse.md)**
 
 ### Errors
 

@@ -1,0 +1,15 @@
+# DeploymentUpdate
+
+
+## Fields
+
+| Field                                                                      | Type                                                                       | Required                                                                   | Description                                                                |
+| -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `workflow_version_id`                                                      | *OptionalNullable[str]*                                                    | :heavy_minus_sign:                                                         | N/A                                                                        |
+| `machine_id`                                                               | *OptionalNullable[str]*                                                    | :heavy_minus_sign:                                                         | N/A                                                                        |
+| `machine_version_id`                                                       | *OptionalNullable[str]*                                                    | :heavy_minus_sign:                                                         | N/A                                                                        |
+| `concurrency_limit`                                                        | *OptionalNullable[int]*                                                    | :heavy_minus_sign:                                                         | N/A                                                                        |
+| `gpu`                                                                      | [OptionalNullable[components.GPUType]](../../models/components/gputype.md) | :heavy_minus_sign:                                                         | N/A                                                                        |
+| `run_timeout`                                                              | *OptionalNullable[int]*                                                    | :heavy_minus_sign:                                                         | N/A                                                                        |
+| `idle_timeout`                                                             | *OptionalNullable[int]*                                                    | :heavy_minus_sign:                                                         | N/A                                                                        |
+| `keep_warm`                                                                | *OptionalNullable[int]*                                                    | :heavy_minus_sign:                                                         | N/A                                                                        |
