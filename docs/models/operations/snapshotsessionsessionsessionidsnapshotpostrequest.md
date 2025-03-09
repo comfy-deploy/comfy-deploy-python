@@ -1,0 +1,9 @@
+# SnapshotSessionSessionSessionIDSnapshotPostRequest
+
+
+## Fields
+
+| Field                                                                                              | Type                                                                                               | Required                                                                                           | Description                                                                                        |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `session_id`                                                                                       | *str*                                                                                              | :heavy_check_mark:                                                                                 | N/A                                                                                                |
+| `snapshot_session_body`                                                                            | [OptionalNullable[components.SnapshotSessionBody]](../../models/components/snapshotsessionbody.md) | :heavy_minus_sign:                                                                                 | N/A                                                                                                |

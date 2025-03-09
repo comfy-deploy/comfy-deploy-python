@@ -6,7 +6,12 @@
 ### Available Operations
 
 * [create](#create) - Create Deployment
+* [update](#update) - Update Deployment
+* [get](#get) - Get Deployment
 * [list](#list) - Get Deployments
+* [get_share_deployment_share_username_slug_get](#get_share_deployment_share_username_slug_get) - Get Share Deployment
+* [get_featured_deployments_deployments_featured_get](#get_featured_deployments_deployments_featured_get) - Get Featured Deployments
+* [deactivate](#deactivate) - Deactivate Deployment
 
 ## create
 
@@ -17,6 +22,7 @@ Create Deployment
 ```python
 from comfydeploy import ComfyDeploy
 
+
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
 ) as comfy_deploy:
@@ -24,7 +30,6 @@ with ComfyDeploy(
     res = comfy_deploy.deployments.create(request={
         "workflow_version_id": "<id>",
         "workflow_id": "<id>",
-        "machine_id": "<id>",
         "environment": "<value>",
     })
 
@@ -53,6 +58,89 @@ with ComfyDeploy(
 | errors.HTTPValidationError | 422                        | application/json           |
 | errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
+## update
+
+Update Deployment
+
+### Example Usage
+
+```python
+from comfydeploy import ComfyDeploy
+
+
+with ComfyDeploy(
+    bearer="<YOUR_BEARER_TOKEN_HERE>",
+) as comfy_deploy:
+
+    res = comfy_deploy.deployments.update(deployment_id="<id>", deployment_update={})
+
+    assert res.deployment_model is not None
+
+    # Handle response
+    print(res.deployment_model)
+
+```
+
+### Parameters
+
+| Parameter                                                                  | Type                                                                       | Required                                                                   | Description                                                                |
+| -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `deployment_id`                                                            | *str*                                                                      | :heavy_check_mark:                                                         | N/A                                                                        |
+| `deployment_update`                                                        | [components.DeploymentUpdate](../../models/components/deploymentupdate.md) | :heavy_check_mark:                                                         | N/A                                                                        |
+| `retries`                                                                  | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)           | :heavy_minus_sign:                                                         | Configuration to override the default retry behavior of the client.        |
+
+### Response
+
+**[operations.UpdateDeploymentDeploymentDeploymentIDPatchResponse](../../models/operations/updatedeploymentdeploymentdeploymentidpatchresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## get
+
+Get Deployment
+
+### Example Usage
+
+```python
+from comfydeploy import ComfyDeploy
+
+
+with ComfyDeploy(
+    bearer="<YOUR_BEARER_TOKEN_HERE>",
+) as comfy_deploy:
+
+    res = comfy_deploy.deployments.get(deployment_id="<id>")
+
+    assert res.deployment_model is not None
+
+    # Handle response
+    print(res.deployment_model)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `deployment_id`                                                     | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[operations.GetDeploymentDeploymentDeploymentIDGetResponse](../../models/operations/getdeploymentdeploymentdeploymentidgetresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
 ## list
 
 Get Deployments
@@ -61,6 +149,7 @@ Get Deployments
 
 ```python
 from comfydeploy import ComfyDeploy
+
 
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
@@ -80,11 +169,134 @@ with ComfyDeploy(
 | Parameter                                                                                              | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
 | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
 | `environment`                                                                                          | [OptionalNullable[components.DeploymentEnvironment]](../../models/components/deploymentenvironment.md) | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
+| `is_fluid`                                                                                             | *Optional[bool]*                                                                                       | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
 | `retries`                                                                                              | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                       | :heavy_minus_sign:                                                                                     | Configuration to override the default retry behavior of the client.                                    |
 
 ### Response
 
 **[operations.GetDeploymentsDeploymentsGetResponse](../../models/operations/getdeploymentsdeploymentsgetresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## get_share_deployment_share_username_slug_get
+
+Get Share Deployment
+
+### Example Usage
+
+```python
+from comfydeploy import ComfyDeploy
+
+
+with ComfyDeploy(
+    bearer="<YOUR_BEARER_TOKEN_HERE>",
+) as comfy_deploy:
+
+    res = comfy_deploy.deployments.get_share_deployment_share_username_slug_get(username="Albertha60", slug="<value>")
+
+    assert res.deployment_share_model is not None
+
+    # Handle response
+    print(res.deployment_share_model)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `username`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `slug`                                                              | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[operations.GetShareDeploymentShareUsernameSlugGetResponse](../../models/operations/getsharedeploymentshareusernamesluggetresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## get_featured_deployments_deployments_featured_get
+
+Get Featured Deployments
+
+### Example Usage
+
+```python
+from comfydeploy import ComfyDeploy
+
+
+with ComfyDeploy(
+    bearer="<YOUR_BEARER_TOKEN_HERE>",
+) as comfy_deploy:
+
+    res = comfy_deploy.deployments.get_featured_deployments_deployments_featured_get()
+
+    assert res.response_get_featured_deployments_deployments_featured_get is not None
+
+    # Handle response
+    print(res.response_get_featured_deployments_deployments_featured_get)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[operations.GetFeaturedDeploymentsDeploymentsFeaturedGetResponse](../../models/operations/getfeatureddeploymentsdeploymentsfeaturedgetresponse.md)**
+
+### Errors
+
+| Error Type      | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
+
+## deactivate
+
+Deactivate Deployment
+
+### Example Usage
+
+```python
+from comfydeploy import ComfyDeploy
+
+
+with ComfyDeploy(
+    bearer="<YOUR_BEARER_TOKEN_HERE>",
+) as comfy_deploy:
+
+    res = comfy_deploy.deployments.deactivate(deployment_id="<id>")
+
+    assert res.deployment_model is not None
+
+    # Handle response
+    print(res.deployment_model)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `deployment_id`                                                     | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[operations.DeactivateDeploymentDeploymentDeploymentIDDeactivatePostResponse](../../models/operations/deactivatedeploymentdeploymentdeploymentiddeactivatepostresponse.md)**
 
 ### Errors
 

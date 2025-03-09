@@ -3,10 +3,10 @@
 import importlib.metadata
 
 __title__: str = "comfydeploy"
-__version__: str = "0.6.3"
+__version__: str = "0.7.0"
 __openapi_doc_version__: str = "V2"
-__gen_version__: str = "2.493.21"
-__user_agent__: str = "speakeasy-sdk/python 0.6.3 2.493.21 V2 comfydeploy"
+__gen_version__: str = "2.545.4"
+__user_agent__: str = "speakeasy-sdk/python 0.7.0 2.545.4 V2 comfydeploy"
 
 try:
     if __package__ is not None:

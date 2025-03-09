@@ -1,4 +1,4 @@
-# WorkflowRunVersionRequestGpu
+# DeploymentRunRequestGpu
 
 The GPU to override the machine's default GPU
 

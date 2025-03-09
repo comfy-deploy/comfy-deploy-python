@@ -1,0 +1,15 @@
+# DeploymentShareModel
+
+
+## Fields
+
+| Field                                                                  | Type                                                                   | Required                                                               | Description                                                            |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `id`                                                                   | *str*                                                                  | :heavy_check_mark:                                                     | N/A                                                                    |
+| `user_id`                                                              | *str*                                                                  | :heavy_check_mark:                                                     | N/A                                                                    |
+| `org_id`                                                               | *Nullable[str]*                                                        | :heavy_check_mark:                                                     | N/A                                                                    |
+| `share_slug`                                                           | *str*                                                                  | :heavy_check_mark:                                                     | N/A                                                                    |
+| `workflow`                                                             | Dict[str, *Nullable[str]*]                                             | :heavy_check_mark:                                                     | N/A                                                                    |
+| `input_types`                                                          | List[[components.InputTypes](../../models/components/inputtypes.md)]   | :heavy_check_mark:                                                     | N/A                                                                    |
+| `output_types`                                                         | List[[components.OutputTypes](../../models/components/outputtypes.md)] | :heavy_check_mark:                                                     | N/A                                                                    |
+| `description`                                                          | *OptionalNullable[str]*                                                | :heavy_minus_sign:                                                     | N/A                                                                    |

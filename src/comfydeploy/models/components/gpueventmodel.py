@@ -11,13 +11,10 @@ from comfydeploy.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from comfydeploy.utils import validate_const
 from datetime import datetime
-import pydantic
 from pydantic import model_serializer
-from pydantic.functional_validators import AfterValidator
 from typing import Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import NotRequired, TypedDict
 
 
 class GPUEventModelTypedDict(TypedDict):
@@ -28,8 +25,8 @@ class GPUEventModelTypedDict(TypedDict):
     start_time: Nullable[datetime]
     end_time: Nullable[datetime]
     gpu: Nullable[MachineGPUOutput]
-    gpu_provider: GPUProviderType
     ws_gpu: Nullable[WorkspaceGPU]
+    gpu_provider: GPUProviderType
     created_at: NotRequired[datetime]
     updated_at: NotRequired[datetime]
     session_timeout: NotRequired[Nullable[int]]
@@ -55,15 +52,9 @@ class GPUEventModel(BaseModel):
 
     gpu: Nullable[MachineGPUOutput]
 
-    gpu_provider: GPUProviderType
+    ws_gpu: Nullable[WorkspaceGPU]
 
-    WS_GPU: Annotated[
-        Annotated[
-            Nullable[WorkspaceGPU],
-            AfterValidator(validate_const(WorkspaceGPU.FOUR_THOUSAND_AND_NINETY)),
-        ],
-        pydantic.Field(alias="ws_gpu"),
-    ] = WorkspaceGPU.FOUR_THOUSAND_AND_NINETY
+    gpu_provider: GPUProviderType
 
     created_at: Optional[datetime] = None
 

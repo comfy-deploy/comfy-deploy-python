@@ -7,15 +7,17 @@ from typing import Any, Dict, List, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-InputsTypedDict = TypeAliasType(
-    "InputsTypedDict", Union[str, int, float, bool, List[Any]]
+DeploymentRunRequestInputsTypedDict = TypeAliasType(
+    "DeploymentRunRequestInputsTypedDict", Union[str, int, float, bool, List[Any]]
 )
 
 
-Inputs = TypeAliasType("Inputs", Union[str, int, float, bool, List[Any]])
+DeploymentRunRequestInputs = TypeAliasType(
+    "DeploymentRunRequestInputs", Union[str, int, float, bool, List[Any]]
+)
 
 
-class Gpu(str, Enum):
+class DeploymentRunRequestGpu(str, Enum):
     r"""The GPU to override the machine's default GPU"""
 
     T4 = "T4"
@@ -29,23 +31,23 @@ class Gpu(str, Enum):
 
 class DeploymentRunRequestTypedDict(TypedDict):
     deployment_id: str
-    inputs: NotRequired[Dict[str, InputsTypedDict]]
+    inputs: NotRequired[Dict[str, DeploymentRunRequestInputsTypedDict]]
     r"""The inputs to the workflow"""
     webhook: NotRequired[str]
     webhook_intermediate_status: NotRequired[bool]
-    gpu: NotRequired[Gpu]
+    gpu: NotRequired[DeploymentRunRequestGpu]
     r"""The GPU to override the machine's default GPU"""
 
 
 class DeploymentRunRequest(BaseModel):
     deployment_id: str
 
-    inputs: Optional[Dict[str, Inputs]] = None
+    inputs: Optional[Dict[str, DeploymentRunRequestInputs]] = None
     r"""The inputs to the workflow"""
 
     webhook: Optional[str] = None
 
     webhook_intermediate_status: Optional[bool] = False
 
-    gpu: Optional[Gpu] = None
+    gpu: Optional[DeploymentRunRequestGpu] = None
     r"""The GPU to override the machine's default GPU"""

@@ -14,17 +14,15 @@ from typing import Any, Dict, List, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-WorkflowRunVersionRequestInputsTypedDict = TypeAliasType(
-    "WorkflowRunVersionRequestInputsTypedDict", Union[str, int, float, bool, List[Any]]
+InputsTypedDict = TypeAliasType(
+    "InputsTypedDict", Union[str, int, float, bool, List[Any]]
 )
 
 
-WorkflowRunVersionRequestInputs = TypeAliasType(
-    "WorkflowRunVersionRequestInputs", Union[str, int, float, bool, List[Any]]
-)
+Inputs = TypeAliasType("Inputs", Union[str, int, float, bool, List[Any]])
 
 
-class WorkflowRunVersionRequestGpu(str, Enum):
+class Gpu(str, Enum):
     r"""The GPU to override the machine's default GPU"""
 
     T4 = "T4"
@@ -38,11 +36,11 @@ class WorkflowRunVersionRequestGpu(str, Enum):
 
 class WorkflowRunVersionRequestTypedDict(TypedDict):
     workflow_version_id: str
-    inputs: NotRequired[Dict[str, WorkflowRunVersionRequestInputsTypedDict]]
+    inputs: NotRequired[Dict[str, InputsTypedDict]]
     r"""The inputs to the workflow"""
     webhook: NotRequired[str]
     webhook_intermediate_status: NotRequired[bool]
-    gpu: NotRequired[WorkflowRunVersionRequestGpu]
+    gpu: NotRequired[Gpu]
     r"""The GPU to override the machine's default GPU"""
     machine_id: NotRequired[Nullable[str]]
 
@@ -50,14 +48,14 @@ class WorkflowRunVersionRequestTypedDict(TypedDict):
 class WorkflowRunVersionRequest(BaseModel):
     workflow_version_id: str
 
-    inputs: Optional[Dict[str, WorkflowRunVersionRequestInputs]] = None
+    inputs: Optional[Dict[str, Inputs]] = None
     r"""The inputs to the workflow"""
 
     webhook: Optional[str] = None
 
     webhook_intermediate_status: Optional[bool] = False
 
-    gpu: Optional[WorkflowRunVersionRequestGpu] = None
+    gpu: Optional[Gpu] = None
     r"""The GPU to override the machine's default GPU"""
 
     machine_id: OptionalNullable[str] = UNSET

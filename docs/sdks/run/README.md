@@ -20,6 +20,7 @@ Get Run
 ```python
 from comfydeploy import ComfyDeploy
 
+
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
 ) as comfy_deploy:
@@ -61,6 +62,7 @@ Create a new workflow run with the given parameters. This function sets up the r
 
 ```python
 from comfydeploy import ComfyDeploy
+
 
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
@@ -111,6 +113,7 @@ Create a new workflow run with the given parameters. This function sets up the r
 ```python
 from comfydeploy import ComfyDeploy
 
+
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
 ) as comfy_deploy:
@@ -160,6 +163,7 @@ Create a new workflow run with the given parameters. This function sets up the r
 ```python
 from comfydeploy import ComfyDeploy
 
+
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
 ) as comfy_deploy:
@@ -208,6 +212,7 @@ Cancel Run
 
 ```python
 from comfydeploy import ComfyDeploy
+
 
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",

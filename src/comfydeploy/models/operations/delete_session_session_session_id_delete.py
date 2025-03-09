@@ -6,7 +6,7 @@ from comfydeploy.models.components import (
     httpmetadata as components_httpmetadata,
 )
 from comfydeploy.types import BaseModel
-from comfydeploy.utils import FieldMetadata, PathParamMetadata
+from comfydeploy.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
 import pydantic
 from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
@@ -14,12 +14,18 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class DeleteSessionSessionSessionIDDeleteRequestTypedDict(TypedDict):
     session_id: str
+    wait_for_shutdown: NotRequired[bool]
 
 
 class DeleteSessionSessionSessionIDDeleteRequest(BaseModel):
     session_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
+
+    wait_for_shutdown: Annotated[
+        Optional[bool],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = False
 
 
 class DeleteSessionSessionSessionIDDeleteResponseTypedDict(TypedDict):
