@@ -24,6 +24,7 @@ class GetDeploymentsDeploymentsGetRequestTypedDict(TypedDict):
     environment: NotRequired[
         Nullable[components_deploymentenvironment.DeploymentEnvironment]
     ]
+    is_fluid: NotRequired[bool]
 
 
 class GetDeploymentsDeploymentsGetRequest(BaseModel):
@@ -32,9 +33,14 @@ class GetDeploymentsDeploymentsGetRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
 
+    is_fluid: Annotated[
+        Optional[bool],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = False
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["environment"]
+        optional_fields = ["environment", "is_fluid"]
         nullable_fields = ["environment"]
         null_default_fields = []
 

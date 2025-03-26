@@ -3,7 +3,7 @@
 from __future__ import annotations
 from comfydeploy.models.components import (
     httpmetadata as components_httpmetadata,
-    session as components_session,
+    sessionresponse as components_sessionresponse,
 )
 from comfydeploy.types import BaseModel
 from comfydeploy.utils import FieldMetadata, PathParamMetadata
@@ -24,7 +24,7 @@ class GetSessionSessionSessionIDGetRequest(BaseModel):
 
 class GetSessionSessionSessionIDGetResponseTypedDict(TypedDict):
     http_meta: components_httpmetadata.HTTPMetadataTypedDict
-    session: NotRequired[components_session.SessionTypedDict]
+    session_response: NotRequired[components_sessionresponse.SessionResponseTypedDict]
     r"""Successful Response"""
 
 
@@ -33,5 +33,5 @@ class GetSessionSessionSessionIDGetResponse(BaseModel):
         Optional[components_httpmetadata.HTTPMetadata], pydantic.Field(exclude=True)
     ] = None
 
-    session: Optional[components_session.Session] = None
+    session_response: Optional[components_sessionresponse.SessionResponse] = None
     r"""Successful Response"""

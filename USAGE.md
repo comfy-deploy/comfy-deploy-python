@@ -3,6 +3,7 @@
 # Synchronous Example
 from comfydeploy import ComfyDeploy
 
+
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
 ) as comfy_deploy:
@@ -24,6 +25,7 @@ import asyncio
 from comfydeploy import ComfyDeploy
 
 async def main():
+
     async with ComfyDeploy(
         bearer="<YOUR_BEARER_TOKEN_HERE>",
     ) as comfy_deploy:

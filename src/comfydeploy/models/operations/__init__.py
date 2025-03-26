@@ -18,24 +18,6 @@ from .create_run_deployment_stream_run_deployment_stream_post import (
     CreateRunDeploymentStreamRunDeploymentStreamPostResponse,
     CreateRunDeploymentStreamRunDeploymentStreamPostResponseTypedDict,
 )
-from .create_run_queue_run_queue_post import (
-    CreateRunQueueRunQueuePostData,
-    CreateRunQueueRunQueuePostDataTypedDict,
-    CreateRunQueueRunQueuePostResponse,
-    CreateRunQueueRunQueuePostResponseTypedDict,
-)
-from .create_run_stream_run_stream_post import (
-    CreateRunStreamRunStreamPostData,
-    CreateRunStreamRunStreamPostDataTypedDict,
-    CreateRunStreamRunStreamPostResponse,
-    CreateRunStreamRunStreamPostResponseTypedDict,
-)
-from .create_run_sync_run_sync_post import (
-    CreateRunSyncRunSyncPostData,
-    CreateRunSyncRunSyncPostDataTypedDict,
-    CreateRunSyncRunSyncPostResponse,
-    CreateRunSyncRunSyncPostResponseTypedDict,
-)
 from .create_run_workflow_stream_run_workflow_stream_post import (
     CreateRunWorkflowStreamRunWorkflowStreamPostResponse,
     CreateRunWorkflowStreamRunWorkflowStreamPostResponseTypedDict,
@@ -43,6 +25,12 @@ from .create_run_workflow_stream_run_workflow_stream_post import (
 from .create_session_session_post import (
     CreateSessionSessionPostResponse,
     CreateSessionSessionPostResponseTypedDict,
+)
+from .deactivate_deployment_deployment_deployment_id_deactivate_post import (
+    DeactivateDeploymentDeploymentDeploymentIDDeactivatePostRequest,
+    DeactivateDeploymentDeploymentDeploymentIDDeactivatePostRequestTypedDict,
+    DeactivateDeploymentDeploymentDeploymentIDDeactivatePostResponse,
+    DeactivateDeploymentDeploymentDeploymentIDDeactivatePostResponseTypedDict,
 )
 from .delete_asset_assets_asset_id_delete import (
     DeleteAssetAssetsAssetIDDeleteRequest,
@@ -62,11 +50,21 @@ from .get_asset_assets_asset_id_get import (
     GetAssetAssetsAssetIDGetResponse,
     GetAssetAssetsAssetIDGetResponseTypedDict,
 )
+from .get_deployment_deployment_deployment_id_get import (
+    GetDeploymentDeploymentDeploymentIDGetRequest,
+    GetDeploymentDeploymentDeploymentIDGetRequestTypedDict,
+    GetDeploymentDeploymentDeploymentIDGetResponse,
+    GetDeploymentDeploymentDeploymentIDGetResponseTypedDict,
+)
 from .get_deployments_deployments_get import (
     GetDeploymentsDeploymentsGetRequest,
     GetDeploymentsDeploymentsGetRequestTypedDict,
     GetDeploymentsDeploymentsGetResponse,
     GetDeploymentsDeploymentsGetResponseTypedDict,
+)
+from .get_featured_deployments_deployments_featured_get import (
+    GetFeaturedDeploymentsDeploymentsFeaturedGetResponse,
+    GetFeaturedDeploymentsDeploymentsFeaturedGetResponseTypedDict,
 )
 from .get_machine_sessions_sessions_get import (
     GetMachineSessionsSessionsGetRequest,
@@ -85,6 +83,18 @@ from .get_session_session_session_id_get import (
     GetSessionSessionSessionIDGetRequestTypedDict,
     GetSessionSessionSessionIDGetResponse,
     GetSessionSessionSessionIDGetResponseTypedDict,
+)
+from .get_share_deployment_share_username_slug_get import (
+    GetShareDeploymentShareUsernameSlugGetRequest,
+    GetShareDeploymentShareUsernameSlugGetRequestTypedDict,
+    GetShareDeploymentShareUsernameSlugGetResponse,
+    GetShareDeploymentShareUsernameSlugGetResponseTypedDict,
+)
+from .increase_timeout_2_session_session_id_increase_timeout_post import (
+    IncreaseTimeout2SessionSessionIDIncreaseTimeoutPostRequest,
+    IncreaseTimeout2SessionSessionIDIncreaseTimeoutPostRequestTypedDict,
+    IncreaseTimeout2SessionSessionIDIncreaseTimeoutPostResponse,
+    IncreaseTimeout2SessionSessionIDIncreaseTimeoutPostResponseTypedDict,
 )
 from .increase_timeout_session_increase_timeout_post import (
     IncreaseTimeoutSessionIncreaseTimeoutPostResponse,
@@ -114,6 +124,12 @@ from .search_search_model_get import (
     SearchSearchModelGetResponse,
     SearchSearchModelGetResponseTypedDict,
 )
+from .snapshot_session_session_session_id_snapshot_post import (
+    SnapshotSessionSessionSessionIDSnapshotPostRequest,
+    SnapshotSessionSessionSessionIDSnapshotPostRequestTypedDict,
+    SnapshotSessionSessionSessionIDSnapshotPostResponse,
+    SnapshotSessionSessionSessionIDSnapshotPostResponseTypedDict,
+)
 from .sync_deployment_run_run_deployment_sync_post import (
     SyncDeploymentRunRunDeploymentSyncPostResponse,
     SyncDeploymentRunRunDeploymentSyncPostResponseTypedDict,
@@ -121,6 +137,12 @@ from .sync_deployment_run_run_deployment_sync_post import (
 from .sync_workflow_run_run_workflow_sync_post import (
     SyncWorkflowRunRunWorkflowSyncPostResponse,
     SyncWorkflowRunRunWorkflowSyncPostResponseTypedDict,
+)
+from .update_deployment_deployment_deployment_id_patch import (
+    UpdateDeploymentDeploymentDeploymentIDPatchRequest,
+    UpdateDeploymentDeploymentDeploymentIDPatchRequestTypedDict,
+    UpdateDeploymentDeploymentDeploymentIDPatchResponse,
+    UpdateDeploymentDeploymentDeploymentIDPatchResponseTypedDict,
 )
 from .upload_asset_file_assets_upload_post import (
     UploadAssetFileAssetsUploadPostRequest,
@@ -145,22 +167,14 @@ __all__ = [
     "CreateFolderAssetsFolderPostResponseTypedDict",
     "CreateRunDeploymentStreamRunDeploymentStreamPostResponse",
     "CreateRunDeploymentStreamRunDeploymentStreamPostResponseTypedDict",
-    "CreateRunQueueRunQueuePostData",
-    "CreateRunQueueRunQueuePostDataTypedDict",
-    "CreateRunQueueRunQueuePostResponse",
-    "CreateRunQueueRunQueuePostResponseTypedDict",
-    "CreateRunStreamRunStreamPostData",
-    "CreateRunStreamRunStreamPostDataTypedDict",
-    "CreateRunStreamRunStreamPostResponse",
-    "CreateRunStreamRunStreamPostResponseTypedDict",
-    "CreateRunSyncRunSyncPostData",
-    "CreateRunSyncRunSyncPostDataTypedDict",
-    "CreateRunSyncRunSyncPostResponse",
-    "CreateRunSyncRunSyncPostResponseTypedDict",
     "CreateRunWorkflowStreamRunWorkflowStreamPostResponse",
     "CreateRunWorkflowStreamRunWorkflowStreamPostResponseTypedDict",
     "CreateSessionSessionPostResponse",
     "CreateSessionSessionPostResponseTypedDict",
+    "DeactivateDeploymentDeploymentDeploymentIDDeactivatePostRequest",
+    "DeactivateDeploymentDeploymentDeploymentIDDeactivatePostRequestTypedDict",
+    "DeactivateDeploymentDeploymentDeploymentIDDeactivatePostResponse",
+    "DeactivateDeploymentDeploymentDeploymentIDDeactivatePostResponseTypedDict",
     "DeleteAssetAssetsAssetIDDeleteRequest",
     "DeleteAssetAssetsAssetIDDeleteRequestTypedDict",
     "DeleteAssetAssetsAssetIDDeleteResponse",
@@ -173,10 +187,16 @@ __all__ = [
     "GetAssetAssetsAssetIDGetRequestTypedDict",
     "GetAssetAssetsAssetIDGetResponse",
     "GetAssetAssetsAssetIDGetResponseTypedDict",
+    "GetDeploymentDeploymentDeploymentIDGetRequest",
+    "GetDeploymentDeploymentDeploymentIDGetRequestTypedDict",
+    "GetDeploymentDeploymentDeploymentIDGetResponse",
+    "GetDeploymentDeploymentDeploymentIDGetResponseTypedDict",
     "GetDeploymentsDeploymentsGetRequest",
     "GetDeploymentsDeploymentsGetRequestTypedDict",
     "GetDeploymentsDeploymentsGetResponse",
     "GetDeploymentsDeploymentsGetResponseTypedDict",
+    "GetFeaturedDeploymentsDeploymentsFeaturedGetResponse",
+    "GetFeaturedDeploymentsDeploymentsFeaturedGetResponseTypedDict",
     "GetMachineSessionsSessionsGetRequest",
     "GetMachineSessionsSessionsGetRequestTypedDict",
     "GetMachineSessionsSessionsGetResponse",
@@ -189,6 +209,14 @@ __all__ = [
     "GetSessionSessionSessionIDGetRequestTypedDict",
     "GetSessionSessionSessionIDGetResponse",
     "GetSessionSessionSessionIDGetResponseTypedDict",
+    "GetShareDeploymentShareUsernameSlugGetRequest",
+    "GetShareDeploymentShareUsernameSlugGetRequestTypedDict",
+    "GetShareDeploymentShareUsernameSlugGetResponse",
+    "GetShareDeploymentShareUsernameSlugGetResponseTypedDict",
+    "IncreaseTimeout2SessionSessionIDIncreaseTimeoutPostRequest",
+    "IncreaseTimeout2SessionSessionIDIncreaseTimeoutPostRequestTypedDict",
+    "IncreaseTimeout2SessionSessionIDIncreaseTimeoutPostResponse",
+    "IncreaseTimeout2SessionSessionIDIncreaseTimeoutPostResponseTypedDict",
     "IncreaseTimeoutSessionIncreaseTimeoutPostResponse",
     "IncreaseTimeoutSessionIncreaseTimeoutPostResponseTypedDict",
     "ListAssetsAssetsGetRequest",
@@ -205,10 +233,18 @@ __all__ = [
     "SearchSearchModelGetRequestTypedDict",
     "SearchSearchModelGetResponse",
     "SearchSearchModelGetResponseTypedDict",
+    "SnapshotSessionSessionSessionIDSnapshotPostRequest",
+    "SnapshotSessionSessionSessionIDSnapshotPostRequestTypedDict",
+    "SnapshotSessionSessionSessionIDSnapshotPostResponse",
+    "SnapshotSessionSessionSessionIDSnapshotPostResponseTypedDict",
     "SyncDeploymentRunRunDeploymentSyncPostResponse",
     "SyncDeploymentRunRunDeploymentSyncPostResponseTypedDict",
     "SyncWorkflowRunRunWorkflowSyncPostResponse",
     "SyncWorkflowRunRunWorkflowSyncPostResponseTypedDict",
+    "UpdateDeploymentDeploymentDeploymentIDPatchRequest",
+    "UpdateDeploymentDeploymentDeploymentIDPatchRequestTypedDict",
+    "UpdateDeploymentDeploymentDeploymentIDPatchResponse",
+    "UpdateDeploymentDeploymentDeploymentIDPatchResponseTypedDict",
     "UploadAssetFileAssetsUploadPostRequest",
     "UploadAssetFileAssetsUploadPostRequestTypedDict",
     "UploadAssetFileAssetsUploadPostResponse",

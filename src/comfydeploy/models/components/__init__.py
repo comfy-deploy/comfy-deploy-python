@@ -22,6 +22,10 @@ from .createsessionresponse import CreateSessionResponse, CreateSessionResponseT
 from .deletesessionresponse import DeleteSessionResponse, DeleteSessionResponseTypedDict
 from .deploymentcreate import DeploymentCreate, DeploymentCreateTypedDict
 from .deploymentenvironment import DeploymentEnvironment
+from .deploymentfeaturedmodel import (
+    DeploymentFeaturedModel,
+    DeploymentFeaturedModelTypedDict,
+)
 from .deploymentmodel import (
     DeploymentModel,
     DeploymentModelTypedDict,
@@ -29,6 +33,8 @@ from .deploymentmodel import (
     ShareOptionsTypedDict,
     ShowcaseMedia,
     ShowcaseMediaTypedDict,
+    Version,
+    VersionTypedDict,
 )
 from .deploymentrunrequest import (
     DeploymentRunRequest,
@@ -37,17 +43,22 @@ from .deploymentrunrequest import (
     Inputs,
     InputsTypedDict,
 )
-from .eventupdate import EventUpdate, EventUpdateTypedDict
-from .eventupdateevent import (
-    EventUpdateEvent,
-    EventUpdateEventEvent,
-    EventUpdateEventTypedDict,
+from .deploymentsharemodel import (
+    DeploymentShareModel,
+    DeploymentShareModelTypedDict,
+    InputTypes,
+    InputTypesTypedDict,
+    OutputTypes,
+    OutputTypesTypedDict,
 )
+from .deploymentupdate import DeploymentUpdate, DeploymentUpdateTypedDict
+from .eventupdate import EventUpdate, EventUpdateTypedDict
+from .eventupdateevent import EventUpdateEvent, EventUpdateEventTypedDict
 from .fileuploadresponse import FileUploadResponse, FileUploadResponseTypedDict
-from .gpueventmodel import GPUEventModel, GPUEventModelTypedDict
-from .gpuprovidertype import GPUProviderType
+from .gputype import GPUType
 from .httpmetadata import HTTPMetadata, HTTPMetadataTypedDict
 from .increasetimeoutbody import IncreaseTimeoutBody, IncreaseTimeoutBodyTypedDict
+from .increasetimeoutbody2 import IncreaseTimeoutBody2, IncreaseTimeoutBody2TypedDict
 from .inputmodel import (
     DefaultValue,
     DefaultValueTypedDict,
@@ -61,8 +72,8 @@ from .inputmodel import (
     StepTypedDict,
 )
 from .logdatacontent import LogDataContent, LogDataContentTypedDict
-from .logupdateevent import Event, LogUpdateEvent, LogUpdateEventTypedDict
-from .machinegpu_output import MachineGPUOutput
+from .logupdateevent import LogUpdateEvent, LogUpdateEventTypedDict
+from .machinewithname import MachineWithName, MachineWithNameTypedDict
 from .mediaitem import MediaItem, MediaItemTypedDict
 from .modelinput import (
     ClassType,
@@ -72,20 +83,14 @@ from .modelinput import (
     Two,
 )
 from .modeloutput import ModelOutput, ModelOutputClassType, ModelOutputTypedDict
-from .modelrunrequest import (
-    ModelRunRequest,
-    ModelRunRequestGpu,
-    ModelRunRequestInputs,
-    ModelRunRequestInputsTypedDict,
-    ModelRunRequestTypedDict,
-)
 from .modelsearchquery import ModelSearchQuery, ModelSearchQueryTypedDict
 from .modelwithmetadata import ModelWithMetadata, ModelWithMetadataTypedDict
 from .outputmodel import OutputModel, OutputModelTypedDict
 from .runstream import RunStream, RunStreamTypedDict
 from .searchmodelsresponse import SearchModelsResponse, SearchModelsResponseTypedDict
 from .security import Security, SecurityTypedDict
-from .session import Session, SessionTypedDict
+from .sessionresponse import SessionResponse, SessionResponseTypedDict
+from .snapshotsessionbody import SnapshotSessionBody, SnapshotSessionBodyTypedDict
 from .validationerror import (
     Loc,
     LocTypedDict,
@@ -111,13 +116,6 @@ from .workflowrunrequest import (
     WorkflowTypedDict,
 )
 from .workflowrunstatus import WorkflowRunStatus
-from .workflowrunversionrequest import (
-    WorkflowRunVersionRequest,
-    WorkflowRunVersionRequestGpu,
-    WorkflowRunVersionRequestInputs,
-    WorkflowRunVersionRequestInputsTypedDict,
-    WorkflowRunVersionRequestTypedDict,
-)
 from .workflowrunwebhookbody import (
     WorkflowRunWebhookBody,
     WorkflowRunWebhookBodyTypedDict,
@@ -127,7 +125,6 @@ from .workflowrunwebhookresponse import (
     WorkflowRunWebhookResponseTypedDict,
 )
 from .workflowwithname import WorkflowWithName, WorkflowWithNameTypedDict
-from .workspacegpu import WorkspaceGPU
 
 
 __all__ = [
@@ -161,30 +158,36 @@ __all__ = [
     "DeploymentCreate",
     "DeploymentCreateTypedDict",
     "DeploymentEnvironment",
+    "DeploymentFeaturedModel",
+    "DeploymentFeaturedModelTypedDict",
     "DeploymentModel",
     "DeploymentModelTypedDict",
     "DeploymentRunRequest",
     "DeploymentRunRequestTypedDict",
-    "Event",
+    "DeploymentShareModel",
+    "DeploymentShareModelTypedDict",
+    "DeploymentUpdate",
+    "DeploymentUpdateTypedDict",
     "EventUpdate",
     "EventUpdateEvent",
-    "EventUpdateEventEvent",
     "EventUpdateEventTypedDict",
     "EventUpdateTypedDict",
     "File",
     "FileTypedDict",
     "FileUploadResponse",
     "FileUploadResponseTypedDict",
-    "GPUEventModel",
-    "GPUEventModelTypedDict",
-    "GPUProviderType",
+    "GPUType",
     "Gpu",
     "HTTPMetadata",
     "HTTPMetadataTypedDict",
     "IncreaseTimeoutBody",
+    "IncreaseTimeoutBody2",
+    "IncreaseTimeoutBody2TypedDict",
     "IncreaseTimeoutBodyTypedDict",
     "InputModel",
     "InputModelTypedDict",
+    "InputTypes",
+    "InputTypesTypedDict",
     "Inputs",
     "InputsTypedDict",
     "Loc",
@@ -193,7 +196,8 @@ __all__ = [
     "LogDataContentTypedDict",
     "LogUpdateEvent",
     "LogUpdateEventTypedDict",
-    "MachineGPUOutput",
+    "MachineWithName",
+    "MachineWithNameTypedDict",
     "MaxValue",
     "MaxValueTypedDict",
     "MediaItem",
@@ -205,34 +209,35 @@ __all__ = [
     "ModelOutput",
     "ModelOutputClassType",
     "ModelOutputTypedDict",
-    "ModelRunRequest",
-    "ModelRunRequestGpu",
-    "ModelRunRequestInputs",
-    "ModelRunRequestInputsTypedDict",
-    "ModelRunRequestTypedDict",
     "ModelSearchQuery",
     "ModelSearchQueryTypedDict",
     "ModelWithMetadata",
     "ModelWithMetadataTypedDict",
     "OutputModel",
     "OutputModelTypedDict",
+    "OutputTypes",
+    "OutputTypesTypedDict",
     "RunStream",
     "RunStreamTypedDict",
     "SearchModelsResponse",
     "SearchModelsResponseTypedDict",
     "Security",
     "SecurityTypedDict",
-    "Session",
-    "SessionTypedDict",
+    "SessionResponse",
+    "SessionResponseTypedDict",
     "ShareOptions",
     "ShareOptionsTypedDict",
     "ShowcaseMedia",
     "ShowcaseMediaTypedDict",
+    "SnapshotSessionBody",
+    "SnapshotSessionBodyTypedDict",
     "Step",
     "StepTypedDict",
     "Two",
     "ValidationError",
     "ValidationErrorTypedDict",
+    "Version",
+    "VersionTypedDict",
     "Workflow",
     "WorkflowAPIJSON",
     "WorkflowAPIJSONTypedDict",
@@ -246,11 +251,6 @@ __all__ = [
     "WorkflowRunRequestInputsTypedDict",
     "WorkflowRunRequestTypedDict",
     "WorkflowRunStatus",
-    "WorkflowRunVersionRequest",
-    "WorkflowRunVersionRequestGpu",
-    "WorkflowRunVersionRequestInputs",
-    "WorkflowRunVersionRequestInputsTypedDict",
-    "WorkflowRunVersionRequestTypedDict",
     "WorkflowRunWebhookBody",
     "WorkflowRunWebhookBodyTypedDict",
     "WorkflowRunWebhookResponse",
@@ -258,5 +258,4 @@ __all__ = [
     "WorkflowTypedDict",
     "WorkflowWithName",
     "WorkflowWithNameTypedDict",
-    "WorkspaceGPU",
 ]

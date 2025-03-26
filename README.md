@@ -48,6 +48,7 @@ To authenticate your requests, include your API key in the `Authorization` heade
   * [Error Handling](#error-handling)
   * [Server Selection](#server-selection)
   * [Custom HTTP Client](#custom-http-client)
+  * [Resource Management](#resource-management)
   * [Debugging](#debugging)
 * [Development](#development)
   * [Maturity](#maturity)
@@ -57,6 +58,11 @@ To authenticate your requests, include your API key in the `Authorization` heade
 
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
+
+> [!NOTE]
+> **Python version upgrade policy**
+>
+> Once a Python version reaches its [official end of life date](https://devguide.python.org/versions/), a 3-month grace period is provided for users to upgrade. Following this grace period, the minimum python version supported in the SDK will be updated.
 
 The SDK can be installed with either *pip* or *poetry* package managers.
 
@@ -75,6 +81,37 @@ pip install comfydeploy
 ```bash
 poetry add comfydeploy
 ```
+
+### Shell and script usage with `uv`
+
+You can use this SDK in a Python shell with [uv](https://docs.astral.sh/uv/) and the `uvx` command that comes with it like so:
+
+```shell
+uvx --from comfydeploy python
+```
+
+It's also possible to write a standalone Python script without needing to set up a whole project like so:
+
+```python
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.9"
+# dependencies = [
+#     "comfydeploy",
+# ]
+# ///
+
+from comfydeploy import ComfyDeploy
+
+sdk = ComfyDeploy(
+  # SDK arguments
+)
+
+# Rest of script here...
+```
+
+Once that is saved to a file, you can run it with `uv run script.py` where
+`script.py` can be replaced with the actual file name.
 <!-- End SDK Installation [installation] -->
 
 <!-- Start IDE Support [idesupport] -->
@@ -95,6 +132,7 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 ```python
 # Synchronous Example
 from comfydeploy import ComfyDeploy
+
 
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
@@ -117,6 +155,7 @@ import asyncio
 from comfydeploy import ComfyDeploy
 
 async def main():
+
     async with ComfyDeploy(
         bearer="<YOUR_BEARER_TOKEN_HERE>",
     ) as comfy_deploy:
@@ -147,6 +186,7 @@ To authenticate with the API the `bearer` parameter must be set when initializin
 ```python
 from comfydeploy import ComfyDeploy
 
+
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
 ) as comfy_deploy:
@@ -171,7 +211,12 @@ with ComfyDeploy(
 ### [deployments](docs/sdks/deployments/README.md)
 
 * [create](docs/sdks/deployments/README.md#create) - Create Deployment
+* [update](docs/sdks/deployments/README.md#update) - Update Deployment
+* [get](docs/sdks/deployments/README.md#get) - Get Deployment
 * [list](docs/sdks/deployments/README.md#list) - Get Deployments
+* [get_share_deployment_share_username_slug_get](docs/sdks/deployments/README.md#get_share_deployment_share_username_slug_get) - Get Share Deployment
+* [get_featured_deployments_deployments_featured_get](docs/sdks/deployments/README.md#get_featured_deployments_deployments_featured_get) - Get Featured Deployments
+* [deactivate](docs/sdks/deployments/README.md#deactivate) - Deactivate Deployment
 
 ### [file](docs/sdks/file/README.md)
 
@@ -189,9 +234,6 @@ with ComfyDeploy(
 ### [run](docs/sdks/run/README.md)
 
 * [get](docs/sdks/run/README.md#get) - Get Run
-* [~~queue~~](docs/sdks/run/README.md#queue) - Queue a workflow :warning: **Deprecated**
-* [~~sync~~](docs/sdks/run/README.md#sync) - Run a workflow in sync :warning: **Deprecated**
-* [~~stream~~](docs/sdks/run/README.md#stream) - Run a workflow in stream :warning: **Deprecated**
 * [cancel_run_run_run_id_cancel_post](docs/sdks/run/README.md#cancel_run_run_run_id_cancel_post) - Cancel Run
 
 #### [run.deployment](docs/sdks/deployment/README.md)
@@ -216,7 +258,9 @@ with ComfyDeploy(
 * [cancel](docs/sdks/session/README.md#cancel) - Delete Session
 * [list](docs/sdks/session/README.md#list) - Get Machine Sessions
 * [increase_timeout_session_increase_timeout_post](docs/sdks/session/README.md#increase_timeout_session_increase_timeout_post) - Increase Timeout
+* [increase_timeout_2_session_session_id_increase_timeout_post](docs/sdks/session/README.md#increase_timeout_2_session_session_id_increase_timeout_post) - Increase Timeout 2
 * [create](docs/sdks/session/README.md#create) - Create Session
+* [snapshot_session_session_session_id_snapshot_post](docs/sdks/session/README.md#snapshot_session_session_session_id_snapshot_post) - Snapshot Session
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
@@ -235,6 +279,7 @@ underlying connection when the context is exited.
 
 ```python
 from comfydeploy import ComfyDeploy
+
 
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
@@ -276,6 +321,7 @@ Certain SDK methods accept file objects as part of a request body or multi-part 
 ```python
 from comfydeploy import ComfyDeploy
 
+
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
 ) as comfy_deploy:
@@ -305,6 +351,7 @@ To change the default retry strategy for a single API call, simply provide a `Re
 from comfydeploy import ComfyDeploy
 from comfydeploy.utils import BackoffStrategy, RetryConfig
 
+
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
 ) as comfy_deploy:
@@ -323,6 +370,7 @@ If you'd like to override the default retry strategy for all operations that sup
 ```python
 from comfydeploy import ComfyDeploy
 from comfydeploy.utils import BackoffStrategy, RetryConfig
+
 
 with ComfyDeploy(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
@@ -366,6 +414,7 @@ When custom error responses are specified for an operation, the SDK may also rai
 from comfydeploy import ComfyDeploy
 from comfydeploy.models import errors
 
+
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
 ) as comfy_deploy:
@@ -395,16 +444,17 @@ with ComfyDeploy(
 
 You can override the default server globally by passing a server index to the `server_idx: int` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the indexes associated with the available servers:
 
-| #   | Server                                    |
-| --- | ----------------------------------------- |
-| 0   | `https://api.comfydeploy.com/api`         |
-| 1   | `https://staging.api.comfydeploy.com/api` |
-| 2   | `http://localhost:3011/api`               |
+| #   | Server                                    | Description              |
+| --- | ----------------------------------------- | ------------------------ |
+| 0   | `https://api.comfydeploy.com/api`         | Production server        |
+| 1   | `https://staging.api.comfydeploy.com/api` | Staging server           |
+| 2   | `http://localhost:3011/api`               | Local development server |
 
 #### Example
 
 ```python
 from comfydeploy import ComfyDeploy
+
 
 with ComfyDeploy(
     server_idx=2,
@@ -425,6 +475,7 @@ with ComfyDeploy(
 The default server can also be overridden globally by passing a URL to the `server_url: str` optional parameter when initializing the SDK client instance. For example:
 ```python
 from comfydeploy import ComfyDeploy
+
 
 with ComfyDeploy(
     server_url="https://api.comfydeploy.com/api",
@@ -521,6 +572,33 @@ class CustomClient(AsyncHttpClient):
 s = ComfyDeploy(async_client=CustomClient(httpx.AsyncClient()))
 ```
 <!-- End Custom HTTP Client [http-client] -->
+
+<!-- Start Resource Management [resource-management] -->
+## Resource Management
+
+The `ComfyDeploy` class implements the context manager protocol and registers a finalizer function to close the underlying sync and async HTTPX clients it uses under the hood. This will close HTTP connections, release memory and free up other resources held by the SDK. In short-lived Python programs and notebooks that make a few SDK method calls, resource management may not be a concern. However, in longer-lived programs, it is beneficial to create a single SDK instance via a [context manager][context-manager] and reuse it across the application.
+
+[context-manager]: https://docs.python.org/3/reference/datamodel.html#context-managers
+
+```python
+from comfydeploy import ComfyDeploy
+def main():
+
+    with ComfyDeploy(
+        bearer="<YOUR_BEARER_TOKEN_HERE>",
+    ) as comfy_deploy:
+        # Rest of application here...
+
+
+# Or when using async:
+async def amain():
+
+    async with ComfyDeploy(
+        bearer="<YOUR_BEARER_TOKEN_HERE>",
+    ) as comfy_deploy:
+        # Rest of application here...
+```
+<!-- End Resource Management [resource-management] -->
 
 <!-- Start Debugging [debug] -->
 ## Debugging

@@ -33,6 +33,8 @@ class Session(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = operations.GetSessionSessionSessionIDGetRequest(
             session_id=session_id,
@@ -64,6 +66,7 @@ class Session(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="get_session_session__session_id__get",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -73,17 +76,19 @@ class Session(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return operations.GetSessionSessionSessionIDGetResponse(
-                session=utils.unmarshal_json(
-                    http_res.text, Optional[components.Session]
+                session_response=utils.unmarshal_json(
+                    http_res.text, Optional[components.SessionResponse]
                 ),
                 http_meta=components.HTTPMetadata(request=req, response=http_res),
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, errors.HTTPValidationErrorData
+            )
+            raise errors.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError(
@@ -128,6 +133,8 @@ class Session(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = operations.GetSessionSessionSessionIDGetRequest(
             session_id=session_id,
@@ -159,6 +166,7 @@ class Session(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="get_session_session__session_id__get",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -168,17 +176,19 @@ class Session(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return operations.GetSessionSessionSessionIDGetResponse(
-                session=utils.unmarshal_json(
-                    http_res.text, Optional[components.Session]
+                session_response=utils.unmarshal_json(
+                    http_res.text, Optional[components.SessionResponse]
                 ),
                 http_meta=components.HTTPMetadata(request=req, response=http_res),
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, errors.HTTPValidationErrorData
+            )
+            raise errors.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError(
@@ -203,6 +213,7 @@ class Session(BaseSDK):
         self,
         *,
         session_id: str,
+        wait_for_shutdown: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -211,6 +222,7 @@ class Session(BaseSDK):
         r"""Delete Session
 
         :param session_id:
+        :param wait_for_shutdown:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -223,9 +235,12 @@ class Session(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = operations.DeleteSessionSessionSessionIDDeleteRequest(
             session_id=session_id,
+            wait_for_shutdown=wait_for_shutdown,
         )
 
         req = self._build_request(
@@ -254,6 +269,7 @@ class Session(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="delete_session_session__session_id__delete",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -263,7 +279,7 @@ class Session(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return operations.DeleteSessionSessionSessionIDDeleteResponse(
                 delete_session_response=utils.unmarshal_json(
@@ -272,8 +288,10 @@ class Session(BaseSDK):
                 http_meta=components.HTTPMetadata(request=req, response=http_res),
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, errors.HTTPValidationErrorData
+            )
+            raise errors.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError(
@@ -298,6 +316,7 @@ class Session(BaseSDK):
         self,
         *,
         session_id: str,
+        wait_for_shutdown: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -306,6 +325,7 @@ class Session(BaseSDK):
         r"""Delete Session
 
         :param session_id:
+        :param wait_for_shutdown:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -318,9 +338,12 @@ class Session(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = operations.DeleteSessionSessionSessionIDDeleteRequest(
             session_id=session_id,
+            wait_for_shutdown=wait_for_shutdown,
         )
 
         req = self._build_request_async(
@@ -349,6 +372,7 @@ class Session(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="delete_session_session__session_id__delete",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -358,7 +382,7 @@ class Session(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return operations.DeleteSessionSessionSessionIDDeleteResponse(
                 delete_session_response=utils.unmarshal_json(
@@ -367,8 +391,10 @@ class Session(BaseSDK):
                 http_meta=components.HTTPMetadata(request=req, response=http_res),
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, errors.HTTPValidationErrorData
+            )
+            raise errors.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError(
@@ -392,7 +418,7 @@ class Session(BaseSDK):
     def list(
         self,
         *,
-        machine_id: str,
+        machine_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -413,6 +439,8 @@ class Session(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = operations.GetMachineSessionsSessionsGetRequest(
             machine_id=machine_id,
@@ -444,6 +472,7 @@ class Session(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="get_machine_sessions_sessions_get",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -453,17 +482,19 @@ class Session(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return operations.GetMachineSessionsSessionsGetResponse(
                 response_get_machine_sessions_sessions_get=utils.unmarshal_json(
-                    http_res.text, Optional[List[components.GPUEventModel]]
+                    http_res.text, Optional[List[components.SessionResponse]]
                 ),
                 http_meta=components.HTTPMetadata(request=req, response=http_res),
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, errors.HTTPValidationErrorData
+            )
+            raise errors.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError(
@@ -487,7 +518,7 @@ class Session(BaseSDK):
     async def list_async(
         self,
         *,
-        machine_id: str,
+        machine_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -508,6 +539,8 @@ class Session(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = operations.GetMachineSessionsSessionsGetRequest(
             machine_id=machine_id,
@@ -539,6 +572,7 @@ class Session(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="get_machine_sessions_sessions_get",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -548,17 +582,19 @@ class Session(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return operations.GetMachineSessionsSessionsGetResponse(
                 response_get_machine_sessions_sessions_get=utils.unmarshal_json(
-                    http_res.text, Optional[List[components.GPUEventModel]]
+                    http_res.text, Optional[List[components.SessionResponse]]
                 ),
                 http_meta=components.HTTPMetadata(request=req, response=http_res),
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, errors.HTTPValidationErrorData
+            )
+            raise errors.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError(
@@ -605,6 +641,8 @@ class Session(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(request, components.IncreaseTimeoutBody)
@@ -639,6 +677,7 @@ class Session(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="increase_timeout_session_increase_timeout_post",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -648,15 +687,17 @@ class Session(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return operations.IncreaseTimeoutSessionIncreaseTimeoutPostResponse(
                 any=utils.unmarshal_json(http_res.text, Optional[Any]),
                 http_meta=components.HTTPMetadata(request=req, response=http_res),
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, errors.HTTPValidationErrorData
+            )
+            raise errors.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError(
@@ -703,6 +744,8 @@ class Session(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(request, components.IncreaseTimeoutBody)
@@ -737,6 +780,7 @@ class Session(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="increase_timeout_session_increase_timeout_post",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -746,15 +790,245 @@ class Session(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return operations.IncreaseTimeoutSessionIncreaseTimeoutPostResponse(
                 any=utils.unmarshal_json(http_res.text, Optional[Any]),
                 http_meta=components.HTTPMetadata(request=req, response=http_res),
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, errors.HTTPValidationErrorData
+            )
+            raise errors.HTTPValidationError(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise errors.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    def increase_timeout_2_session_session_id_increase_timeout_post(
+        self,
+        *,
+        session_id: str,
+        increase_timeout_body2: Union[
+            components.IncreaseTimeoutBody2, components.IncreaseTimeoutBody2TypedDict
+        ],
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> operations.IncreaseTimeout2SessionSessionIDIncreaseTimeoutPostResponse:
+        r"""Increase Timeout 2
+
+        :param session_id:
+        :param increase_timeout_body2:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = operations.IncreaseTimeout2SessionSessionIDIncreaseTimeoutPostRequest(
+            session_id=session_id,
+            increase_timeout_body2=utils.get_pydantic_model(
+                increase_timeout_body2, components.IncreaseTimeoutBody2
+            ),
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/session/{session_id}/increase-timeout",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.increase_timeout_body2,
+                False,
+                False,
+                "json",
+                components.IncreaseTimeoutBody2,
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                base_url=base_url or "",
+                operation_id="increase_timeout_2_session__session_id__increase_timeout_post",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return (
+                operations.IncreaseTimeout2SessionSessionIDIncreaseTimeoutPostResponse(
+                    any=utils.unmarshal_json(http_res.text, Optional[Any]),
+                    http_meta=components.HTTPMetadata(request=req, response=http_res),
+                )
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = utils.unmarshal_json(
+                http_res.text, errors.HTTPValidationErrorData
+            )
+            raise errors.HTTPValidationError(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise errors.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    async def increase_timeout_2_session_session_id_increase_timeout_post_async(
+        self,
+        *,
+        session_id: str,
+        increase_timeout_body2: Union[
+            components.IncreaseTimeoutBody2, components.IncreaseTimeoutBody2TypedDict
+        ],
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> operations.IncreaseTimeout2SessionSessionIDIncreaseTimeoutPostResponse:
+        r"""Increase Timeout 2
+
+        :param session_id:
+        :param increase_timeout_body2:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = operations.IncreaseTimeout2SessionSessionIDIncreaseTimeoutPostRequest(
+            session_id=session_id,
+            increase_timeout_body2=utils.get_pydantic_model(
+                increase_timeout_body2, components.IncreaseTimeoutBody2
+            ),
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/session/{session_id}/increase-timeout",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.increase_timeout_body2,
+                False,
+                False,
+                "json",
+                components.IncreaseTimeoutBody2,
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                base_url=base_url or "",
+                operation_id="increase_timeout_2_session__session_id__increase_timeout_post",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return (
+                operations.IncreaseTimeout2SessionSessionIDIncreaseTimeoutPostResponse(
+                    any=utils.unmarshal_json(http_res.text, Optional[Any]),
+                    http_meta=components.HTTPMetadata(request=req, response=http_res),
+                )
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = utils.unmarshal_json(
+                http_res.text, errors.HTTPValidationErrorData
+            )
+            raise errors.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError(
@@ -801,6 +1075,8 @@ class Session(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(request, components.CreateSessionBody)
@@ -835,6 +1111,7 @@ class Session(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="create_session_session_post",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -844,7 +1121,7 @@ class Session(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return operations.CreateSessionSessionPostResponse(
                 create_session_response=utils.unmarshal_json(
@@ -853,8 +1130,10 @@ class Session(BaseSDK):
                 http_meta=components.HTTPMetadata(request=req, response=http_res),
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, errors.HTTPValidationErrorData
+            )
+            raise errors.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError(
@@ -901,6 +1180,8 @@ class Session(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(request, components.CreateSessionBody)
@@ -935,6 +1216,7 @@ class Session(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="create_session_session_post",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -944,7 +1226,7 @@ class Session(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return operations.CreateSessionSessionPostResponse(
                 create_session_response=utils.unmarshal_json(
@@ -953,8 +1235,238 @@ class Session(BaseSDK):
                 http_meta=components.HTTPMetadata(request=req, response=http_res),
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, errors.HTTPValidationErrorData
+            )
+            raise errors.HTTPValidationError(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise errors.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    def snapshot_session_session_session_id_snapshot_post(
+        self,
+        *,
+        session_id: str,
+        snapshot_session_body: OptionalNullable[
+            Union[
+                components.SnapshotSessionBody, components.SnapshotSessionBodyTypedDict
+            ]
+        ] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> operations.SnapshotSessionSessionSessionIDSnapshotPostResponse:
+        r"""Snapshot Session
+
+        :param session_id:
+        :param snapshot_session_body:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = operations.SnapshotSessionSessionSessionIDSnapshotPostRequest(
+            session_id=session_id,
+            snapshot_session_body=utils.get_pydantic_model(
+                snapshot_session_body, OptionalNullable[components.SnapshotSessionBody]
+            ),
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/session/{session_id}/snapshot",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.snapshot_session_body,
+                True,
+                True,
+                "json",
+                OptionalNullable[components.SnapshotSessionBody],
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                base_url=base_url or "",
+                operation_id="snapshot_session_session__session_id__snapshot_post",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return operations.SnapshotSessionSessionSessionIDSnapshotPostResponse(
+                any=utils.unmarshal_json(http_res.text, Optional[Any]),
+                http_meta=components.HTTPMetadata(request=req, response=http_res),
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = utils.unmarshal_json(
+                http_res.text, errors.HTTPValidationErrorData
+            )
+            raise errors.HTTPValidationError(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise errors.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    async def snapshot_session_session_session_id_snapshot_post_async(
+        self,
+        *,
+        session_id: str,
+        snapshot_session_body: OptionalNullable[
+            Union[
+                components.SnapshotSessionBody, components.SnapshotSessionBodyTypedDict
+            ]
+        ] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> operations.SnapshotSessionSessionSessionIDSnapshotPostResponse:
+        r"""Snapshot Session
+
+        :param session_id:
+        :param snapshot_session_body:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = operations.SnapshotSessionSessionSessionIDSnapshotPostRequest(
+            session_id=session_id,
+            snapshot_session_body=utils.get_pydantic_model(
+                snapshot_session_body, OptionalNullable[components.SnapshotSessionBody]
+            ),
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/session/{session_id}/snapshot",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.snapshot_session_body,
+                True,
+                True,
+                "json",
+                OptionalNullable[components.SnapshotSessionBody],
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                base_url=base_url or "",
+                operation_id="snapshot_session_session__session_id__snapshot_post",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return operations.SnapshotSessionSessionSessionIDSnapshotPostResponse(
+                any=utils.unmarshal_json(http_res.text, Optional[Any]),
+                http_meta=components.HTTPMetadata(request=req, response=http_res),
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = utils.unmarshal_json(
+                http_res.text, errors.HTTPValidationErrorData
+            )
+            raise errors.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError(

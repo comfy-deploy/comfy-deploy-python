@@ -18,6 +18,7 @@ Create a new deployment run with the given parameters.
 ```python
 from comfydeploy import ComfyDeploy
 
+
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
 ) as comfy_deploy:
@@ -65,6 +66,7 @@ Create a new deployment run with the given parameters.
 ```python
 from comfydeploy import ComfyDeploy
 
+
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
 ) as comfy_deploy:
@@ -111,6 +113,7 @@ Create a new deployment run with the given parameters. This function sets up the
 
 ```python
 from comfydeploy import ComfyDeploy
+
 
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",

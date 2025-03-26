@@ -1,0 +1,9 @@
+# GetFeaturedDeploymentsDeploymentsFeaturedGetResponse
+
+
+## Fields
+
+| Field                                                                                          | Type                                                                                           | Required                                                                                       | Description                                                                                    |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `http_meta`                                                                                    | [components.HTTPMetadata](../../models/components/httpmetadata.md)                             | :heavy_check_mark:                                                                             | N/A                                                                                            |
+| `response_get_featured_deployments_deployments_featured_get`                                   | List[[components.DeploymentFeaturedModel](../../models/components/deploymentfeaturedmodel.md)] | :heavy_minus_sign:                                                                             | Successful Response                                                                            |
