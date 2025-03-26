@@ -15,10 +15,10 @@ from typing import Any, Dict, List, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-DataTypedDict = TypeAliasType("DataTypedDict", Union[MediaItemTypedDict, str])
+DataTypedDict = TypeAliasType("DataTypedDict", Union[MediaItemTypedDict, str, bool])
 
 
-Data = TypeAliasType("Data", Union[MediaItem, str])
+Data = TypeAliasType("Data", Union[MediaItem, str, bool])
 
 
 class WorkflowRunOutputModelTypedDict(TypedDict):

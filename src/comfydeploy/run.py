@@ -6,16 +6,12 @@ from comfydeploy import utils
 from comfydeploy._hooks import HookContext
 from comfydeploy.deployment import Deployment
 from comfydeploy.models import components, errors, operations
-from comfydeploy.types import BaseModel, OptionalNullable, UNSET
-from comfydeploy.utils import eventstreaming
-from comfydeploy.workflow import Workflow
-from typing import Any, List, Mapping, Optional, Union, cast
-from typing_extensions import deprecated
+from comfydeploy.types import OptionalNullable, UNSET
+from typing import Any, Mapping, Optional
 
 
 class Run(BaseSDK):
     deployment: Deployment
-    workflow: Workflow
 
     def __init__(self, sdk_config: SDKConfiguration) -> None:
         BaseSDK.__init__(self, sdk_config)
@@ -24,7 +20,6 @@ class Run(BaseSDK):
 
     def _init_sdks(self):
         self.deployment = Deployment(self.sdk_configuration)
-        self.workflow = Workflow(self.sdk_configuration)
 
     def get(
         self,
@@ -50,6 +45,8 @@ class Run(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = operations.GetRunRunRunIDGetRequest(
             run_id=run_id,
@@ -81,6 +78,7 @@ class Run(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="get_run_run__run_id__get",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -90,7 +88,7 @@ class Run(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return operations.GetRunRunRunIDGetResponse(
                 workflow_run_model=utils.unmarshal_json(
@@ -99,8 +97,10 @@ class Run(BaseSDK):
                 http_meta=components.HTTPMetadata(request=req, response=http_res),
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, errors.HTTPValidationErrorData
+            )
+            raise errors.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError(
@@ -145,6 +145,8 @@ class Run(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = operations.GetRunRunRunIDGetRequest(
             run_id=run_id,
@@ -176,6 +178,7 @@ class Run(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="get_run_run__run_id__get",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -185,7 +188,7 @@ class Run(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return operations.GetRunRunRunIDGetResponse(
                 workflow_run_model=utils.unmarshal_json(
@@ -194,8 +197,10 @@ class Run(BaseSDK):
                 http_meta=components.HTTPMetadata(request=req, response=http_res),
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, errors.HTTPValidationErrorData
+            )
+            raise errors.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError(
@@ -216,671 +221,10 @@ class Run(BaseSDK):
             http_res,
         )
 
-    @deprecated(
-        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
-    )
-    def queue(
-        self,
-        *,
-        request: Union[
-            operations.CreateRunQueueRunQueuePostData,
-            operations.CreateRunQueueRunQueuePostDataTypedDict,
-        ],
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> operations.CreateRunQueueRunQueuePostResponse:
-        r"""Queue a workflow
-
-        Create a new workflow run with the given parameters. This function sets up the run and initiates the execution process. For callback information, see [Callbacks](#tag/callbacks/POST/\{callback_url\}).
-
-        :param request: The request object to send.
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if server_url is not None:
-            base_url = server_url
-
-        if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, operations.CreateRunQueueRunQueuePostData
-            )
-        request = cast(operations.CreateRunQueueRunQueuePostData, request)
-
-        req = self._build_request(
-            method="POST",
-            path="/run/queue",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=False,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", operations.CreateRunQueueRunQueuePostData
-            ),
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                operation_id="create_run_queue_run_queue_post",
-                oauth2_scopes=[],
-                security_source=self.sdk_configuration.security,
-            ),
-            request=req,
-            error_status_codes=["422", "4XX", "5XX"],
-            retry_config=retry_config,
-        )
-
-        data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return operations.CreateRunQueueRunQueuePostResponse(
-                create_run_response=utils.unmarshal_json(
-                    http_res.text, Optional[components.CreateRunResponse]
-                ),
-                http_meta=components.HTTPMetadata(request=req, response=http_res),
-            )
-        if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
-
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
-
-    @deprecated(
-        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
-    )
-    async def queue_async(
-        self,
-        *,
-        request: Union[
-            operations.CreateRunQueueRunQueuePostData,
-            operations.CreateRunQueueRunQueuePostDataTypedDict,
-        ],
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> operations.CreateRunQueueRunQueuePostResponse:
-        r"""Queue a workflow
-
-        Create a new workflow run with the given parameters. This function sets up the run and initiates the execution process. For callback information, see [Callbacks](#tag/callbacks/POST/\{callback_url\}).
-
-        :param request: The request object to send.
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if server_url is not None:
-            base_url = server_url
-
-        if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, operations.CreateRunQueueRunQueuePostData
-            )
-        request = cast(operations.CreateRunQueueRunQueuePostData, request)
-
-        req = self._build_request_async(
-            method="POST",
-            path="/run/queue",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=False,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", operations.CreateRunQueueRunQueuePostData
-            ),
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                operation_id="create_run_queue_run_queue_post",
-                oauth2_scopes=[],
-                security_source=self.sdk_configuration.security,
-            ),
-            request=req,
-            error_status_codes=["422", "4XX", "5XX"],
-            retry_config=retry_config,
-        )
-
-        data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return operations.CreateRunQueueRunQueuePostResponse(
-                create_run_response=utils.unmarshal_json(
-                    http_res.text, Optional[components.CreateRunResponse]
-                ),
-                http_meta=components.HTTPMetadata(request=req, response=http_res),
-            )
-        if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
-
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
-
-    @deprecated(
-        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
-    )
-    def sync(
-        self,
-        *,
-        request: Union[
-            operations.CreateRunSyncRunSyncPostData,
-            operations.CreateRunSyncRunSyncPostDataTypedDict,
-        ],
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> operations.CreateRunSyncRunSyncPostResponse:
-        r"""Run a workflow in sync
-
-        Create a new workflow run with the given parameters. This function sets up the run and initiates the execution process. For callback information, see [Callbacks](#tag/callbacks/POST/\{callback_url\}).
-
-        :param request: The request object to send.
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if server_url is not None:
-            base_url = server_url
-
-        if not isinstance(request, BaseModel):
-            request = utils.unmarshal(request, operations.CreateRunSyncRunSyncPostData)
-        request = cast(operations.CreateRunSyncRunSyncPostData, request)
-
-        req = self._build_request(
-            method="POST",
-            path="/run/sync",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=False,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", operations.CreateRunSyncRunSyncPostData
-            ),
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                operation_id="create_run_sync_run_sync_post",
-                oauth2_scopes=[],
-                security_source=self.sdk_configuration.security,
-            ),
-            request=req,
-            error_status_codes=["422", "4XX", "5XX"],
-            retry_config=retry_config,
-        )
-
-        data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return operations.CreateRunSyncRunSyncPostResponse(
-                response_create_run_sync_run_sync_post=utils.unmarshal_json(
-                    http_res.text, Optional[List[components.WorkflowRunOutputModel]]
-                ),
-                http_meta=components.HTTPMetadata(request=req, response=http_res),
-            )
-        if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
-
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
-
-    @deprecated(
-        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
-    )
-    async def sync_async(
-        self,
-        *,
-        request: Union[
-            operations.CreateRunSyncRunSyncPostData,
-            operations.CreateRunSyncRunSyncPostDataTypedDict,
-        ],
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> operations.CreateRunSyncRunSyncPostResponse:
-        r"""Run a workflow in sync
-
-        Create a new workflow run with the given parameters. This function sets up the run and initiates the execution process. For callback information, see [Callbacks](#tag/callbacks/POST/\{callback_url\}).
-
-        :param request: The request object to send.
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if server_url is not None:
-            base_url = server_url
-
-        if not isinstance(request, BaseModel):
-            request = utils.unmarshal(request, operations.CreateRunSyncRunSyncPostData)
-        request = cast(operations.CreateRunSyncRunSyncPostData, request)
-
-        req = self._build_request_async(
-            method="POST",
-            path="/run/sync",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=False,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", operations.CreateRunSyncRunSyncPostData
-            ),
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                operation_id="create_run_sync_run_sync_post",
-                oauth2_scopes=[],
-                security_source=self.sdk_configuration.security,
-            ),
-            request=req,
-            error_status_codes=["422", "4XX", "5XX"],
-            retry_config=retry_config,
-        )
-
-        data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return operations.CreateRunSyncRunSyncPostResponse(
-                response_create_run_sync_run_sync_post=utils.unmarshal_json(
-                    http_res.text, Optional[List[components.WorkflowRunOutputModel]]
-                ),
-                http_meta=components.HTTPMetadata(request=req, response=http_res),
-            )
-        if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
-
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
-
-    @deprecated(
-        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
-    )
-    def stream(
-        self,
-        *,
-        request: Union[
-            operations.CreateRunStreamRunStreamPostData,
-            operations.CreateRunStreamRunStreamPostDataTypedDict,
-        ],
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> operations.CreateRunStreamRunStreamPostResponse:
-        r"""Run a workflow in stream
-
-        Create a new workflow run with the given parameters. This function sets up the run and initiates the execution process. For callback information, see [Callbacks](#tag/callbacks/POST/\{callback_url\}).
-
-        :param request: The request object to send.
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if server_url is not None:
-            base_url = server_url
-
-        if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, operations.CreateRunStreamRunStreamPostData
-            )
-        request = cast(operations.CreateRunStreamRunStreamPostData, request)
-
-        req = self._build_request(
-            method="POST",
-            path="/run/stream",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=False,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="text/event-stream",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request,
-                False,
-                False,
-                "json",
-                operations.CreateRunStreamRunStreamPostData,
-            ),
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                operation_id="create_run_stream_run_stream_post",
-                oauth2_scopes=[],
-                security_source=self.sdk_configuration.security,
-            ),
-            request=req,
-            error_status_codes=["422", "4XX", "5XX"],
-            stream=True,
-            retry_config=retry_config,
-        )
-
-        data: Any = None
-        if utils.match_response(http_res, "200", "text/event-stream"):
-            return operations.CreateRunStreamRunStreamPostResponse(
-                run_stream=eventstreaming.EventStream(
-                    http_res,
-                    lambda raw: utils.unmarshal_json(raw, components.RunStream),
-                ),
-                http_meta=components.HTTPMetadata(request=req, response=http_res),
-            )
-        if utils.match_response(http_res, "422", "application/json"):
-            http_res_text = utils.stream_to_text(http_res)
-            data = utils.unmarshal_json(http_res_text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
-
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
-
-    @deprecated(
-        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
-    )
-    async def stream_async(
-        self,
-        *,
-        request: Union[
-            operations.CreateRunStreamRunStreamPostData,
-            operations.CreateRunStreamRunStreamPostDataTypedDict,
-        ],
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> operations.CreateRunStreamRunStreamPostResponse:
-        r"""Run a workflow in stream
-
-        Create a new workflow run with the given parameters. This function sets up the run and initiates the execution process. For callback information, see [Callbacks](#tag/callbacks/POST/\{callback_url\}).
-
-        :param request: The request object to send.
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if server_url is not None:
-            base_url = server_url
-
-        if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, operations.CreateRunStreamRunStreamPostData
-            )
-        request = cast(operations.CreateRunStreamRunStreamPostData, request)
-
-        req = self._build_request_async(
-            method="POST",
-            path="/run/stream",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=False,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="text/event-stream",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request,
-                False,
-                False,
-                "json",
-                operations.CreateRunStreamRunStreamPostData,
-            ),
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                operation_id="create_run_stream_run_stream_post",
-                oauth2_scopes=[],
-                security_source=self.sdk_configuration.security,
-            ),
-            request=req,
-            error_status_codes=["422", "4XX", "5XX"],
-            stream=True,
-            retry_config=retry_config,
-        )
-
-        data: Any = None
-        if utils.match_response(http_res, "200", "text/event-stream"):
-            return operations.CreateRunStreamRunStreamPostResponse(
-                run_stream=eventstreaming.EventStreamAsync(
-                    http_res,
-                    lambda raw: utils.unmarshal_json(raw, components.RunStream),
-                ),
-                http_meta=components.HTTPMetadata(request=req, response=http_res),
-            )
-        if utils.match_response(http_res, "422", "application/json"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            data = utils.unmarshal_json(http_res_text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
-
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
-
-    def cancel_run_run_run_id_cancel_post(
+    def cancel(
         self,
         *,
         run_id: str,
-        cancel_function_body: Union[
-            components.CancelFunctionBody, components.CancelFunctionBodyTypedDict
-        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -889,7 +233,6 @@ class Run(BaseSDK):
         r"""Cancel Run
 
         :param run_id:
-        :param cancel_function_body:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -902,12 +245,11 @@ class Run(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = operations.CancelRunRunRunIDCancelPostRequest(
             run_id=run_id,
-            cancel_function_body=utils.get_pydantic_model(
-                cancel_function_body, components.CancelFunctionBody
-            ),
         )
 
         req = self._build_request(
@@ -916,20 +258,13 @@ class Run(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.cancel_function_body,
-                False,
-                False,
-                "json",
-                components.CancelFunctionBody,
-            ),
             timeout_ms=timeout_ms,
         )
 
@@ -943,6 +278,7 @@ class Run(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="cancel_run_run__run_id__cancel_post",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -952,15 +288,17 @@ class Run(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return operations.CancelRunRunRunIDCancelPostResponse(
                 any=utils.unmarshal_json(http_res.text, Optional[Any]),
                 http_meta=components.HTTPMetadata(request=req, response=http_res),
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, errors.HTTPValidationErrorData
+            )
+            raise errors.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError(
@@ -981,13 +319,10 @@ class Run(BaseSDK):
             http_res,
         )
 
-    async def cancel_run_run_run_id_cancel_post_async(
+    async def cancel_async(
         self,
         *,
         run_id: str,
-        cancel_function_body: Union[
-            components.CancelFunctionBody, components.CancelFunctionBodyTypedDict
-        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -996,7 +331,6 @@ class Run(BaseSDK):
         r"""Cancel Run
 
         :param run_id:
-        :param cancel_function_body:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1009,12 +343,11 @@ class Run(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = operations.CancelRunRunRunIDCancelPostRequest(
             run_id=run_id,
-            cancel_function_body=utils.get_pydantic_model(
-                cancel_function_body, components.CancelFunctionBody
-            ),
         )
 
         req = self._build_request_async(
@@ -1023,20 +356,13 @@ class Run(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.cancel_function_body,
-                False,
-                False,
-                "json",
-                components.CancelFunctionBody,
-            ),
             timeout_ms=timeout_ms,
         )
 
@@ -1050,6 +376,7 @@ class Run(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="cancel_run_run__run_id__cancel_post",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -1059,15 +386,17 @@ class Run(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return operations.CancelRunRunRunIDCancelPostResponse(
                 any=utils.unmarshal_json(http_res.text, Optional[Any]),
                 http_meta=components.HTTPMetadata(request=req, response=http_res),
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, errors.HTTPValidationErrorData)
-            raise errors.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, errors.HTTPValidationErrorData
+            )
+            raise errors.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError(

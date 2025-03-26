@@ -42,12 +42,11 @@ To authenticate your requests, include your API key in the `Authorization` heade
   * [SDK Example Usage](#sdk-example-usage)
   * [Authentication](#authentication)
   * [Available Resources and Operations](#available-resources-and-operations)
-  * [Server-sent event streaming](#server-sent-event-streaming)
-  * [File uploads](#file-uploads)
   * [Retries](#retries)
   * [Error Handling](#error-handling)
   * [Server Selection](#server-selection)
   * [Custom HTTP Client](#custom-http-client)
+  * [Resource Management](#resource-management)
   * [Debugging](#debugging)
 * [Development](#development)
   * [Maturity](#maturity)
@@ -57,6 +56,11 @@ To authenticate your requests, include your API key in the `Authorization` heade
 
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
+
+> [!NOTE]
+> **Python version upgrade policy**
+>
+> Once a Python version reaches its [official end of life date](https://devguide.python.org/versions/), a 3-month grace period is provided for users to upgrade. Following this grace period, the minimum python version supported in the SDK will be updated.
 
 The SDK can be installed with either *pip* or *poetry* package managers.
 
@@ -75,6 +79,37 @@ pip install comfydeploy
 ```bash
 poetry add comfydeploy
 ```
+
+### Shell and script usage with `uv`
+
+You can use this SDK in a Python shell with [uv](https://docs.astral.sh/uv/) and the `uvx` command that comes with it like so:
+
+```shell
+uvx --from comfydeploy python
+```
+
+It's also possible to write a standalone Python script without needing to set up a whole project like so:
+
+```python
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.9"
+# dependencies = [
+#     "comfydeploy",
+# ]
+# ///
+
+from comfydeploy import ComfyDeploy
+
+sdk = ComfyDeploy(
+  # SDK arguments
+)
+
+# Rest of script here...
+```
+
+Once that is saved to a file, you can run it with `uv run script.py` where
+`script.py` can be replaced with the actual file name.
 <!-- End SDK Installation [installation] -->
 
 <!-- Start IDE Support [idesupport] -->
@@ -95,6 +130,7 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 ```python
 # Synchronous Example
 from comfydeploy import ComfyDeploy
+
 
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
@@ -117,6 +153,7 @@ import asyncio
 from comfydeploy import ComfyDeploy
 
 async def main():
+
     async with ComfyDeploy(
         bearer="<YOUR_BEARER_TOKEN_HERE>",
     ) as comfy_deploy:
@@ -147,6 +184,7 @@ To authenticate with the API the `bearer` parameter must be set when initializin
 ```python
 from comfydeploy import ComfyDeploy
 
+
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
 ) as comfy_deploy:
@@ -168,132 +206,17 @@ with ComfyDeploy(
 <summary>Available methods</summary>
 
 
-### [deployments](docs/sdks/deployments/README.md)
-
-* [create](docs/sdks/deployments/README.md#create) - Create Deployment
-* [list](docs/sdks/deployments/README.md#list) - Get Deployments
-
-### [file](docs/sdks/file/README.md)
-
-* [upload](docs/sdks/file/README.md#upload) - Upload File
-* [create_folder_assets_folder_post](docs/sdks/file/README.md#create_folder_assets_folder_post) - Create Folder
-* [list_assets_assets_get](docs/sdks/file/README.md#list_assets_assets_get) - List Assets
-* [delete_asset_assets_asset_id_delete](docs/sdks/file/README.md#delete_asset_assets_asset_id_delete) - Delete Asset
-* [get_asset_assets_asset_id_get](docs/sdks/file/README.md#get_asset_assets_asset_id_get) - Get Asset
-* [upload_asset_file_assets_upload_post](docs/sdks/file/README.md#upload_asset_file_assets_upload_post) - Upload Asset File
-
-### [models](docs/sdks/models/README.md)
-
-* [public_models_models_get](docs/sdks/models/README.md#public_models_models_get) - Public Models
-
 ### [run](docs/sdks/run/README.md)
 
 * [get](docs/sdks/run/README.md#get) - Get Run
-* [~~queue~~](docs/sdks/run/README.md#queue) - Queue a workflow :warning: **Deprecated**
-* [~~sync~~](docs/sdks/run/README.md#sync) - Run a workflow in sync :warning: **Deprecated**
-* [~~stream~~](docs/sdks/run/README.md#stream) - Run a workflow in stream :warning: **Deprecated**
-* [cancel_run_run_run_id_cancel_post](docs/sdks/run/README.md#cancel_run_run_run_id_cancel_post) - Cancel Run
+* [cancel](docs/sdks/run/README.md#cancel) - Cancel Run
 
 #### [run.deployment](docs/sdks/deployment/README.md)
 
-* [queue](docs/sdks/deployment/README.md#queue) - Deployment - Queue
-* [sync](docs/sdks/deployment/README.md#sync) - Deployment - Sync
-* [stream](docs/sdks/deployment/README.md#stream) - Deployment - Stream
-
-#### [run.workflow](docs/sdks/workflow/README.md)
-
-* [queue](docs/sdks/workflow/README.md#queue) - Workflow - Queue
-* [sync](docs/sdks/workflow/README.md#sync) - Workflow - Sync
-* [stream](docs/sdks/workflow/README.md#stream) - Workflow - Stream
-
-### [search](docs/sdks/search/README.md)
-
-* [search_search_model_get](docs/sdks/search/README.md#search_search_model_get) - Search
-
-### [session](docs/sdks/session/README.md)
-
-* [get](docs/sdks/session/README.md#get) - Get Session
-* [cancel](docs/sdks/session/README.md#cancel) - Delete Session
-* [list](docs/sdks/session/README.md#list) - Get Machine Sessions
-* [increase_timeout_session_increase_timeout_post](docs/sdks/session/README.md#increase_timeout_session_increase_timeout_post) - Increase Timeout
-* [create](docs/sdks/session/README.md#create) - Create Session
+* [queue](docs/sdks/deployment/README.md#queue) - Queue Run
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
-
-<!-- Start Server-sent event streaming [eventstream] -->
-## Server-sent event streaming
-
-[Server-sent events][mdn-sse] are used to stream content from certain
-operations. These operations will expose the stream as [Generator][generator] that
-can be consumed using a simple `for` loop. The loop will
-terminate when the server no longer has any events to send and closes the
-underlying connection.  
-
-The stream is also a [Context Manager][context-manager] and can be used with the `with` statement and will close the
-underlying connection when the context is exited.
-
-```python
-from comfydeploy import ComfyDeploy
-
-with ComfyDeploy(
-    bearer="<YOUR_BEARER_TOKEN_HERE>",
-) as comfy_deploy:
-
-    res = comfy_deploy.run.deployment.stream(request={
-        "deployment_id": "15e79589-12c9-453c-a41a-348fdd7de957",
-        "inputs": {
-            "prompt": "A beautiful landscape",
-            "seed": 42,
-        },
-        "webhook": "https://myapp.com/webhook",
-    })
-
-    assert res.run_stream is not None
-
-    with res.run_stream as event_stream:
-        for event in event_stream:
-            # handle event
-            print(event, flush=True)
-
-```
-
-[mdn-sse]: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events
-[generator]: https://book.pythontips.com/en/latest/generators.html
-[context-manager]: https://book.pythontips.com/en/latest/context_managers.html
-<!-- End Server-sent event streaming [eventstream] -->
-
-<!-- Start File uploads [file-upload] -->
-## File uploads
-
-Certain SDK methods accept file objects as part of a request body or multi-part request. It is possible and typically recommended to upload files as a stream rather than reading the entire contents into memory. This avoids excessive memory consumption and potentially crashing with out-of-memory errors when working with very large files. The following example demonstrates how to attach a file stream to a request.
-
-> [!TIP]
->
-> For endpoints that handle file uploads bytes arrays can also be used. However, using streams is recommended for large files.
->
-
-```python
-from comfydeploy import ComfyDeploy
-
-with ComfyDeploy(
-    bearer="<YOUR_BEARER_TOKEN_HERE>",
-) as comfy_deploy:
-
-    res = comfy_deploy.file.upload(request={
-        "file": {
-            "file_name": "example.file",
-            "content": open("example.file", "rb"),
-        },
-    })
-
-    assert res.file_upload_response is not None
-
-    # Handle response
-    print(res.file_upload_response)
-
-```
-<!-- End File uploads [file-upload] -->
 
 <!-- Start Retries [retries] -->
 ## Retries
@@ -304,6 +227,7 @@ To change the default retry strategy for a single API call, simply provide a `Re
 ```python
 from comfydeploy import ComfyDeploy
 from comfydeploy.utils import BackoffStrategy, RetryConfig
+
 
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
@@ -323,6 +247,7 @@ If you'd like to override the default retry strategy for all operations that sup
 ```python
 from comfydeploy import ComfyDeploy
 from comfydeploy.utils import BackoffStrategy, RetryConfig
+
 
 with ComfyDeploy(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
@@ -366,6 +291,7 @@ When custom error responses are specified for an operation, the SDK may also rai
 from comfydeploy import ComfyDeploy
 from comfydeploy.models import errors
 
+
 with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
 ) as comfy_deploy:
@@ -395,16 +321,17 @@ with ComfyDeploy(
 
 You can override the default server globally by passing a server index to the `server_idx: int` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the indexes associated with the available servers:
 
-| #   | Server                                    |
-| --- | ----------------------------------------- |
-| 0   | `https://api.comfydeploy.com/api`         |
-| 1   | `https://staging.api.comfydeploy.com/api` |
-| 2   | `http://localhost:3011/api`               |
+| #   | Server                                    | Description              |
+| --- | ----------------------------------------- | ------------------------ |
+| 0   | `https://api.comfydeploy.com/api`         | Production server        |
+| 1   | `https://staging.api.comfydeploy.com/api` | Staging server           |
+| 2   | `http://localhost:3011/api`               | Local development server |
 
 #### Example
 
 ```python
 from comfydeploy import ComfyDeploy
+
 
 with ComfyDeploy(
     server_idx=2,
@@ -425,6 +352,7 @@ with ComfyDeploy(
 The default server can also be overridden globally by passing a URL to the `server_url: str` optional parameter when initializing the SDK client instance. For example:
 ```python
 from comfydeploy import ComfyDeploy
+
 
 with ComfyDeploy(
     server_url="https://api.comfydeploy.com/api",
@@ -521,6 +449,33 @@ class CustomClient(AsyncHttpClient):
 s = ComfyDeploy(async_client=CustomClient(httpx.AsyncClient()))
 ```
 <!-- End Custom HTTP Client [http-client] -->
+
+<!-- Start Resource Management [resource-management] -->
+## Resource Management
+
+The `ComfyDeploy` class implements the context manager protocol and registers a finalizer function to close the underlying sync and async HTTPX clients it uses under the hood. This will close HTTP connections, release memory and free up other resources held by the SDK. In short-lived Python programs and notebooks that make a few SDK method calls, resource management may not be a concern. However, in longer-lived programs, it is beneficial to create a single SDK instance via a [context manager][context-manager] and reuse it across the application.
+
+[context-manager]: https://docs.python.org/3/reference/datamodel.html#context-managers
+
+```python
+from comfydeploy import ComfyDeploy
+def main():
+
+    with ComfyDeploy(
+        bearer="<YOUR_BEARER_TOKEN_HERE>",
+    ) as comfy_deploy:
+        # Rest of application here...
+
+
+# Or when using async:
+async def amain():
+
+    async with ComfyDeploy(
+        bearer="<YOUR_BEARER_TOKEN_HERE>",
+    ) as comfy_deploy:
+        # Rest of application here...
+```
+<!-- End Resource Management [resource-management] -->
 
 <!-- Start Debugging [debug] -->
 ## Debugging
