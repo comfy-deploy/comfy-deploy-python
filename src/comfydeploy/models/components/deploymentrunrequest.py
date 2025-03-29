@@ -18,6 +18,7 @@ Inputs = TypeAliasType("Inputs", Union[str, int, float, bool, List[Any]])
 class Gpu(str, Enum):
     r"""The GPU to override the machine's default GPU"""
 
+    CPU = "CPU"
     T4 = "T4"
     L4 = "L4"
     A10_G = "A10G"
