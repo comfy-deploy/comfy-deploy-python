@@ -7,6 +7,7 @@ The GPU to override the machine's default GPU
 
 | Name         | Value        |
 | ------------ | ------------ |
+| `CPU`        | CPU          |
 | `T4`         | T4           |
 | `L4`         | L4           |
 | `A10_G`      | A10G         |
