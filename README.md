@@ -355,7 +355,7 @@ from comfydeploy import ComfyDeploy
 
 
 with ComfyDeploy(
-    server_url="https://api.comfydeploy.com/api",
+    server_url="http://localhost:3011/api",
     bearer="<YOUR_BEARER_TOKEN_HERE>",
 ) as comfy_deploy:
 
