@@ -25,6 +25,7 @@ class Run(BaseSDK):
         self,
         *,
         run_id: str,
+        queue_position: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -33,6 +34,7 @@ class Run(BaseSDK):
         r"""Get Run
 
         :param run_id:
+        :param queue_position:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -50,6 +52,7 @@ class Run(BaseSDK):
 
         request = operations.GetRunRunRunIDGetRequest(
             run_id=run_id,
+            queue_position=queue_position,
         )
 
         req = self._build_request(
@@ -125,6 +128,7 @@ class Run(BaseSDK):
         self,
         *,
         run_id: str,
+        queue_position: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -133,6 +137,7 @@ class Run(BaseSDK):
         r"""Get Run
 
         :param run_id:
+        :param queue_position:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -150,6 +155,7 @@ class Run(BaseSDK):
 
         request = operations.GetRunRunRunIDGetRequest(
             run_id=run_id,
+            queue_position=queue_position,
         )
 
         req = self._build_request_async(
