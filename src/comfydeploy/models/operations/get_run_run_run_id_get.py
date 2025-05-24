@@ -6,7 +6,7 @@ from comfydeploy.models.components import (
     workflowrunmodel as components_workflowrunmodel,
 )
 from comfydeploy.types import BaseModel
-from comfydeploy.utils import FieldMetadata, PathParamMetadata
+from comfydeploy.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
 import pydantic
 from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
@@ -14,12 +14,18 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class GetRunRunRunIDGetRequestTypedDict(TypedDict):
     run_id: str
+    queue_position: NotRequired[bool]
 
 
 class GetRunRunRunIDGetRequest(BaseModel):
     run_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
+
+    queue_position: Annotated[
+        Optional[bool],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = False
 
 
 class GetRunRunRunIDGetResponseTypedDict(TypedDict):

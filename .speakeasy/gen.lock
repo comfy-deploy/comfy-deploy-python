@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2c1d440e-25e4-46e2-a435-ebd1f72a7373
 management:
-  docChecksum: a12e94397f17ad377cd82287f65fc0dd
+  docChecksum: de561cbc390ed8d22ebb811da3571d0f
   docVersion: V2
-  speakeasyVersion: 1.523.2
-  generationVersion: 2.560.1
-  releaseVersion: 0.7.0
-  configChecksum: efd69310efe6f150238bffd349771dd8
+  speakeasyVersion: 1.551.0
+  generationVersion: 2.610.0
+  releaseVersion: 0.8.0
+  configChecksum: c4b154736748c84844f6455fa939b87c
   repoURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   installationURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   published: true
@@ -14,7 +14,7 @@ features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.5
-    core: 5.12.4
+    core: 5.19.0
     defaultEnabledRetries: 0.2.0
     devContainers: 3.0.0
     enumUnions: 0.1.0
@@ -23,7 +23,7 @@ features:
     globalSecurity: 3.0.3
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
-    globalServerURLs: 3.1.0
+    globalServerURLs: 3.1.1
     groups: 3.0.0
     nameOverrides: 3.0.1
     nullables: 1.0.1
@@ -110,6 +110,7 @@ generatedFiles:
   - src/comfydeploy/types/basemodel.py
   - src/comfydeploy/utils/__init__.py
   - src/comfydeploy/utils/annotations.py
+  - src/comfydeploy/utils/datetimes.py
   - src/comfydeploy/utils/enums.py
   - src/comfydeploy/utils/eventstreaming.py
   - src/comfydeploy/utils/forms.py
@@ -128,10 +129,12 @@ examples:
     speakeasy-default-get-run-run-run-id-get:
       parameters:
         path:
-          run_id: "b888f774-3e7c-4135-a18c-6b985523c4bc"
+          run_id: "faf49b3a-7b64-4687-95c8-58ca8a41dd73"
+        query:
+          queue_position: false
       responses:
         "200":
-          application/json: {"id": "e50f7622-81da-484b-9c66-1c8a99c6b71b", "workflow_version_id": "ecd62b8f-7112-4aaf-90ab-4e43b4cca371", "workflow_inputs": "<value>", "workflow_id": "f620807a-a1f8-4cf0-95d8-9d58ee381f6b", "workflow_api": "<value>", "machine_id": "b885c09d-541c-4293-b683-64a15f8d7e75", "origin": "<value>", "status": "<value>", "created_at": "2024-02-02T12:01:38.576Z", "updated_at": "2023-04-16T15:25:27.950Z", "gpu_event_id": "<id>", "gpu": "<value>", "machine_version": "<value>", "machine_type": "<value>", "modal_function_call_id": "<id>", "user_id": "<id>", "org_id": "<id>", "live_status": "<value>", "progress": 0, "is_realtime": false, "webhook": "<value>", "webhook_status": "<value>", "webhook_intermediate_status": false, "number": 494415, "duration": 6188.69, "cold_start_duration": 9131.15, "cold_start_duration_total": 1865.92, "run_duration": 3787.04}
+          application/json: {"id": "46a99099-5b7a-4e10-8e06-6dacc98118bf", "workflow_version_id": "f69dd44f-f54c-41db-91a8-2526823f19f0", "workflow_inputs": "<value>", "workflow_id": "39f9f100-52c4-4837-9d06-0278a672e1ec", "workflow_api": "<value>", "machine_id": "2fc8c79b-bed3-4891-b575-269d7cdf77e5", "origin": "<value>", "status": "<value>", "created_at": "2025-04-08T06:46:17.964Z", "updated_at": "2024-08-17T20:17:10.773Z", "gpu_event_id": "<id>", "gpu": "<value>", "machine_version": "<value>", "machine_type": "<value>", "modal_function_call_id": "<id>", "user_id": "<id>", "org_id": "<id>", "live_status": "<value>", "progress": 0, "is_realtime": false, "webhook": "<value>", "webhook_status": "<value>", "webhook_intermediate_status": false}
         "422":
           application/json: {}
   cancel_run_run__run_id__cancel_post:
@@ -147,20 +150,20 @@ examples:
   queue_deployment_run_run_deployment_queue_post:
     speakeasy-default-queue-deployment-run-run-deployment-queue-post:
       requestBody:
-        application/json: {"inputs": {"prompt": "A beautiful landscape", "seed": 42}, "webhook": "https://myapp.com/webhook", "webhook_intermediate_status": true, "deployment_id": "15e79589-12c9-453c-a41a-348fdd7de957"}
+        application/json: {"inputs": {"num_inference_steps": 30, "prompt": "A futuristic cityscape", "seed": 123456}, "webhook": "https://myapp.com/webhook", "webhook_intermediate_status": true, "deployment_id": "12345678-1234-5678-1234-567812345678"}
       responses:
         "200":
-          application/json: {"run_id": "03ec31b2-4d0d-4329-88ff-ac74003017b7"}
+          application/json: {"run_id": "17cad37f-15e1-48dc-8b81-b4a67ba778ba"}
         "422":
           application/json: {}
   run_update__request_body__webhook__post:
     speakeasy-default-run-update-request-body-webhook-post:
       requestBody:
-        application/json: {"run_id": "<id>", "status": "success", "live_status": "<value>", "progress": 0}
+        application/json: {"run_id": "<id>", "status": "running", "live_status": "<value>", "progress": 0}
       responses:
         "200":
           application/json: {"status": "<value>"}
         "422":
           application/json: {}
-examplesVersion: 1.0.0
+examplesVersion: 1.0.2
 generatedTests: {}
