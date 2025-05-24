@@ -28,6 +28,7 @@ class WorkflowRunOutputModelTypedDict(TypedDict):
     node_meta: Nullable[Any]
     created_at: datetime
     updated_at: datetime
+    output_id: NotRequired[Nullable[str]]
     type: NotRequired[Nullable[str]]
     node_id: NotRequired[Nullable[str]]
 
@@ -45,21 +46,23 @@ class WorkflowRunOutputModel(BaseModel):
 
     updated_at: datetime
 
+    output_id: OptionalNullable[str] = UNSET
+
     type: OptionalNullable[str] = UNSET
 
     node_id: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["type", "node_id"]
-        nullable_fields = ["node_meta", "type", "node_id"]
+        optional_fields = ["output_id", "type", "node_id"]
+        nullable_fields = ["output_id", "node_meta", "type", "node_id"]
         null_default_fields = []
 
         serialized = handler(self)
 
         m = {}
 
-        for n, f in self.model_fields.items():
+        for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
             serialized.pop(k, None)

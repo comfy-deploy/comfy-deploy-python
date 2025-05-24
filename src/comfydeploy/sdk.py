@@ -8,11 +8,14 @@ from .utils.retries import RetryConfig
 from comfydeploy import utils
 from comfydeploy._hooks import SDKHooks
 from comfydeploy.models import components
-from comfydeploy.run import Run
 from comfydeploy.types import OptionalNullable, UNSET
 import httpx
-from typing import Any, Callable, Dict, Optional, Union, cast
+import importlib
+from typing import Any, Callable, Dict, Optional, TYPE_CHECKING, Union, cast
 import weakref
+
+if TYPE_CHECKING:
+    from comfydeploy.run import Run
 
 
 class ComfyDeploy(BaseSDK):
@@ -34,7 +37,10 @@ class ComfyDeploy(BaseSDK):
 
     """
 
-    run: Run
+    run: "Run"
+    _sub_sdk_map = {
+        "run": ("comfydeploy.run", "Run"),
+    }
 
     def __init__(
         self,
@@ -129,10 +135,32 @@ class ComfyDeploy(BaseSDK):
             self.sdk_configuration.async_client_supplied,
         )
 
-        self._init_sdks()
+    def __getattr__(self, name: str):
+        if name in self._sub_sdk_map:
+            module_path, class_name = self._sub_sdk_map[name]
+            try:
+                module = importlib.import_module(module_path)
+                klass = getattr(module, class_name)
+                instance = klass(self.sdk_configuration)
+                setattr(self, name, instance)
+                return instance
+            except ImportError as e:
+                raise AttributeError(
+                    f"Failed to import module {module_path} for attribute {name}: {e}"
+                ) from e
+            except AttributeError as e:
+                raise AttributeError(
+                    f"Failed to find class {class_name} in module {module_path} for attribute {name}: {e}"
+                ) from e
 
-    def _init_sdks(self):
-        self.run = Run(self.sdk_configuration)
+        raise AttributeError(
+            f"'{type(self).__name__}' object has no attribute '{name}'"
+        )
+
+    def __dir__(self):
+        default_attrs = list(super().__dir__())
+        lazy_attrs = list(self._sub_sdk_map.keys())
+        return sorted(list(set(default_attrs + lazy_attrs)))
 
     def __enter__(self):
         return self
