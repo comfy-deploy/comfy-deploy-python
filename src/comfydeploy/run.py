@@ -25,6 +25,7 @@ class Run(BaseSDK):
         self,
         *,
         run_id: str,
+        queue_position: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -33,6 +34,7 @@ class Run(BaseSDK):
         r"""Get Run
 
         :param run_id:
+        :param queue_position:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -50,6 +52,7 @@ class Run(BaseSDK):
 
         request = operations.GetRunRunRunIDGetRequest(
             run_id=run_id,
+            queue_position=queue_position,
         )
 
         req = self._build_request(
@@ -78,6 +81,7 @@ class Run(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="get_run_run__run_id__get",
                 oauth2_scopes=[],
@@ -125,6 +129,7 @@ class Run(BaseSDK):
         self,
         *,
         run_id: str,
+        queue_position: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -133,6 +138,7 @@ class Run(BaseSDK):
         r"""Get Run
 
         :param run_id:
+        :param queue_position:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -150,6 +156,7 @@ class Run(BaseSDK):
 
         request = operations.GetRunRunRunIDGetRequest(
             run_id=run_id,
+            queue_position=queue_position,
         )
 
         req = self._build_request_async(
@@ -178,6 +185,7 @@ class Run(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="get_run_run__run_id__get",
                 oauth2_scopes=[],
@@ -278,6 +286,7 @@ class Run(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="cancel_run_run__run_id__cancel_post",
                 oauth2_scopes=[],
@@ -376,6 +385,7 @@ class Run(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="cancel_run_run__run_id__cancel_post",
                 oauth2_scopes=[],

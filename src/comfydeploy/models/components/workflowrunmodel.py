@@ -39,11 +39,6 @@ class WorkflowRunModelTypedDict(TypedDict):
     live_status: Nullable[str]
     webhook: Nullable[str]
     webhook_status: Nullable[str]
-    number: int
-    duration: Nullable[float]
-    cold_start_duration: Nullable[float]
-    cold_start_duration_total: Nullable[float]
-    run_duration: Nullable[float]
     ended_at: NotRequired[Nullable[datetime]]
     queued_at: NotRequired[Nullable[datetime]]
     started_at: NotRequired[Nullable[datetime]]
@@ -51,6 +46,12 @@ class WorkflowRunModelTypedDict(TypedDict):
     is_realtime: NotRequired[bool]
     webhook_intermediate_status: NotRequired[bool]
     outputs: NotRequired[List[WorkflowRunOutputModelTypedDict]]
+    number: NotRequired[Nullable[int]]
+    duration: NotRequired[Nullable[float]]
+    cold_start_duration: NotRequired[Nullable[float]]
+    cold_start_duration_total: NotRequired[Nullable[float]]
+    run_duration: NotRequired[Nullable[float]]
+    queue_position: NotRequired[Nullable[int]]
 
 
 class WorkflowRunModel(BaseModel):
@@ -94,16 +95,6 @@ class WorkflowRunModel(BaseModel):
 
     webhook_status: Nullable[str]
 
-    number: int
-
-    duration: Nullable[float]
-
-    cold_start_duration: Nullable[float]
-
-    cold_start_duration_total: Nullable[float]
-
-    run_duration: Nullable[float]
-
     ended_at: OptionalNullable[datetime] = UNSET
 
     queued_at: OptionalNullable[datetime] = UNSET
@@ -118,6 +109,18 @@ class WorkflowRunModel(BaseModel):
 
     outputs: Optional[List[WorkflowRunOutputModel]] = None
 
+    number: OptionalNullable[int] = UNSET
+
+    duration: OptionalNullable[float] = UNSET
+
+    cold_start_duration: OptionalNullable[float] = UNSET
+
+    cold_start_duration_total: OptionalNullable[float] = UNSET
+
+    run_duration: OptionalNullable[float] = UNSET
+
+    queue_position: OptionalNullable[int] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -128,12 +131,21 @@ class WorkflowRunModel(BaseModel):
             "is_realtime",
             "webhook_intermediate_status",
             "outputs",
+            "number",
+            "duration",
+            "cold_start_duration",
+            "cold_start_duration_total",
+            "run_duration",
+            "queue_position",
         ]
         nullable_fields = [
             "workflow_version_id",
             "workflow_inputs",
             "workflow_api",
             "machine_id",
+            "ended_at",
+            "queued_at",
+            "started_at",
             "gpu_event_id",
             "gpu",
             "machine_version",
@@ -144,13 +156,12 @@ class WorkflowRunModel(BaseModel):
             "live_status",
             "webhook",
             "webhook_status",
+            "number",
             "duration",
             "cold_start_duration",
             "cold_start_duration_total",
             "run_duration",
-            "ended_at",
-            "queued_at",
-            "started_at",
+            "queue_position",
         ]
         null_default_fields = []
 
@@ -158,7 +169,7 @@ class WorkflowRunModel(BaseModel):
 
         m = {}
 
-        for n, f in self.model_fields.items():
+        for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
             serialized.pop(k, None)
