@@ -5,6 +5,7 @@ from comfydeploy import utils
 from comfydeploy._hooks import HookContext
 from comfydeploy.models import components, errors, operations
 from comfydeploy.types import BaseModel, OptionalNullable, UNSET
+from comfydeploy.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Any, Mapping, Optional, Union, cast
 
 
@@ -73,6 +74,7 @@ class Deployment(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="queue_deployment_run_run_deployment_queue_post",
                 oauth2_scopes=[],
@@ -86,35 +88,24 @@ class Deployment(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return operations.QueueDeploymentRunRunDeploymentQueuePostResponse(
-                create_run_response=utils.unmarshal_json(
-                    http_res.text, Optional[components.CreateRunResponse]
+                create_run_response=unmarshal_json_response(
+                    Optional[components.CreateRunResponse], http_res
                 ),
                 http_meta=components.HTTPMetadata(request=req, response=http_res),
             )
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, errors.HTTPValidationErrorData
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
             )
-            raise errors.HTTPValidationError(data=response_data)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def queue_async(
         self,
@@ -180,6 +171,7 @@ class Deployment(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="queue_deployment_run_run_deployment_queue_post",
                 oauth2_scopes=[],
@@ -193,32 +185,21 @@ class Deployment(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return operations.QueueDeploymentRunRunDeploymentQueuePostResponse(
-                create_run_response=utils.unmarshal_json(
-                    http_res.text, Optional[components.CreateRunResponse]
+                create_run_response=unmarshal_json_response(
+                    Optional[components.CreateRunResponse], http_res
                 ),
                 http_meta=components.HTTPMetadata(request=req, response=http_res),
             )
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, errors.HTTPValidationErrorData
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
             )
-            raise errors.HTTPValidationError(data=response_data)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)

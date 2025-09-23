@@ -14,6 +14,7 @@ Get Run
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="get_run_run__run_id__get" method="get" path="/run/{run_id}" -->
 ```python
 from comfydeploy import ComfyDeploy
 
@@ -22,7 +23,7 @@ with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
 ) as comfy_deploy:
 
-    res = comfy_deploy.run.get(run_id="b888f774-3e7c-4135-a18c-6b985523c4bc")
+    res = comfy_deploy.run.get(run_id="faf49b3a-7b64-4687-95c8-58ca8a41dd73", queue_position=False)
 
     assert res.workflow_run_model is not None
 
@@ -36,6 +37,7 @@ with ComfyDeploy(
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `run_id`                                                            | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `queue_position`                                                    | *Optional[bool]*                                                    | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
@@ -55,6 +57,7 @@ Cancel Run
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="cancel_run_run__run_id__cancel_post" method="post" path="/run/{run_id}/cancel" -->
 ```python
 from comfydeploy import ComfyDeploy
 
