@@ -1,37 +1,420 @@
 lockVersion: 2.0.0
 id: 2c1d440e-25e4-46e2-a435-ebd1f72a7373
 management:
-  docChecksum: a12e94397f17ad377cd82287f65fc0dd
+  docChecksum: fd38934c9601532f275d5d950bbef05b
   docVersion: V2
-  speakeasyVersion: 1.523.2
-  generationVersion: 2.560.1
-  releaseVersion: 0.7.0
-  configChecksum: efd69310efe6f150238bffd349771dd8
+  speakeasyVersion: 1.796.4
+  generationVersion: 2.935.1
+  releaseVersion: 0.8.0
+  configChecksum: 251fde23a364c4164df62003b5da27f5
   repoURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   installationURL: https://github.com/comfy-deploy/comfy-deploy-python.git
   published: true
+persistentEdits:
+  generation_id: eb773536-23ea-4add-bc47-6b0d27ee1dcc
+  pristine_commit_hash: 302498e28583be36964c5fa30240bb5149c5f6d4
+  pristine_tree_hash: 240eeb2fc707f6c340febf71c2f426ec25981bef
 features:
   python:
-    additionalDependencies: 1.0.0
-    constsAndDefaults: 1.0.5
-    core: 5.12.4
+    additionalDependencies: 1.1.0
+    constsAndDefaults: 1.0.7
+    core: 6.1.2
     defaultEnabledRetries: 0.2.0
     devContainers: 3.0.0
-    enumUnions: 0.1.0
-    envVarSecurityUsage: 0.3.2
+    enumUnions: 0.1.1
+    envVarSecurityUsage: 0.3.3
     flattening: 3.1.1
-    globalSecurity: 3.0.3
+    globalSecurity: 3.0.7
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
-    globalServerURLs: 3.1.0
-    groups: 3.0.0
-    nameOverrides: 3.0.1
-    nullables: 1.0.1
-    responseFormat: 1.0.1
-    retries: 3.0.2
-    sdkHooks: 1.0.1
-    unions: 3.0.4
-    webhooks: 2.0.0
+    globalServerURLs: 3.2.1
+    groups: 3.0.1
+    nameOverrides: 3.0.3
+    nullables: 1.0.2
+    responseFormat: 1.1.0
+    retries: 3.1.2
+    sdkHooks: 1.3.0
+    unions: 3.1.9
+trackedFiles:
+  .devcontainer/README.md:
+    id: b170c0f184ac
+    last_write_checksum: sha1:13e7232fc4c3162f6c758d5ed5ce1cb424b757df
+    pristine_git_object: dc080ebd408ffb5e8dacbb55f64f4bcf6bf01f57
+  .devcontainer/devcontainer.json:
+    id: b34062a34eb1
+    last_write_checksum: sha1:fbbce5654b8990b172a9ffe841d7635cd51c495b
+    pristine_git_object: 7e67af9f5b5aeed56bab8dd84f75d3729df3ada1
+  .devcontainer/setup.sh:
+    id: 5f1dfbfeb8eb
+    last_write_checksum: sha1:7f1b58df073363f88af7088c19956109f244dcfb
+    pristine_git_object: 11bc4efad90a23e056acb0e4fdd871a865c3c4d6
+  .gitattributes:
+    id: 24139dae6567
+    last_write_checksum: sha1:53134de3ada576f37c22276901e1b5b6d85cd2da
+    pristine_git_object: 4d75d59008e4d8609876d263419a9dc56c8d6f3a
+  .vscode/settings.json:
+    id: 89aa447020cd
+    last_write_checksum: sha1:f84632c81029fcdda8c3b0c768d02b836fc80526
+    pristine_git_object: 8d79f0abb72526f1fb34a4c03e5bba612c6ba2ae
+  USAGE.md:
+    id: 3aed33ce6e6f
+    last_write_checksum: sha1:feeeb7d156cb1c940397a4e32846d61364c24402
+    pristine_git_object: 6b4891818267e758054da1c559284150c0c17b6c
+  docs/models/components/createrunresponse.md:
+    id: 7616117e7b1f
+    last_write_checksum: sha1:5856ea6a443a67a5ceaf594892a715a04cf54858
+    pristine_git_object: 50219001832e86ffe7e28bca624dbd5a7e8581cc
+  docs/models/components/data.md:
+    id: 3f89c52c2b17
+    last_write_checksum: sha1:225f3c6070467f71c37cc0179f2ccaf639cb11a8
+    pristine_git_object: 242b929e2ee1f38828faca5b55a7bfd43e76fc7a
+  docs/models/components/deploymentrunrequest.md:
+    id: ab656a0f1241
+    last_write_checksum: sha1:679fe8d485a6ba3eb32bac5d97cda3fdde89d95b
+    pristine_git_object: 8ec6c817a44f605dc5d07b3573efe940787e90fb
+  docs/models/components/gpu.md:
+    id: 7da418721011
+    last_write_checksum: sha1:366f893d6c3a0e970ddd90129e3ef18af4fc2181
+    pristine_git_object: e16abde5e4f0383cc8b90ddde09fc8ef053c3203
+  docs/models/components/httpmetadata.md:
+    id: 728948c70168
+    last_write_checksum: sha1:09d9c91cf41e3b9e867647becda4e437f4f3e3c8
+    pristine_git_object: 2c187164ad5f4bf5cc49203cbb81b64b240247a6
+  docs/models/components/inputs.md:
+    id: dd91830fb1c4
+    last_write_checksum: sha1:8dcf82451bda39a1e833a9c80eff04e0028ceeef
+    pristine_git_object: 949a69368f3ee584090ba331b204111ec470a113
+  docs/models/components/loc.md:
+    id: 18d5ad9b7905
+    last_write_checksum: sha1:09a04749333ab50ae806c3ac6adcaa90d54df0f1
+    pristine_git_object: d6094ac2c6e0326c039dad2f6b89158694ef6aa7
+  docs/models/components/mediaitem.md:
+    id: d645b5382e16
+    last_write_checksum: sha1:1535c71a59d3a28fbeca6433e84d6dcc883ec3e6
+    pristine_git_object: 1b141ff9660f59bdb80c2ec9dc764c36d1aaa6be
+  docs/models/components/security.md:
+    id: 54906b49ea28
+    last_write_checksum: sha1:bfebf2ebf88a6a1768d99c2705250630e80769de
+    pristine_git_object: 7cf6e695c302312633cb16875add305e473d5c98
+  docs/models/components/validationerror.md:
+    id: 23910fc567b1
+    last_write_checksum: sha1:259c32ece2a67dc59b4cfa58e0020894ecd7afc2
+    pristine_git_object: fe535e36357b4f1f67c9a1229114a3fa249556a5
+  docs/models/components/workflowrunmodel.md:
+    id: 88bbf89656d1
+    last_write_checksum: sha1:a35ff6a0bdd679c0f7ff5ef6f02c60891ab4d1e2
+    pristine_git_object: f52ca641f6a77c6ecee63f1fba9054c738ee28a8
+  docs/models/components/workflowrunoutputmodel.md:
+    id: d0979b0cf456
+    last_write_checksum: sha1:95f6930ad088dd4aa2e78a036e11bd5715e0d7d3
+    pristine_git_object: 169d51e10015d9b49f6881822cc72a3efd807d51
+  docs/models/errors/httpvalidationerror.md:
+    id: 9365601abbd7
+    last_write_checksum: sha1:c569603480752cb4c870e0502971b5dadd839baf
+    pristine_git_object: 5cf28a6acddb114e74138e7056f719a3a35747a1
+  docs/models/operations/cancelrunrunrunidcancelpostrequest.md:
+    id: 447a96ed716c
+    last_write_checksum: sha1:bef672711cd7115c1b20cee83eced665ca41915d
+    pristine_git_object: 289c4a01fcbad5797ad2285d90adc25b59640314
+  docs/models/operations/cancelrunrunrunidcancelpostresponse.md:
+    id: 79891a596482
+    last_write_checksum: sha1:6e7d3ae9c1e321c2f8416497fbb2b29bdd457833
+    pristine_git_object: afa3e3542687a1c3577e08310ff43c1c8fde8dff
+  docs/models/operations/getrunrunrunidgetrequest.md:
+    id: 8e715af51248
+    last_write_checksum: sha1:d7c38b1bd259e7ad26a5de4ef8dd23533d78b9c2
+    pristine_git_object: 3cee973d2c377b4599bf9fd0403766b04167f396
+  docs/models/operations/getrunrunrunidgetresponse.md:
+    id: 8e7ad6b11417
+    last_write_checksum: sha1:29da211c6a98c9ebbc0e7651bb1aa274de8dee55
+    pristine_git_object: 5f52900d6b2c86cede9978f17a03c5777ea21cef
+  docs/models/operations/queuedeploymentrunrundeploymentqueuepostresponse.md:
+    id: a1f83718f3a9
+    last_write_checksum: sha1:e480aa70b64891e7755c00a1c1dd9dba1742f4c3
+    pristine_git_object: f3c23da594ecadd75a811cea7e629a12e6088da6
+  docs/models/utils/retryconfig.md:
+    id: 4343ac43161c
+    last_write_checksum: sha1:562c0f21e308ad10c27f85f75704c15592c6929d
+    pristine_git_object: 69dd549ec7f5f885101d08dd502e25748183aebf
+  docs/sdks/deployment/README.md:
+    id: 5cb544abed28
+    last_write_checksum: sha1:a2a175097aeb414576061de7d1e7bbef6de318d6
+    pristine_git_object: cd3f902e4c52ff3a94703e6741850f5504f9f477
+  docs/sdks/run/README.md:
+    id: 43088858b794
+    last_write_checksum: sha1:efe12fbdaededae3f77390fb285970bb167e7a78
+    pristine_git_object: ecb83067a13348e1df747667897eee8801bdcc11
+  poetry.toml:
+    id: a81ade82122a
+    last_write_checksum: sha1:2242305e29dc6921bdf5b200aea5d4bf67830230
+    pristine_git_object: cd3492ac9dc870fdcf23dbd94fd1d40cc753cc8e
+  py.typed:
+    id: 258c3ed47ae4
+    last_write_checksum: sha1:8efc425ffe830805ffcc0f3055871bdcdc542c60
+    pristine_git_object: 3e38f1a929f7d6b1d6de74604aa87e3d8f010544
+  pylintrc:
+    id: 7ce8b9f946e6
+    last_write_checksum: sha1:02d374417b71ebbc1bfa08d3e2bb8855b2299bc7
+    pristine_git_object: f4af620789217ae70ea020db1c3cf0687bb9b0ae
+  pyproject.toml:
+    id: 5d07e7d72637
+    last_write_checksum: sha1:5b9e2532f7e9e41abde06bc06c0d3cce1d3ce265
+    pristine_git_object: 38c18c78c480446f74387cc6451fbd64d5ac9112
+  scripts/prepare_readme.py:
+    id: e0c5957a6035
+    last_write_checksum: sha1:17e351800fa5736a976dc16bf7a3e0df5ea575bb
+    pristine_git_object: 3048971b09e8eaff9faaf414a5bf5b1c7a33fc19
+  scripts/publish.sh:
+    id: fe273b08f514
+    last_write_checksum: sha1:b31bafc19c15ab5ea925fdf8d5d4adce2b115a63
+    pristine_git_object: 2a3ead70ccc6228cbae1c5c8a319b1399f3804ea
+  src/comfydeploy/__init__.py:
+    id: 1a545ebe94d7
+    last_write_checksum: sha1:da077c0bdfcef64a4a5aea91a17292f72fa2b088
+    pristine_git_object: 833c68cd526fe34aab2b7e7c45f974f7f4b9e120
+  src/comfydeploy/_hooks/__init__.py:
+    id: 11f57e4a3a3a
+    last_write_checksum: sha1:45a380490e968d8d95994dd97554ac60eeb6ae60
+    pristine_git_object: e763be4b171bbcf9c16caeaf381f8c92ce8d8e6e
+  src/comfydeploy/_hooks/sdkhooks.py:
+    id: 4593eada03c5
+    last_write_checksum: sha1:b35348526dd2e95f81aa96948b5c2d1cfa497c04
+    pristine_git_object: cb7dc1b650381c88001eb2a0ce17fa2331e419dd
+  src/comfydeploy/_hooks/types.py:
+    id: af5e33946cc2
+    last_write_checksum: sha1:d3fea5e8b68a6d4c32a3ea7a77bdbc18d844d1bd
+    pristine_git_object: 28504b54facdefb119a6c9441ada2b2f64a14b34
+  src/comfydeploy/_version.py:
+    id: 67e5b67b4975
+    last_write_checksum: sha1:17dff7cdcd9c2231afc84aae04240ed04d7bfde8
+    pristine_git_object: 6f30040841056b250d4fe464402348756d992eb0
+  src/comfydeploy/basesdk.py:
+    id: 719dbcb20392
+    last_write_checksum: sha1:e03a3980b24f62e38da90370f105c5d4ad9c9e1d
+    pristine_git_object: 69cde99d873c3efab230cdd1f2319941aea231f5
+  src/comfydeploy/deployment.py:
+    id: 5ac7810ce526
+    last_write_checksum: sha1:aafd376567db345dce843d96c0bfc3faffdc1178
+    pristine_git_object: 30a061f4b03bd98a1f737fca872e75819bc50b02
+  src/comfydeploy/httpclient.py:
+    id: ad2135d282d4
+    last_write_checksum: sha1:5e55338d6ee9f01ab648cad4380201a8a3da7dd7
+    pristine_git_object: 89560b566073785535643e694c112bedbd3db13d
+  src/comfydeploy/models/__init__.py:
+    id: 2ac59c91c0a2
+    last_write_checksum: sha1:143b8c9c91161887484945e0e5eabaadebc9e4df
+    pristine_git_object: 97096fe880281768d27a19ae72b0ec8ddf8fd5c3
+  src/comfydeploy/models/components/__init__.py:
+    id: 78aaa2aa749d
+    last_write_checksum: sha1:33fd26f264196c5c291b437ac5299baf56031e20
+    pristine_git_object: 8d98d1332a8c2bcdd7d1500b8679735031d72a39
+  src/comfydeploy/models/components/createrunresponse.py:
+    id: 662ce976eab5
+    last_write_checksum: sha1:53c343c04aad542776292c8b3b00a24590a3f799
+    pristine_git_object: 9b36f5d2c55ec3c515fc0827e9d90a7e97454a86
+  src/comfydeploy/models/components/deploymentrunrequest.py:
+    id: 306998ef0eb8
+    last_write_checksum: sha1:8f5f9bb0cd2b05aea9cd6617b979ce194723b18e
+    pristine_git_object: 073e5ac754fc70cbfc803274d510e7b20a2ec374
+  src/comfydeploy/models/components/httpmetadata.py:
+    id: 9cd1a5f28bd9
+    last_write_checksum: sha1:5b240993a5d32d0575416226bb4d5bc675a94595
+    pristine_git_object: 00ac55873ef9d5c74ad3446c2b0a7e166b2fa370
+  src/comfydeploy/models/components/mediaitem.py:
+    id: 48364f955210
+    last_write_checksum: sha1:9488ba6fd86953b9bc4e85aff427b8717e8fcfef
+    pristine_git_object: bdb584198828857456301508a5b8d6f8c50ded9f
+  src/comfydeploy/models/components/security.py:
+    id: b7446ffbe893
+    last_write_checksum: sha1:03d542b03e9bb91230dd7ce157aef77f7ae68051
+    pristine_git_object: dac95b45ee87237d81203f518a453fbe032b4ad9
+  src/comfydeploy/models/components/validationerror.py:
+    id: 6338d64128fb
+    last_write_checksum: sha1:896b694ecf231299e7633ae3f444c49320709185
+    pristine_git_object: 4d1e9ddddc6330395ad102faa2684f5ceafba965
+  src/comfydeploy/models/components/workflowrunmodel.py:
+    id: 54cd24bb650e
+    last_write_checksum: sha1:ea40fc811ea8b3619c46884c078712827ca79e47
+    pristine_git_object: 39e6656da1af78e79e84c2ae5700c079a94a66f6
+  src/comfydeploy/models/components/workflowrunoutputmodel.py:
+    id: c1faef4e9e15
+    last_write_checksum: sha1:f39c12f4b648cb6bcf46cae7bddf87808a0e7d9e
+    pristine_git_object: 6ef089eab02eac32b2be7d6ea2f156d3a0682fa9
+  src/comfydeploy/models/errors/__init__.py:
+    id: 382af20dfb0f
+    last_write_checksum: sha1:b709b6e816854eb09bd6c559c2dbbf0f0539f878
+    pristine_git_object: 495a2bcf30a9dff4ec8cfb636a5c8273a2be4b24
+  src/comfydeploy/models/errors/comfydeployerror.py:
+    id: 436ec35f1a47
+    last_write_checksum: sha1:717f703a1481df4641f6a4f912ffaaddcbf84282
+    pristine_git_object: 86408794622d505648d99aea9c37d8a2da0f46c8
+  src/comfydeploy/models/errors/httpvalidationerror.py:
+    id: 8961298f3828
+    last_write_checksum: sha1:2e2cb9e86916ba557762b9dd387efd2b20248452
+    pristine_git_object: fd09b4d2a50605f487aafaf3a97e068b5a180ba7
+  src/comfydeploy/models/errors/no_response_error.py:
+    id: fdf38b115c4e
+    last_write_checksum: sha1:7f326424a7d5ae1bcd5c89a0d6b3dbda9138942f
+    pristine_git_object: 1deab64bc43e1e65bf3c412d326a4032ce342366
+  src/comfydeploy/models/errors/responsevalidationerror.py:
+    id: b89feac92bd5
+    last_write_checksum: sha1:ba6b618dcb3169c1d4027297c988db50578b4005
+    pristine_git_object: f6d8edbc53459a78a422f3e4ac6a8786e180109f
+  src/comfydeploy/models/errors/sdkerror.py:
+    id: fa6233721c94
+    last_write_checksum: sha1:4f33058826f2fd6f08913295e75e5397c40affee
+    pristine_git_object: 831e0c7433a9876f45bd2caaedc5ef899c6fa0cf
+  src/comfydeploy/models/operations/__init__.py:
+    id: 3a2e2a70b25b
+    last_write_checksum: sha1:3c31bd9f4e92eabc01f29c7fdf87ea24df922c85
+    pristine_git_object: 848cb36ada17a6b967a918d91874e5fa88bd5d0f
+  src/comfydeploy/models/operations/cancel_run_run_run_id_cancel_post.py:
+    id: 32931ea8b22b
+    last_write_checksum: sha1:dfc97762d505c802d6513d26e146d1b84b69be24
+    pristine_git_object: eda190314bb4d8b11985ff37ab471a5a1bacd4c9
+  src/comfydeploy/models/operations/get_run_run_run_id_get.py:
+    id: 80c19ea0638c
+    last_write_checksum: sha1:4dea613ac4f66aa690a9d13aa88ddc5c86cbd58f
+    pristine_git_object: 6af389ea449f2f728d7cde43d8a14114fadaa2b1
+  src/comfydeploy/models/operations/queue_deployment_run_run_deployment_queue_post.py:
+    id: 52f96a6ea591
+    last_write_checksum: sha1:bd329eb57a285a960abc6c99c4a4184f2db923ac
+    pristine_git_object: 3265566980e04671488b301a1311cb73ac07a55f
+  src/comfydeploy/py.typed:
+    id: 8b1245764230
+    last_write_checksum: sha1:8efc425ffe830805ffcc0f3055871bdcdc542c60
+    pristine_git_object: 3e38f1a929f7d6b1d6de74604aa87e3d8f010544
+  src/comfydeploy/run.py:
+    id: 31417a2b86a7
+    last_write_checksum: sha1:079bd631f89ea2de6dc2f24b2c391460e5bd2188
+    pristine_git_object: 216d536bfd178131e3b131157d5eaa49fb26b840
+  src/comfydeploy/sdk.py:
+    id: 88e6efb43aec
+    last_write_checksum: sha1:3d3a3d2868a4398683ab1e042653cc993810de81
+    pristine_git_object: f7c683afcafe638d1281b407b21065bdb9cac037
+  src/comfydeploy/sdkconfiguration.py:
+    id: a853e3fc5813
+    last_write_checksum: sha1:d48da6f5003f7d6cf540952bc501c2a5c4709831
+    pristine_git_object: 6f28b788ee9ee504a773b4c0610830eaebbb5a20
+  src/comfydeploy/types/__init__.py:
+    id: 7a179196be4d
+    last_write_checksum: sha1:f9ad14217f832e74f594285960125add50324be9
+    pristine_git_object: faa268137bc01c9d08cfadc4797017db48747a96
+  src/comfydeploy/types/base64fileinput.py:
+    id: 356a2c0ecd6b
+    last_write_checksum: sha1:1522687ae3398374c35710cad993a6e82b5ab99d
+    pristine_git_object: 862566fe2b1db830276b390e136e65090e5963d2
+  src/comfydeploy/types/basemodel.py:
+    id: 0ecbbb05ee55
+    last_write_checksum: sha1:10d84aedeb9d35edfdadf2c3020caa1d24d8b584
+    pristine_git_object: a9a640a1a7048736383f96c67c6290c86bf536ee
+  src/comfydeploy/utils/__init__.py:
+    id: 643b9259783a
+    last_write_checksum: sha1:53c9544397bbc534c45a228feac3cdb2e9017fe6
+    pristine_git_object: 7af3b82cf95edc2901bc85b2624c54f39b7f9724
+  src/comfydeploy/utils/annotations.py:
+    id: bddf86890ce0
+    last_write_checksum: sha1:a4824ad65f730303e4e1e3ec1febf87b4eb46dbc
+    pristine_git_object: 12e0aa4f1151bb52474cc02e88397329b90703f6
+  src/comfydeploy/utils/datetimes.py:
+    id: 4168ab191bf2
+    last_write_checksum: sha1:fa47d54c549ff9b95496ce91930fadfb04a36be9
+    pristine_git_object: adad24762cf452d137abe94fda0fd26224cef593
+  src/comfydeploy/utils/dynamic_imports.py:
+    id: 124ac7e1e7c6
+    last_write_checksum: sha1:a1940c63feb8eddfd8026de53384baf5056d5dcc
+    pristine_git_object: 673edf82a97d0fea7295625d3e092ea369a36b79
+  src/comfydeploy/utils/enums.py:
+    id: 03bbc4ebb085
+    last_write_checksum: sha1:bc8c3c1285ae09ba8a094ee5c3d9c7f41fa1284d
+    pristine_git_object: 3324e1bc2668c54c4d5f5a1a845675319757a828
+  src/comfydeploy/utils/eventstreaming.py:
+    id: cc7989ec95f7
+    last_write_checksum: sha1:7d1dc68f8b48486ab646653aa05cc38752e1f912
+    pristine_git_object: a8d4fe5cc88d3c7337339e1b36a61bbf7ca8c4eb
+  src/comfydeploy/utils/forms.py:
+    id: df6743c41f17
+    last_write_checksum: sha1:a971cdb120ad3d416d296d5d0ad89e4808350a7f
+    pristine_git_object: fdf0dc9b2a67bca773eefe6b471498cccaa83424
+  src/comfydeploy/utils/headers.py:
+    id: f500acbd10b2
+    last_write_checksum: sha1:7c6df233ee006332b566a8afa9ce9a245941d935
+    pristine_git_object: 37864cbbbc40d1a47112bbfdd3ba79568fc8818a
+  src/comfydeploy/utils/logger.py:
+    id: 6cd4e9e87a19
+    last_write_checksum: sha1:f3fdb154a3f09b8cc43d74c7e9c02f899f8086e4
+    pristine_git_object: b661aff65d38b77d035149699aea09b2785d2fc6
+  src/comfydeploy/utils/metadata.py:
+    id: 92c53d72ecce
+    last_write_checksum: sha1:e703e5cbb5255144aacf86898d1420529afaaff8
+    pristine_git_object: 5abddd588837ac297050ca3b543627faadb350a9
+  src/comfydeploy/utils/queryparams.py:
+    id: d6bf20aad3fb
+    last_write_checksum: sha1:b94c3f314fd3da0d1d215afc2731f48748e2aa59
+    pristine_git_object: c04e0db82b68eca041f2cb2614d748fbac80fd41
+  src/comfydeploy/utils/requestbodies.py:
+    id: 7902232a8c92
+    last_write_checksum: sha1:e1fef575283b7fe7fe2ad392dbbb3fb105309124
+    pristine_git_object: 591415af8e64baa410627b507d2740afb5387d13
+  src/comfydeploy/utils/retries.py:
+    id: c75d8ef6dc86
+    last_write_checksum: sha1:251e4dd969bb6c06025afe1bad1b5035e94c2060
+    pristine_git_object: 406c1e7c36c7a4fa4fb48bb567d254e2803e1792
+  src/comfydeploy/utils/security.py:
+    id: a65efdd0a3c1
+    last_write_checksum: sha1:c11eef495b6aaa249178c24c796940cc540b7a00
+    pristine_git_object: 42d8d78e9981eed7507670014d99588e27ab325a
+  src/comfydeploy/utils/serializers.py:
+    id: 8e039c5d7ada
+    last_write_checksum: sha1:7485f1425b0661fd84836186570df90207eec6af
+    pristine_git_object: 1031ed930bad5ece220cf7416a56c29f40f0588b
+  src/comfydeploy/utils/unmarshal_json_response.py:
+    id: 83ba4c3727c0
+    last_write_checksum: sha1:f928ad99d34b9bbe6d20c16f6b4d58bd441e36ae
+    pristine_git_object: 6c39969dc4f77cacde3c2c91163eb44999173bea
+  src/comfydeploy/utils/url.py:
+    id: 6b6ebd0b30b5
+    last_write_checksum: sha1:6479961baa90432ca25626f8e40a7bbc32e73b41
+    pristine_git_object: c78ccbae426ce6d385709d97ce0b1c2813ea2418
+  src/comfydeploy/utils/values.py:
+    id: 9185aaf9b78b
+    last_write_checksum: sha1:65e1ee8607767a4fc1ae7a55c74d77a23ab3cef1
+    pristine_git_object: ac217f473c5d52a454a2979b3eb35e66175d365c
+examples:
+  get_run_run__run_id__get:
+    speakeasy-default-get-run-run-run-id-get:
+      parameters:
+        path:
+          run_id: "faf49b3a-7b64-4687-95c8-58ca8a41dd73"
+        query:
+          queue_position: false
+      responses:
+        "200":
+          application/json: {"id": "46a99099-5b7a-4e10-8e06-6dacc98118bf", "workflow_version_id": "f69dd44f-f54c-41db-91a8-2526823f19f0", "workflow_inputs": "<value>", "workflow_id": "39f9f100-52c4-4837-9d06-0278a672e1ec", "machine_id": "62fc8c79-bbed-4389-9157-5269d7cdf77e", "origin": "<value>", "status": "<value>", "created_at": "2026-04-25T23:18:08.058Z", "updated_at": "2026-04-08T06:46:17.964Z", "gpu_event_id": "<id>", "gpu": "<value>", "machine_version": "<value>", "machine_type": "<value>", "modal_function_call_id": "<id>", "user_id": "<id>", "org_id": "<id>", "live_status": "<value>", "progress": 0, "is_realtime": false, "webhook": "<value>", "webhook_status": "<value>", "webhook_intermediate_status": false}
+        "422":
+          application/json: {}
+  cancel_run_run__run_id__cancel_post:
+    speakeasy-default-cancel-run-run-run-id-cancel-post:
+      parameters:
+        path:
+          run_id: "<id>"
+      responses:
+        "200":
+          application/json: "<value>"
+        "422":
+          application/json: {}
+  queue_deployment_run_run_deployment_queue_post:
+    speakeasy-default-queue-deployment-run-run-deployment-queue-post:
+      requestBody:
+        application/json: {"inputs": {"num_inference_steps": 30, "prompt": "A futuristic cityscape", "seed": 123456}, "webhook": "https://myapp.com/webhook", "webhook_intermediate_status": true, "deployment_id": "12345678-1234-5678-1234-567812345678"}
+      responses:
+        "200":
+          application/json: {"run_id": "17cad37f-15e1-48dc-8b81-b4a67ba778ba"}
+        "422":
+          application/json: {}
+examplesVersion: 1.0.2
+generatedTests: {}
+releaseNotes: "## Python SDK Changes:\n* `comfy_deploy.run.get()`: \n  *  `request.queue_position` **Added**\n  *  `response` **Changed** (Breaking ⚠️)\n* `comfy_deploy.run.deployment.queue()`:  `request` **Changed**\n"
 generatedFiles:
   - .devcontainer/README.md
   - .devcontainer/devcontainer.json
@@ -123,44 +506,3 @@ generatedFiles:
   - src/comfydeploy/utils/serializers.py
   - src/comfydeploy/utils/url.py
   - src/comfydeploy/utils/values.py
-examples:
-  get_run_run__run_id__get:
-    speakeasy-default-get-run-run-run-id-get:
-      parameters:
-        path:
-          run_id: "b888f774-3e7c-4135-a18c-6b985523c4bc"
-      responses:
-        "200":
-          application/json: {"id": "e50f7622-81da-484b-9c66-1c8a99c6b71b", "workflow_version_id": "ecd62b8f-7112-4aaf-90ab-4e43b4cca371", "workflow_inputs": "<value>", "workflow_id": "f620807a-a1f8-4cf0-95d8-9d58ee381f6b", "workflow_api": "<value>", "machine_id": "b885c09d-541c-4293-b683-64a15f8d7e75", "origin": "<value>", "status": "<value>", "created_at": "2024-02-02T12:01:38.576Z", "updated_at": "2023-04-16T15:25:27.950Z", "gpu_event_id": "<id>", "gpu": "<value>", "machine_version": "<value>", "machine_type": "<value>", "modal_function_call_id": "<id>", "user_id": "<id>", "org_id": "<id>", "live_status": "<value>", "progress": 0, "is_realtime": false, "webhook": "<value>", "webhook_status": "<value>", "webhook_intermediate_status": false, "number": 494415, "duration": 6188.69, "cold_start_duration": 9131.15, "cold_start_duration_total": 1865.92, "run_duration": 3787.04}
-        "422":
-          application/json: {}
-  cancel_run_run__run_id__cancel_post:
-    speakeasy-default-cancel-run-run-run-id-cancel-post:
-      parameters:
-        path:
-          run_id: "<id>"
-      responses:
-        "200":
-          application/json: "<value>"
-        "422":
-          application/json: {}
-  queue_deployment_run_run_deployment_queue_post:
-    speakeasy-default-queue-deployment-run-run-deployment-queue-post:
-      requestBody:
-        application/json: {"inputs": {"prompt": "A beautiful landscape", "seed": 42}, "webhook": "https://myapp.com/webhook", "webhook_intermediate_status": true, "deployment_id": "15e79589-12c9-453c-a41a-348fdd7de957"}
-      responses:
-        "200":
-          application/json: {"run_id": "03ec31b2-4d0d-4329-88ff-ac74003017b7"}
-        "422":
-          application/json: {}
-  run_update__request_body__webhook__post:
-    speakeasy-default-run-update-request-body-webhook-post:
-      requestBody:
-        application/json: {"run_id": "<id>", "status": "success", "live_status": "<value>", "progress": 0}
-      responses:
-        "200":
-          application/json: {"status": "<value>"}
-        "422":
-          application/json: {}
-examplesVersion: 1.0.0
-generatedTests: {}
