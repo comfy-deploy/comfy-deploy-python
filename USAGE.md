@@ -8,7 +8,7 @@ with ComfyDeploy(
     bearer="<YOUR_BEARER_TOKEN_HERE>",
 ) as comfy_deploy:
 
-    res = comfy_deploy.run.get(run_id="b888f774-3e7c-4135-a18c-6b985523c4bc")
+    res = comfy_deploy.run.get(run_id="faf49b3a-7b64-4687-95c8-58ca8a41dd73", queue_position=False)
 
     assert res.workflow_run_model is not None
 
@@ -18,7 +18,8 @@ with ComfyDeploy(
 
 </br>
 
-The same SDK client can also be used to make asychronous requests by importing asyncio.
+The same SDK client can also be used to make asynchronous requests by importing asyncio.
+
 ```python
 # Asynchronous Example
 import asyncio
@@ -30,7 +31,7 @@ async def main():
         bearer="<YOUR_BEARER_TOKEN_HERE>",
     ) as comfy_deploy:
 
-        res = await comfy_deploy.run.get_async(run_id="b888f774-3e7c-4135-a18c-6b985523c4bc")
+        res = await comfy_deploy.run.get_async(run_id="faf49b3a-7b64-4687-95c8-58ca8a41dd73", queue_position=False)
 
         assert res.workflow_run_model is not None
 
