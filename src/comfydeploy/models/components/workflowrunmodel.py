@@ -23,7 +23,6 @@ class WorkflowRunModelTypedDict(TypedDict):
     workflow_version_id: Nullable[str]
     workflow_inputs: Nullable[Any]
     workflow_id: str
-    workflow_api: Nullable[Any]
     machine_id: Nullable[str]
     origin: str
     status: str
@@ -39,11 +38,6 @@ class WorkflowRunModelTypedDict(TypedDict):
     live_status: Nullable[str]
     webhook: Nullable[str]
     webhook_status: Nullable[str]
-    number: int
-    duration: Nullable[float]
-    cold_start_duration: Nullable[float]
-    cold_start_duration_total: Nullable[float]
-    run_duration: Nullable[float]
     ended_at: NotRequired[Nullable[datetime]]
     queued_at: NotRequired[Nullable[datetime]]
     started_at: NotRequired[Nullable[datetime]]
@@ -51,6 +45,12 @@ class WorkflowRunModelTypedDict(TypedDict):
     is_realtime: NotRequired[bool]
     webhook_intermediate_status: NotRequired[bool]
     outputs: NotRequired[List[WorkflowRunOutputModelTypedDict]]
+    number: NotRequired[Nullable[int]]
+    duration: NotRequired[Nullable[float]]
+    cold_start_duration: NotRequired[Nullable[float]]
+    cold_start_duration_total: NotRequired[Nullable[float]]
+    run_duration: NotRequired[Nullable[float]]
+    queue_position: NotRequired[Nullable[int]]
 
 
 class WorkflowRunModel(BaseModel):
@@ -62,8 +62,6 @@ class WorkflowRunModel(BaseModel):
 
     workflow_id: str
 
-    workflow_api: Nullable[Any]
-
     machine_id: Nullable[str]
 
     origin: str
@@ -93,16 +91,6 @@ class WorkflowRunModel(BaseModel):
     webhook: Nullable[str]
 
     webhook_status: Nullable[str]
-
-    number: int
-
-    duration: Nullable[float]
-
-    cold_start_duration: Nullable[float]
-
-    cold_start_duration_total: Nullable[float]
-
-    run_duration: Nullable[float]
 
     ended_at: OptionalNullable[datetime] = UNSET
 
@@ -118,62 +106,80 @@ class WorkflowRunModel(BaseModel):
 
     outputs: Optional[List[WorkflowRunOutputModel]] = None
 
+    number: OptionalNullable[int] = UNSET
+
+    duration: OptionalNullable[float] = UNSET
+
+    cold_start_duration: OptionalNullable[float] = UNSET
+
+    cold_start_duration_total: OptionalNullable[float] = UNSET
+
+    run_duration: OptionalNullable[float] = UNSET
+
+    queue_position: OptionalNullable[int] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = [
-            "ended_at",
-            "queued_at",
-            "started_at",
-            "progress",
-            "is_realtime",
-            "webhook_intermediate_status",
-            "outputs",
-        ]
-        nullable_fields = [
-            "workflow_version_id",
-            "workflow_inputs",
-            "workflow_api",
-            "machine_id",
-            "gpu_event_id",
-            "gpu",
-            "machine_version",
-            "machine_type",
-            "modal_function_call_id",
-            "user_id",
-            "org_id",
-            "live_status",
-            "webhook",
-            "webhook_status",
-            "duration",
-            "cold_start_duration",
-            "cold_start_duration_total",
-            "run_duration",
-            "ended_at",
-            "queued_at",
-            "started_at",
-        ]
-        null_default_fields = []
-
+        optional_fields = set(
+            [
+                "ended_at",
+                "queued_at",
+                "started_at",
+                "progress",
+                "is_realtime",
+                "webhook_intermediate_status",
+                "outputs",
+                "number",
+                "duration",
+                "cold_start_duration",
+                "cold_start_duration_total",
+                "run_duration",
+                "queue_position",
+            ]
+        )
+        nullable_fields = set(
+            [
+                "workflow_version_id",
+                "workflow_inputs",
+                "machine_id",
+                "ended_at",
+                "queued_at",
+                "started_at",
+                "gpu_event_id",
+                "gpu",
+                "machine_version",
+                "machine_type",
+                "modal_function_call_id",
+                "user_id",
+                "org_id",
+                "live_status",
+                "webhook",
+                "webhook_status",
+                "number",
+                "duration",
+                "cold_start_duration",
+                "cold_start_duration_total",
+                "run_duration",
+                "queue_position",
+            ]
+        )
         serialized = handler(self)
-
         m = {}
 
-        for n, f in self.model_fields.items():
+        for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
-            serialized.pop(k, None)
+            val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
