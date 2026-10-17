@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 from comfydeploy.models.components import httpmetadata as components_httpmetadata
-from comfydeploy.types import BaseModel
+from comfydeploy.types import BaseModel, UNSET_SENTINEL
 from comfydeploy.utils import FieldMetadata, PathParamMetadata
 import pydantic
+from pydantic import model_serializer
 from typing import Any, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
@@ -32,3 +33,19 @@ class CancelRunRunRunIDCancelPostResponse(BaseModel):
 
     any: Optional[Any] = None
     r"""Successful Response"""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["any"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
