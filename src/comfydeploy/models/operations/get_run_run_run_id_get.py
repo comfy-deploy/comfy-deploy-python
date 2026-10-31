@@ -5,21 +5,55 @@ from comfydeploy.models.components import (
     httpmetadata as components_httpmetadata,
     workflowrunmodel as components_workflowrunmodel,
 )
-from comfydeploy.types import BaseModel
-from comfydeploy.utils import FieldMetadata, PathParamMetadata
+from comfydeploy.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
+from comfydeploy.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
 import pydantic
+from pydantic import model_serializer
 from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class GetRunRunRunIDGetRequestTypedDict(TypedDict):
     run_id: str
+    queue_position: NotRequired[bool]
 
 
 class GetRunRunRunIDGetRequest(BaseModel):
     run_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
+
+    queue_position: Annotated[
+        Optional[bool],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = False
+
+    @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
+    def serialize_model(self, handler):
+        optional_fields = set(["queue_position"])
+        exclude_none = current_exclude_none()
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
 
 
 class GetRunRunRunIDGetResponseTypedDict(TypedDict):
@@ -37,3 +71,25 @@ class GetRunRunRunIDGetResponse(BaseModel):
 
     workflow_run_model: Optional[components_workflowrunmodel.WorkflowRunModel] = None
     r"""Successful Response"""
+
+    @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
+    def serialize_model(self, handler):
+        optional_fields = set(["WorkflowRunModel"])
+        exclude_none = current_exclude_none()
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
