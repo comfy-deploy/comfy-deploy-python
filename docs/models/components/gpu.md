@@ -2,15 +2,27 @@
 
 The GPU to override the machine's default GPU
 
+## Example Usage
+
+```python
+from comfydeploy.models.components import Gpu
+
+value = Gpu.CPU
+```
+
 
 ## Values
 
-| Name         | Value        |
-| ------------ | ------------ |
-| `T4`         | T4           |
-| `L4`         | L4           |
-| `A10_G`      | A10G         |
-| `L40_S`      | L40S         |
-| `A100`       | A100         |
-| `A100_80_GB` | A100-80GB    |
-| `H100`       | H100         |
+| Name           | Value          |
+| -------------- | -------------- |
+| `CPU`          | CPU            |
+| `T4`           | T4             |
+| `L4`           | L4             |
+| `A10_G`        | A10G           |
+| `L40_S`        | L40S           |
+| `A100`         | A100           |
+| `A100_80_GB`   | A100-80GB      |
+| `H100`         | H100           |
+| `H200`         | H200           |
+| `B200`         | B200           |
+| `RTX_PRO_6000` | RTX-PRO-6000   |

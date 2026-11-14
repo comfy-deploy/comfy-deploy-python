@@ -7,24 +7,28 @@ from comfydeploy._hooks import HookContext
 from comfydeploy.deployment import Deployment
 from comfydeploy.models import components, errors, operations
 from comfydeploy.types import OptionalNullable, UNSET
+from comfydeploy.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Any, Mapping, Optional
 
 
 class Run(BaseSDK):
     deployment: Deployment
 
-    def __init__(self, sdk_config: SDKConfiguration) -> None:
-        BaseSDK.__init__(self, sdk_config)
+    def __init__(
+        self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
+    ) -> None:
+        BaseSDK.__init__(self, sdk_config, parent_ref=parent_ref)
         self.sdk_configuration = sdk_config
         self._init_sdks()
 
     def _init_sdks(self):
-        self.deployment = Deployment(self.sdk_configuration)
+        self.deployment = Deployment(self.sdk_configuration, parent_ref=self.parent_ref)
 
     def get(
         self,
         *,
         run_id: str,
+        queue_position: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -33,6 +37,7 @@ class Run(BaseSDK):
         r"""Get Run
 
         :param run_id:
+        :param queue_position:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -50,6 +55,7 @@ class Run(BaseSDK):
 
         request = operations.GetRunRunRunIDGetRequest(
             run_id=run_id,
+            queue_position=queue_position,
         )
 
         req = self._build_request(
@@ -65,6 +71,7 @@ class Run(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -78,53 +85,46 @@ class Run(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="get_run_run__run_id__get",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Run"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return operations.GetRunRunRunIDGetResponse(
-                workflow_run_model=utils.unmarshal_json(
-                    http_res.text, Optional[components.WorkflowRunModel]
+                workflow_run_model=unmarshal_json_response(
+                    Optional[components.WorkflowRunModel], http_res
                 ),
                 http_meta=components.HTTPMetadata(request=req, response=http_res),
             )
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, errors.HTTPValidationErrorData
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
             )
-            raise errors.HTTPValidationError(data=response_data)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def get_async(
         self,
         *,
         run_id: str,
+        queue_position: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -133,6 +133,7 @@ class Run(BaseSDK):
         r"""Get Run
 
         :param run_id:
+        :param queue_position:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -150,6 +151,7 @@ class Run(BaseSDK):
 
         request = operations.GetRunRunRunIDGetRequest(
             run_id=run_id,
+            queue_position=queue_position,
         )
 
         req = self._build_request_async(
@@ -165,6 +167,7 @@ class Run(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -178,48 +181,40 @@ class Run(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="get_run_run__run_id__get",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Run"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return operations.GetRunRunRunIDGetResponse(
-                workflow_run_model=utils.unmarshal_json(
-                    http_res.text, Optional[components.WorkflowRunModel]
+                workflow_run_model=unmarshal_json_response(
+                    Optional[components.WorkflowRunModel], http_res
                 ),
                 http_meta=components.HTTPMetadata(request=req, response=http_res),
             )
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, errors.HTTPValidationErrorData
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
             )
-            raise errors.HTTPValidationError(data=response_data)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def cancel(
         self,
@@ -265,6 +260,7 @@ class Run(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -278,46 +274,38 @@ class Run(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="cancel_run_run__run_id__cancel_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Run"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return operations.CancelRunRunRunIDCancelPostResponse(
-                any=utils.unmarshal_json(http_res.text, Optional[Any]),
+                any=unmarshal_json_response(Optional[Any], http_res),
                 http_meta=components.HTTPMetadata(request=req, response=http_res),
             )
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, errors.HTTPValidationErrorData
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
             )
-            raise errors.HTTPValidationError(data=response_data)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def cancel_async(
         self,
@@ -363,6 +351,7 @@ class Run(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -376,43 +365,35 @@ class Run(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="cancel_run_run__run_id__cancel_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Run"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return operations.CancelRunRunRunIDCancelPostResponse(
-                any=utils.unmarshal_json(http_res.text, Optional[Any]),
+                any=unmarshal_json_response(Optional[Any], http_res),
                 http_meta=components.HTTPMetadata(request=req, response=http_res),
             )
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, errors.HTTPValidationErrorData
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
             )
-            raise errors.HTTPValidationError(data=response_data)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
