@@ -1,21 +1,20 @@
-speakeasyVersion: 1.523.2
+speakeasyVersion: 1.809.0
 sources:
     comfydeploy-api:
         sourceNamespace: comfydeploy-api
-        sourceRevisionDigest: sha256:88643a4de11cc9a90c5da0de3ecf6526f61237a30189707b7a6abf6192ad4cb2
-        sourceBlobDigest: sha256:df07cbe29241948042d8f8f0dc662107805290842e5a6ed7623ccf270744fba1
+        sourceRevisionDigest: sha256:a41588a301c43dadb43e555cba2045ae7ba4cf16f99bdf9dbe475575bf5e6c05
+        sourceBlobDigest: sha256:83804b95608d6364de59d10c2adb684cc7a518ef84fd7cbbc3913d21562c4e76
         tags:
             - latest
-            - speakeasy-sdk-regen-1743002572
             - V2
 targets:
     comfy-deploy:
         source: comfydeploy-api
         sourceNamespace: comfydeploy-api
-        sourceRevisionDigest: sha256:88643a4de11cc9a90c5da0de3ecf6526f61237a30189707b7a6abf6192ad4cb2
-        sourceBlobDigest: sha256:df07cbe29241948042d8f8f0dc662107805290842e5a6ed7623ccf270744fba1
+        sourceRevisionDigest: sha256:a41588a301c43dadb43e555cba2045ae7ba4cf16f99bdf9dbe475575bf5e6c05
+        sourceBlobDigest: sha256:83804b95608d6364de59d10c2adb684cc7a518ef84fd7cbbc3913d21562c4e76
         codeSamplesNamespace: code-samples-python-comfy-deploy
-        codeSamplesRevisionDigest: sha256:adf2885110445ea05f59d31a8a76e34c61bc6c030a258fc1ef5ae0c8836be768
+        codeSamplesRevisionDigest: sha256:9d00406804ff49ae2c10709badad219304c49b09c44cdfe92c2f1946cd499c07
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
