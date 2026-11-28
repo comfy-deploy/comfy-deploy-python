@@ -189,3 +189,13 @@ Based on:
 - [python v0.7.0] .
 ### Releases
 - [PyPI v0.7.0] https://pypi.org/project/comfydeploy/0.7.0 - .
+
+## 2026-11-28 00:12:53
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.813.0 (2.969.4) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v0.8.0] .
+### Releases
+- [PyPI v0.8.0] https://pypi.org/project/comfydeploy/0.8.0 - .

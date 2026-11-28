@@ -1,5 +1,4 @@
-# Deployment
-(*run.deployment*)
+# Run.Deployment
 
 ## Overview
 
@@ -13,6 +12,7 @@ Create a new deployment run with the given parameters.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="queue_deployment_run_run_deployment_queue_post" method="post" path="/run/deployment/queue" -->
 ```python
 from comfydeploy import ComfyDeploy
 
@@ -22,12 +22,14 @@ with ComfyDeploy(
 ) as comfy_deploy:
 
     res = comfy_deploy.run.deployment.queue(request={
-        "deployment_id": "15e79589-12c9-453c-a41a-348fdd7de957",
         "inputs": {
-            "prompt": "A beautiful landscape",
-            "seed": 42,
+            "num_inference_steps": 30,
+            "prompt": "A futuristic cityscape",
+            "seed": 123456,
         },
         "webhook": "https://myapp.com/webhook",
+        "webhook_intermediate_status": True,
+        "deployment_id": "12345678-1234-5678-1234-567812345678",
     })
 
     assert res.create_run_response is not None
